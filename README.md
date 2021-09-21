@@ -1,2 +1,2 @@
 # cougarsuccess.wsu.edu
-Front-end development for the WSU Cougar Success website
+Front-end development project for the WSU Cougar Success website
