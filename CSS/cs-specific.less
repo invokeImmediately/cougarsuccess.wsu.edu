@@ -1,0 +1,707 @@
+/*! ================================================================================================
+ *  █    █▀▀▀ █▀▀▀ ▄▀▀▄ ▄▀▀▀ █  █   ▄▀▀▀ ▄▀▀▄ █  █ █▀▀▀ ▄▀▀▄ █▀▀▄   ▄▀▀▀ █  █ ▄▀▀▀
+ *  █  ▄ █▀▀  █ ▀▄ █▄▄█ █    ▀▄▄█   █    █  █ █  █ █ ▀▄ █▄▄█ █▄▄▀   ▀▀▀█ █  █ █    ▀
+ *  ▀▀▀  ▀▀▀▀ ▀▀▀▀ █  ▀  ▀▀▀ ▄▄▄▀    ▀▀▀  ▀▀   ▀▀  ▀▀▀▀ █  ▀ ▀  ▀▄  ▀▀▀   ▀▀   ▀▀▀
+ *
+ *       ▄▀▀▀ █▀▀▀ ▄▀▀▀ ▄▀▀▀   ▄▀▀▀▐▀█▀▌█  █ █    ▀█▀ ▐▀▀▄ █▀▀▀
+ *     ▀ █    █▀▀  ▀▀▀█ ▀▀▀█   ▀▀▀█  █  ▀▄▄█ █  ▄  █  █  ▐ █ ▀▄
+ *        ▀▀▀ ▀▀▀▀ ▀▀▀  ▀▀▀    ▀▀▀   █  ▄▄▄▀ ▀▀▀  ▀▀▀ ▀  ▐ ▀▀▀▀
+ *  ================================================================================================
+ *  CSS code written by WSU staff outside DAESA specifically for use on Washington State
+ *    University's [Cougar Success website] (https://cougarsuccess.wsu.edu).
+ * 
+ *  Fully documented, precompiled source code from which this section of the custom stylesheet was
+ *    built is developed and maintained on the linked GitHub project.
+ * 
+ *  @version 1.0.0
+ * 
+ *  @author Jon Bickelhaupt [jbickelhaupt@wsu.edu] (https://github.com/invokeImmediately)
+ *  @author Daniel Rieck [daniel.rieck@wsu.edu]
+ *  @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/
+ *  @license MIT — Copyright (c) 2021 Washington State University.
+ *    Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ *      and associated documentation files (the “Software”), to deal in the Software without
+ *      restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ *      distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom
+ *      the Software is furnished to do so, subject to the following conditions:
+ *    The above copyright notice and this permission notice shall be included in all copies or
+ *      substantial portions of the Software.
+ *    THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ *      BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *      NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ *      DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *      FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *      SOFTWARE.
+ *  ================================================================================================
+ */
+
+html {
+  background-color: white;
+}
+
+body {
+  color: white;
+  font-family: 'Open Sans', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+  background-color: white;
+}
+
+figcaption {
+  color: #5e6a71;
+}
+
+hr {
+  border: 0;
+  height: 1.5px;
+  display: block;
+  margin-top: 2em;
+  border-color: #5e6a71;
+}
+
+#gform_submit_button_1 {
+  display: none;
+}
+
+#glue:before {
+  border-right: 1px solid #dbdbdb;
+}
+
+/** Headers & text **/
+.home h1 {
+  color: white;
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.home h2 {
+  font-size: 30px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  padding-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.home h3 {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: left;
+  text-transform: uppercase;
+  width: auto;
+}
+
+.home hr {
+  width: 25%;
+  background-color: white;
+  margin: 1.05em 0 0 .25em;
+}
+
+.home p {
+}
+
+.whitebox, 
+.whitebox p {
+  color: #5e6a71;
+}
+
+.whitebox h2 {
+  color: #5e6a71;
+  font-size: 30px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  padding-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.whitebox h3 {
+  color: #5e6a71;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: left;
+  text-transform: uppercase;
+  width: auto;
+}
+
+.whitebox hr {
+  width: 25%;
+  background-color: #5e6a71;
+  margin: .25em 0 0 .25em;
+}
+
+.whitebox a {
+  text-decoration: underline;
+}
+
+/** quarter images homepage **/
+#academics-and-lifestyle .column.one {
+  background-image: url(/wp-content/uploads/sites/590/2017/07/BiologyLab_5146_v2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#academics-and-lifestyle .column.three {
+  background-image: url(/wp-content/uploads/sites/590/2017/07/Red_1466_v2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#services-and-calendar .column.two {
+  background-image: url(/wp-content/uploads/sites/590/2017/07/TriCitiesStudents_8767_v2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#services-and-calendar .column.four {
+  background-image: url(/wp-content/uploads/sites/590/2017/07/FloweringTree_9072_v2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/** secondary pages **/
+h1 {
+  color: #c60c30;
+  font-size: 45px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h2 {
+  color: #5e6a71;
+  font-size: 35px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  padding-bottom: 20px;
+  text-transform: uppercase;
+}
+
+h3 {
+  color: #981e32;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h4 {
+  color: #c60c30;
+  font-size: 20px;
+  font-weight: 300;
+  padding-bottom: 10px;
+}
+
+p {
+  color: #5e6a71;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.landingmenu h3 {
+  color: white;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background-color: #981e32;
+  padding-bottom: 15px;
+}
+
+.landingmenu a {
+  color: white;
+  text-decoration: none;
+}
+
+.landingmenu a:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.featured-image {
+  height: 150px;
+}
+
+blockquote {
+  font-family: 'Open Sans', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-weight: 600;
+  font-style: oblique;
+}
+
+/** Tables **/
+.dataTables_wrapper {
+  color: #5e6a71;
+}
+
+.tablepress thead th {
+  background-color: #a80532;
+  color: #fff;
+}
+
+/* LINKS */
+.home main a {
+  font-family: open sans;
+  font-size: 15px;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-decoration: underline;
+  color: white;
+}
+
+.home main a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+main a {
+  text-decoration: underline;
+  color: #981e32;
+  font-weight: 600;
+}
+
+main a:hover {
+  text-decoration: none;
+}
+
+main .whitebox a {
+  font-family: open sans;
+  font-size: 15px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #5e6a71;
+  text-decoration: underline;
+}
+
+main .whitebox a:hover {
+  color: #5e6a71;
+  text-decoration: none;
+}
+
+main .featurelink a {
+  font-size: 15px;
+  font-weight: 400;
+  color: white;
+  border: solid;
+  border-width: 2px;
+  padding: 7px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+main .featurelink a:hover {
+  background-color: white;
+  color: #5e6a71;
+  border: solid;
+  border-width: 2px;
+  padding: 7px;
+}
+
+main a:visited {
+  text-decoration: underline;
+}
+
+.whitetext {
+  color: white;
+}
+
+.greytext {
+  color: #5e6a71;
+}
+
+/*LISTS*/
+main ol li {
+  font-family: open sans;
+  font-size: 15px;
+  color: #5e6a71;
+  font-weight: 300;
+}
+
+body.home #jacket main ul li {
+  font-family: open sans;
+  list-style: none;
+  line-height: 2em;
+  color: white;
+}
+
+.home main ul {
+  font-family: open sans;
+  padding: 0 2em 1em 0;
+  color: white;
+}
+
+main ul {
+  font-family: open sans;
+  font-size: 15px;
+  color: #5e6a71;
+  font-weight: 300;
+}
+
+main ul li p {
+  color: #5e6a71;
+  font-weight: 300;
+}
+
+/**HOMEPAGE**/
+.homepage-header {
+  height: 55px;
+  margin-top: -400px;
+  background-color: #981e32;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.crimsonback {
+  background-color: #981e32;
+  width: 100%;
+}
+
+.greyback {
+  background-color: #5e6a71;
+  width: 100%;
+}
+
+.row.quarters .column {
+  width: 260px;
+}
+
+.homepage-header h1 {
+  text-align: right;
+  color: white;
+  font-size: 33px;
+  font-weight: 300;
+  padding-top: 9px;
+  letter-spacing: 4px;
+}
+
+.homepage-banner {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/590/2017/08/GuideApp-Tablet.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 400px;
+  z-index: 0;
+}
+
+.nopadd p {
+  margin: 0;
+  padding: 0;
+}
+
+.home span.content-item-event-venue {
+  display: none;
+}
+
+.tribe-events-list-separator-month span {
+  background-color: #fff;
+  padding: 0 7.5%;
+  color: #5e6a71;
+}
+
+.home span.content-item-event-date {
+  display: block;
+}
+
+/** Media Query **/
+@media only screen and (min-width: 491px) and (max-width: 791px) {
+  .fluid .row.quarters .column {
+    width: 50%;
+    display: block;
+    position: relative;
+  }
+  
+  body.home .fluid .row.side-right .column.one,body.home .fluid .row.side-right .column.two {
+    width: 100%;
+  }
+  
+  .fifty-hundred.row.thirds .column.one, .fifty-hundred.row.thirds .column.two {
+    width: 50%;
+  }
+  
+  .fifty-hundred.row.thirds .column.three {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 491px) {
+  .column img:not(.unscaled), .column:not(.unscale) img, .row:not(.unscale) .column img {
+    display: none;
+  }
+  
+  .fluid .row.quarters .column {
+    width: 100%;
+  }
+  
+  .featured-image {
+    height: 100px;
+  }
+  
+  .mobileservices {
+    background-color: #981e32;
+    color: white;
+  }
+  
+  .mobileservices h2, hr {
+    color: white;
+  }
+  
+  .column.one.padded.whitebox.mobileservices hr {
+    background-color: white;
+  }
+  
+  .column.one.padded.whitebox.mobileservices ul li a {
+    font-family: open sans;
+    font-size: 15px;
+    font-weight: 300;
+    text-decoration: underline;
+    color: white;
+  }
+  
+  .mobilecalendar {
+    background-color: #5e6a71;
+  }
+  
+  .mobilecalendar a {
+    font-family: open sans;
+    font-size: 15px;
+    font-weight: 300;
+    text-decoration: underline;
+    color: white;
+  }
+  
+  .toolsmobile {
+    background-color: white;
+  }
+  
+  .toolsmobile .whitetext {
+    color: #5e6a71;
+  }
+  
+  .toolsmobile h3, hr {
+    color: #5e6a71;
+    font-weight: 500;
+  }
+  
+  .column.one.crimsonback.guttered.toolsmobile  a {
+    font-family: open sans;
+    font-size: 15px;
+    font-weight: 300;
+    text-decoration: underline;
+    color: #5e6a71;
+  }
+  
+  .column.one.crimsonback.guttered.toolsmobile a:hover {
+    text-decoration: none;
+  }
+  
+  .column.two.guttered.whitebox.tipsmobile a {
+    font-family: open sans;
+    font-size: 15px;
+    font-weight: 300;
+    text-decoration: underline;
+    color: white;
+  }
+  
+  .column.two.guttered.whitebox.tipsmobile a:hover {
+    text-decoration: none;
+  }
+  
+  .tipsmobile {
+    background-color: #981e32;
+  }
+  
+  .tipsmobile h2 {
+    color: white;
+  }
+  
+  .tipsmobile h3 {
+    color: white;
+  }
+  
+  .tipsmobile p {
+    color: white;
+  }
+}
+
+/* Added by CBY so "myWSU" looks correct on the homepage */
+.notransform h3:nth-of-type(3) {
+  text-transform: none;
+}
+
+/* Added by CBY so featured image doesn't show on feature category list */
+.category-feature .article-thumbnail {
+  display: none;
+}
+
+h2.article-title {
+  font-size: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.article-title a {
+  color: #536a71;
+  font-weight: 300;
+}
+
+/* Added by JKB for Keys to Cougar Success styling on homepage */
+#builder-section-1502472472243 {
+  background-color: #f9f9f9;
+}
+
+#builder-section-1502472472243, 
+.right-border {
+  border-right: 1px solid #dbdbdb;
+}
+
+/* More general stylings added by JKB for Cougar Success items */
+.show {
+  display: inherit !important;
+}
+
+/* Red Boxes for Individual Steps */
+.coug-success .crimsonback, 
+.coug-success .whiteback {
+  padding: 2rem;
+  width: auto;
+  text-align: left;
+}
+
+.coug-success .crimsonback {
+  padding-bottom: 0;
+}
+
+.coug-success .crimsonback > * {
+  color: #fff;
+  text-align: center;
+}
+
+.coug-success .crimsonback p {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 1.25rem;
+}
+
+.coug-success .crimsonback h4 {
+  text-transform: uppercase;
+  font-weight: 400;
+  padding-top: 3rem;
+  width: 80%;
+  margin: 0 auto;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+/* Content Under Individual Steps */
+.coug-success .whiteback {
+  color: #5e6a71;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+/* COUGAR SUCCESS BOXES */
+#builder-section-1502228821461 .column:nth-of-type(1) .crimsonback h4::before, 
+#builder-section-1502228821461 .column:nth-of-type(2) .crimsonback h4::before, 
+#builder-section-1502228821461 .column:nth-of-type(3) .crimsonback h4::before, 
+#builder-section-1502229651170 .column:nth-of-type(1) .crimsonback h4::before, 
+#builder-section-1502229651170 .column:nth-of-type(2) .crimsonback h4::before, 
+#builder-section-1502229651170 .column:nth-of-type(3) .crimsonback h4::before {
+  padding-right: .75rem;
+  font-size: 3.5rem;
+  font-weight: 200;
+  position: absolute;
+  top: 2.7rem;
+  left: 3.35rem;
+}
+
+#builder-section-1502228821461 .column:nth-of-type(1) .crimsonback h4::before {
+  content: '1';
+}
+
+#builder-section-1502228821461 .column:nth-of-type(1) .student {
+  background: url(https://s3.wp.wsu.edu/uploads/sites/590/2017/08/step1-bkgrd.png) #981e32 bottom right no-repeat;
+}
+
+#builder-section-1502228821461 .column:nth-of-type(2) .crimsonback h4::before {
+  content: '2';
+}
+
+#builder-section-1502228821461 .column:nth-of-type(2) .student {
+  background: url(https://s3.wp.wsu.edu/uploads/sites/590/2017/08/step2-bkgrd.png) #981e32 bottom right no-repeat;
+}
+
+#builder-section-1502228821461 .column:nth-of-type(3) .crimsonback h4::before {
+  content: '3';
+}
+
+#builder-section-1502228821461 .column:nth-of-type(3) .student {
+  background: url(https://s3.wp.wsu.edu/uploads/sites/590/2017/08/step3-bkgrd.png) #981e32 bottom right no-repeat;
+}
+
+#builder-section-1502228821461 .column:nth-of-type(3) .crimsonback h4 {
+  width: 76%;
+}
+
+#builder-section-1502229651170 .column:nth-of-type(1) .crimsonback h4::before {
+  content: '4';
+}
+
+#builder-section-1502229651170 .column:nth-of-type(1) .student {
+  background: url(https://s3.wp.wsu.edu/uploads/sites/590/2017/08/step4-bkgrd.png) #981e32 bottom right no-repeat;
+}
+
+#builder-section-1502229651170 .column:nth-of-type(2) .crimsonback h4::before {
+  content: '5';
+}
+
+#builder-section-1502229651170 .column:nth-of-type(2) .student {
+  background: url(https://s3.wp.wsu.edu/uploads/sites/590/2017/08/step5-bkgrd.png) #981e32 bottom right no-repeat;
+}
+
+#builder-section-1502229651170 .column:nth-of-type(3) .crimsonback h4::before {
+  content: '6';
+}
+
+#builder-section-1502229651170 .column:nth-of-type(3) .student {
+  background: url(https://s3.wp.wsu.edu/uploads/sites/590/2017/08/step6-bkgrd.png) #981e32 bottom right no-repeat;
+}
+
+.student {
+  background-color: #981e32;
+  padding: 0 2rem;
+  min-height: 100px;
+}
+
+.student h5 {
+  padding-top: 2.5rem;
+  font-size: .85rem;
+  line-height: 1.3;
+}
+
+.student p {
+  color: #fff;
+  font-size: .75rem;
+}
+
+#builder-section-1502228821461 .toolsmobile, 
+#builder-section-1502229651170 .toolsmobile, 
+#builder-section-1502233127770 .toolsmobile {
+  min-height: 435px !important;
+}
+
+/* Additional Keys to Success */
+.add-keys h4 {
+  padding-top: 2rem;
+  line-height: 1.25;
+}
+
+.add-keys h4:first-of-type {
+  padding-top: 0;
+}
