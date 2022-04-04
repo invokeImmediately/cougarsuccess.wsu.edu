@@ -1,0 +1,3 @@
+[submodule "WSU-DAESA-JS"]
+	path = WSU-DAESA-JS
+	url = https://github.com/invokeImmediately/WSU-DAESA-JS
