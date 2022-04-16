@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@types/jquery": "^3.5.14",
     "gulp": "^4.0.2",
     "gulp-append-prepend": "^1.0.9",
     "gulp-clean-css": "^4.3.0",
@@ -10,10 +11,14 @@
     "gulp-insert-lines": "^0.0.4",
     "gulp-less": "^5.0.0",
     "gulp-notify": "^4.0.0",
+    "gulp-preserve-typescript-whitespace": "^1.0.3",
+    "gulp-prettier": "^4.0.0",
     "gulp-replace": "^1.1.3",
     "gulp-terser": "^2.1.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "gulp-wait": "^0.0.2",
+    "prettier": "^2.6.2",
     "pump": "^3.0.0"
   }
 }
