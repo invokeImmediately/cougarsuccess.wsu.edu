@@ -19,7 +19,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -41,18 +41,17 @@ interface gradeLookup {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-//   §1: Persistent documentation for final output..............................................45
-//   §2: DaesaAccordion class...................................................................59
-//   §3: Initialization of accordions..........................................................343
-//   §4: Code execution triggered by DOM loading...............................................368
-//   §5: Closure of IIFE.......................................................................384
-////////////////////////////////////////////////////////////////////////////////////////////////////
+// §1: PERSISTENT DOCUMENTATION for final output................................................51
+// §2: SETUPGPACALC class.......................................................................69
+//   §2.1: Constructor initiated operations....................................................135
+//   §2.2: Event initiated operations..........................................................206
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................254////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.0.1
+ * gpaCalc.js - v0.0.3
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -206,8 +205,8 @@ interface gradeLookup {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.2: Event initiated operations
 
-    checkCourseDetailsRow( e: Event, $input: JQuery) {
-      // TODO: Write 
+    checkCourseDetailsRow( e: Event, $input: JQuery ) {
+      // TODO: Finish writing function
 
       // Now recalculate the GPAs.
       this.recalcGpas( e );
@@ -243,7 +242,7 @@ interface gradeLookup {
         this.$semGpa.val( ( semGpa / totCredits ).toFixed( 2 ) );
       }
       // TODO: Finish writing function
-    } 
+    }
 
     recalcCumGpa( e: Event ) {
       console.log( 'Recalculating cumulative GPA.' );
@@ -263,18 +262,18 @@ interface gradeLookup {
   // Reference to the jQuery instance.
   $: jQuery,
 
-  // CSS Class for selecting the GPA calculator from the DOM.
+  // Selector string for isolating the GPA calculator from the DOM.
   formSel: '.gpa-calc-gf',
 
-  // CSS Class for selecting the submit button from the DOM.
+  // Selector string for isolating the submit button within DOM.
   sbmtBtnSel: '.gform_button[type="submit"]',
 
-  // CSS Class for selecting the list field for collecting course details.
+  // Selector string for isolating the list field for collecting course details within the DOM.
   courseFldsSel: '.gfield.gpa-calc-gf__course-details',
 
-  // CSS Class for selecting the list field for collecting course details.
+  // Selector string for isolating the semester GPA field within the DOM.
   semGpaFldSel: '.gfield.gpa-calc-gf__sem-gpa input',
 
-  // CSS Class for selecting the list field for collecting course details.
+  // Selector string for isolating the semester GPA field within the DOM.
   cumlGpaFldSel: '.gfield.gpa-calc-gf__cuml-gpa input'
 } );
