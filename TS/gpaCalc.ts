@@ -17,7 +17,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.0.0
+ * @version 0.0.1
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -50,7 +50,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.0.0
+ * gpaCalc.js - v0.0.1
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -226,5 +226,5 @@ interface gradeLookup {
   sbmtBtnSel: '.gform_button[type="submit"]',
 
   // CSS Class for selecting the list field for collecting course details.
-  courseFldsSel: '.gfield.course-details'
+  courseFldsSel: '.gfield.gpa-calc-gf__course-details'
 } );
