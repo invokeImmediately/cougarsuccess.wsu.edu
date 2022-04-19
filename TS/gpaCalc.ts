@@ -19,7 +19,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -41,17 +41,18 @@ interface gradeLookup {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: PERSISTENT DOCUMENTATION for final output................................................51
-// §2: SETUPGPACALC class.......................................................................69
-//   §2.1: Constructor initiated operations....................................................135
-//   §2.2: Event initiated operations..........................................................206
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................254////////////////////////////////////////////////////////////////////////////////////////////////////
+// §1: PERSISTENT DOCUMENTATION for final output................................................52
+// §2: SETUPGPACALC class.......................................................................70
+//   §2.1: Constructor initiated operations....................................................140
+//   §2.2: Event initiated operations..........................................................211
+//   §2.3: Utility methods.....................................................................294
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................327////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.0.3
+ * gpaCalc.js - v0.1.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -69,6 +70,7 @@ interface gradeLookup {
   // §2: SETUPGPACALC class
 
   class setUpGpaCalc {
+    clMissingInp: string;
     courseFldsSel: string;
     cumlGpaFldSel: string;
     formSel: string;
@@ -94,6 +96,9 @@ interface gradeLookup {
       this.courseFldsSel = courseFldsSel;
       this.semGpaFldSel = semGpaFldSel;
       this.cumlGpaFldSel = cumlGpaFldSel;
+
+      // Class for marking missing inputs.
+      this.clMissingInp = "gpa-calc-gf__missing-inp";
 
       // Set up the grade lookup table.
       this.gradeLookupTbl = {
@@ -206,6 +211,26 @@ interface gradeLookup {
     // §2.2: Event initiated operations
 
     checkCourseDetailsRow( e: Event, $input: JQuery ) {
+      const $prntFld: JQuery = $input.parent();
+      const $prntRow: JQuery = $prntFld.parent();
+      this.chkCourseNameAbs( $prntRow );
+      // if ( $prntFld.hasClass( 'gfield_list_5_cell1' ) ) {
+      //   this.chkCourseNameAbs( $prntRow );
+      // } else if ( $prntFld.hasClass( 'gfield_list_5_cell2' ) ) {
+      //   //this.chkCourseNameAbs( $prntRow );
+      //   //this.chkCreditsMissing( $prntRow );
+      // } else if ( $prntFld.hasClass( 'gfield_list_5_cell3' ) ) {
+      //   //this.chkCourseNameAbs( $prntRow );
+      //   //this.chkGradeMissing( $prntRow );
+      // } else if ( $prntFld.hasClass( 'gfield_list_5_cell4' ) ) {
+      //   //this.chkCourseNameAbs( $prntRow );
+      //   //this.chkGradeAbs( $prntRow );
+      //   //this.checkRetakeAbs( $prntRow );
+      //   //this.checkRetakeGradeAbs( $prntRow );
+      // } else {
+      //   // TODO: Finish writing block.
+      // }
+
       // TODO: Finish writing function
 
       // Now recalculate the GPAs.
@@ -224,8 +249,12 @@ interface gradeLookup {
       const $rows: JQuery = this.$courseFlds.find( '.gfield_list_group' );
       const inst: setUpGpaCalc = this;
       const coursesUsed: string[] = [];
+
+      // Run through the course details rows and add courses in the averaging calculation whose
+      //   inputs have been completed by user.
       $rows.each( function() {
         const $this: JQuery = $( this );
+        const $course: JQuery = $this.find( '.gfield_list_5_cell1 input' );
         const $grade: JQuery = $this.find( '.gfield_list_5_cell2 input' );
         const gradeStr: string = $grade.val().toString();
         const gradeVal: null | number = $grade.val() !== "" ?
@@ -236,17 +265,61 @@ interface gradeLookup {
         if ( gradeVal !== null && credits > 0 ) {
           semGpa += gradeVal * credits;
           totCredits += credits;
+          coursesUsed.push( $course.val().toString() );
         }
       } );
+
+      // Complete the averaging calculation, if any, and report the result to the user.
       if( totCredits > 0 ) {
+        const $semGpaLbl: JQuery = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
+        const courseList = coursesUsed.reduce( ( prevVal: string, curVal: string, curIdx: number ): string => {
+          return curIdx === 0 ?
+            curVal :
+            prevVal + ", " + curVal;
+        }, '' );
         this.$semGpa.val( ( semGpa / totCredits ).toFixed( 2 ) );
+        $semGpaLbl.html( 'This GPA based on details entered for the following courses: ' + courseList );
+      } else {
+        const $semGpaLbl: JQuery = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
+        $semGpaLbl.html( 'Waiting for course details to be entered.' );
       }
-      // TODO: Finish writing function
     }
 
     recalcCumGpa( e: Event ) {
       console.log( 'Recalculating cumulative GPA.' );
       // TODO: Finish writing function.
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // §2.3: Utility methods
+
+    chkCourseNameAbs( $row: JQuery ) {
+      const $input: JQuery = $row.find( '.gfield_list_5_cell1 input' );
+      const entry: string = $input.val().toString();
+      if ( this.rowIsEmpty( $row ) ) {
+        $row.find( 'input' ).removeClass( this.clMissingInp );
+      } else if ( entry === '' ) {
+        const ariaLbl: string = $input.attr( 'aria-label' ).toString();
+        const needle: RegExp = /Course Name, Row ([0-9]+)/;
+        const match = ariaLbl.match( needle );
+        $input.val( `Course ${match[1]}` );
+      }
+    }
+
+    markInpAsMissing( $input: JQuery ) {
+      // TODO: Finish writing function.
+    }
+
+    rowIsEmpty( $row: JQuery ) {
+      const $inputs: JQuery = $row.find( 'input' );
+      let rowEmpty: boolean = true;
+      $inputs.each( function() {
+        const $this = $( this );
+        if ( rowEmpty ) {
+          rowEmpty = $this.val() === '';
+        }
+      } );
+      return rowEmpty;
     }
   }
 
