@@ -4,7 +4,9 @@ interface gpaCalcOpts {
   cumlGpaFldSel: string;
   formSel: string;
   sbmtBtnSel: string;
+  semGpaCoursesListStr: string;
   semGpaFldSel: string;
+  semGpaNoCoursesMsg: string;
 }
 
 interface gradeLookup {
@@ -64,7 +66,9 @@ interface gradeLookup {
   const sbmtBtnSel: string = opts.sbmtBtnSel;
   const courseFldsSel: string = opts.courseFldsSel;
   const cumlGpaFldSel: string = opts.cumlGpaFldSel;
+  const semGpaCoursesListStr: string = opts.semGpaCoursesListStr;
   const semGpaFldSel: string = opts.semGpaFldSel;
+  const semGpaNoCoursesMsg: string = opts.semGpaNoCoursesMsg;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // §2: SETUPGPACALC class
@@ -76,7 +80,9 @@ interface gradeLookup {
     formSel: string;
     gradeLookupTbl: gradeLookup;
     sbmtBtnSel: string;
+    semGpaCoursesListStr: string;
     semGpaFldSel: string;
+    semGpaNoCoursesMsg: string;
     $courseFlds: JQuery;
     $cumGpa: JQuery;
     $form: JQuery;
@@ -88,6 +94,8 @@ interface gradeLookup {
       sbmtBtnSel: string,
       courseFldsSel: string,
       semGpaFldSel: string,
+      semGpaNoCoursesMsg: string,
+      semGpaCoursesListStr: string,
       cumGpaFldSel: string
     ) {
       // Store a copy of selector strings with the instance.
@@ -95,6 +103,8 @@ interface gradeLookup {
       this.sbmtBtnSel = sbmtBtnSel;
       this.courseFldsSel = courseFldsSel;
       this.semGpaFldSel = semGpaFldSel;
+      this.semGpaNoCoursesMsg = semGpaNoCoursesMsg;
+      this.semGpaCoursesListStr = semGpaCoursesListStr;
       this.cumlGpaFldSel = cumlGpaFldSel;
 
       // Class for marking missing inputs.
@@ -271,17 +281,31 @@ interface gradeLookup {
 
       // Complete the averaging calculation, if any, and report the result to the user.
       if( totCredits > 0 ) {
+
+        // Before reporting results to reduce performance impacts, collapse the array of classes
+        //   that will be included in the GPA calculation into a comma separated string.
         const $semGpaLbl: JQuery = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
-        const courseList = coursesUsed.reduce( ( prevVal: string, curVal: string, curIdx: number ): string => {
-          return curIdx === 0 ?
-            curVal :
-            prevVal + ", " + curVal;
-        }, '' );
+        const courseList = coursesUsed.reduce( (
+            prevRslt: string,
+            curVal: string,
+            curIdx: number
+          ): string => {
+            return curIdx === 0 ?
+              curVal :
+              prevRslt + ", " + curVal;
+          }, '' );
+
+        // Calculate and report the semester GPA rounded to the standard two decimal places.
         this.$semGpa.val( ( semGpa / totCredits ).toFixed( 2 ) );
-        $semGpaLbl.html( 'This GPA based on details entered for the following courses: ' + courseList );
+
+        // Report the courses that were used in the GPA calculation.
+        $semGpaLbl.html( this.semGpaCoursesListStr + courseList );
       } else {
+
+        // Since there are no courses being used in the GPA calculation, report the default 
+        //   "awaiting input" message to the user.
         const $semGpaLbl: JQuery = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
-        $semGpaLbl.html( 'Waiting for course details to be entered.' );
+        $semGpaLbl.html( this.semGpaNoCoursesMsg );
       }
     }
 
@@ -329,7 +353,7 @@ interface gradeLookup {
   // Set up event handler to check for an instance of the GPA Calculator gravity form and set it up
   //   if it is present.
   $( document ).on( 'gform_post_render', function () {
-    const setUpInst = new setUpGpaCalc( formSel, sbmtBtnSel, courseFldsSel, semGpaFldSel,cumlGpaFldSel );
+    const setUpInst = new setUpGpaCalc( formSel, sbmtBtnSel, courseFldsSel, semGpaFldSel, semGpaNoCoursesMsg, semGpaCoursesListStr, cumlGpaFldSel );
   } );
 } )( {
   // Reference to the jQuery instance.
@@ -346,6 +370,13 @@ interface gradeLookup {
 
   // Selector string for isolating the semester GPA field within the DOM.
   semGpaFldSel: '.gfield.gpa-calc-gf__sem-gpa input',
+
+  // Default description for the semester GPA field when no courses have been entered.
+  semGpaNoCoursesMsg: 'Waiting for course details to be entered.',
+
+  // Description substring for the semester GPA field description for indicating to the user what
+  //   courses have been factored into the calculation.
+  semGpaCoursesListStr: 'This GPA is based on the details entered for courses: ',
 
   // Selector string for isolating the semester GPA field within the DOM.
   cumlGpaFldSel: '.gfield.gpa-calc-gf__cuml-gpa input'
