@@ -1,0 +1,10 @@
+{
+  "files": ["TS/*.ts"],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "target": "es6",
+    "types": ["jquery"]
+  }
+}
