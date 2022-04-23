@@ -1,12 +1,26 @@
+interface cumlGpaFldMsgs {
+  allInputs: string,
+  noCourses: string,
+  noCumlGpa: string,
+  noInputs: string,
+  noTotCreds: string,
+  onlyCourses: string,
+  onlyCumlGpa: string,
+  onlyTotCreds: string,
+}
+
 interface gpaCalcOpts {
   $: JQueryStatic;
   courseFldsSel: string;
   cumlGpaFldSel: string;
+  cumlGpaMsgs: cumlGpaFldMsgs;
+  curCumlGpaFldSel: string;
   formSel: string;
   sbmtBtnSel: string;
   semGpaCoursesListStr: string;
   semGpaFldSel: string;
   semGpaNoCoursesMsg: string;
+  totCredsFldSel: string;
 }
 
 interface gradeLookup {
@@ -21,7 +35,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.1.0
+ * @version 0.2.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -54,7 +68,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.1.0
+ * gpaCalc.js - v0.2.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -62,50 +76,77 @@ interface gradeLookup {
 
 ( function( opts: gpaCalcOpts ) {
   const $: JQueryStatic = opts.$;
-  const formSel: string = opts.formSel;
-  const sbmtBtnSel: string = opts.sbmtBtnSel;
   const courseFldsSel: string = opts.courseFldsSel;
   const cumlGpaFldSel: string = opts.cumlGpaFldSel;
+  const cumlGpaMsgs: cumlGpaFldMsgs = opts.cumlGpaMsgs;
+  const curCumlGpaFldSel: string = opts.curCumlGpaFldSel;
+  const formSel: string = opts.formSel;
+  const sbmtBtnSel: string = opts.sbmtBtnSel;
   const semGpaCoursesListStr: string = opts.semGpaCoursesListStr;
   const semGpaFldSel: string = opts.semGpaFldSel;
   const semGpaNoCoursesMsg: string = opts.semGpaNoCoursesMsg;
+  const totCredsFldSel: string = opts.totCredsFldSel;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // §2: SETUPGPACALC class
 
-  class setUpGpaCalc {
+// ---»  Declare the setUpGpaCalc class. «---
+class setUpGpaCalc {
+    $courseFlds: JQuery;
+    $cumlGpa: JQuery;
+    $cumlGpaLbl: JQuery;
+    $curCumlGpa: JQuery;
+    $form: JQuery;
+    $sbmtBtn: JQuery;
+    $semGpa: JQuery;
+    $semGpaLbl: JQuery;
+    $totCreds: JQuery;
     clMissingInp: string;
     courseFldsSel: string;
     cumlGpaFldSel: string;
+    cumlGpaMsgs: string[];
+    curCumlGpaFldSel: string;
     formSel: string;
     gradeLookupTbl: gradeLookup;
     sbmtBtnSel: string;
     semGpaCoursesListStr: string;
     semGpaFldSel: string;
     semGpaNoCoursesMsg: string;
-    $courseFlds: JQuery;
-    $cumGpa: JQuery;
-    $form: JQuery;
-    $sbmtBtn: JQuery;
-    $semGpa: JQuery;
+    totCredsFldSel: string;
 
+    // ---»  Construct a setUpGpaCalc object.  «---
     constructor (
       formSel: string,
       sbmtBtnSel: string,
+      curCumlGpaFldSel: string,
+      totCredsFldSel: string,
       courseFldsSel: string,
       semGpaFldSel: string,
       semGpaNoCoursesMsg: string,
       semGpaCoursesListStr: string,
-      cumGpaFldSel: string
+      cumGpaFldSel: string,
+      cumlGpaMsgs: cumlGpaFldMsgs,
     ) {
       // Store a copy of selector strings with the instance.
       this.formSel = formSel;
       this.sbmtBtnSel = sbmtBtnSel;
+      this.curCumlGpaFldSel = curCumlGpaFldSel;
+      this.totCredsFldSel = totCredsFldSel;
       this.courseFldsSel = courseFldsSel;
       this.semGpaFldSel = semGpaFldSel;
       this.semGpaNoCoursesMsg = semGpaNoCoursesMsg;
       this.semGpaCoursesListStr = semGpaCoursesListStr;
       this.cumlGpaFldSel = cumlGpaFldSel;
+      this.cumlGpaMsgs = [
+        cumlGpaMsgs.noInputs,
+        cumlGpaMsgs.onlyCumlGpa,
+        cumlGpaMsgs.onlyTotCreds,
+        cumlGpaMsgs.noCourses,
+        cumlGpaMsgs.onlyCourses,
+        cumlGpaMsgs.noTotCreds,
+        cumlGpaMsgs.noCumlGpa,
+        cumlGpaMsgs.allInputs,
+      ];
 
       // Class for marking missing inputs.
       this.clMissingInp = "gpa-calc-gf__missing-inp";
@@ -135,7 +176,7 @@ interface gradeLookup {
       // Since a GPA Calculator was found, proceed with additional set up operations.
       this.disableSbmtBtn();
       this.disableSemGpaField();
-      this.disableCumGpaField();
+      this.disableCumlGpaField();
       this.restrictCurGpaEntry();
       this.restrictTotCreditsEntry();
       this.restrictGradeEntry();
@@ -149,16 +190,23 @@ interface gradeLookup {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.1: Constructor initiated operations
 
+    // ---»  Add more rows to the course details list field.  «---
     addMoreInitialRows() {
-      // TODO: Finish writing function
+      // Gravity forms starts list fields with one row, so add more to make it more convenient for 
+      //   the user.
       // TODO: start with six rows.
-      // TODO: Check the number of rows that are present before adding more
-    }
-
-    disableCumGpaField() {
+      // TODO: Check the number of rows that are present before adding more.
       // TODO: Finish writing function
     }
 
+    // ---»  The cumulative GPA field should be read-only to avoid confusion.  «---
+    disableCumlGpaField() {
+      this.$cumlGpa = this.$form.find( this.cumlGpaFldSel );
+      this.$cumlGpaLbl = this.$cumlGpa.parents( '.gfield' ).first().find( '.gfield_description' );
+      // TODO: Finish writing function
+    }
+
+    // ---»  Since the form is a calculator, its submit button should not be used.  «---
     disableSbmtBtn() {
       // Find the submit button in the DOM.
       this.$sbmtBtn = $( this.sbmtBtnSel );
@@ -177,38 +225,49 @@ interface gradeLookup {
       this.$sbmtBtn.css( 'display', 'none' );
     }
 
+    // ---»  The semester GPA field should be read-only to avoid confusion.  «---
     disableSemGpaField() {
+      this.$semGpa = this.$form.find( this.semGpaFldSel );
+      this.$semGpaLbl = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
       // TODO: Finish writing function
     }
 
+    // ---»  Relevant user input must follow a GPA format.  «---
     restrictCurGpaEntry() {
+      this.$curCumlGpa = this.$form.find( this.curCumlGpaFldSel );
       // TODO: Finish writing function
     }
 
+    // ---»  Relevant user input must follow a numerical credits format.  «---
     restrictCreditsEntry() {
       // TODO: Finish writing function
     }
 
+    // ---»  Relevant user input must follow a letter grade format.  «---
     restrictGradeEntry() {
       // TODO: Finish writing function
     }
 
+    // ---»  Relevant user input must follow acceptable course retake indicators.  «---
     restrictRetakeEntry() {
       // TODO: Finish writing function
     }
 
+    // ---»  Relevant user input must follow a letter grade format.  «---
     restrictRetakeGradeEntry() {
       // TODO: Finish writing function
     }
 
+    // ---»  Relevant user input must follow a numerical credits format.  «---
     restrictTotCreditsEntry() {
+      this.$totCreds = this.$form.find( this.totCredsFldSel );
       // TODO: Finish writing function
     }
 
+    // ---»  Automatically calculate GPAs when needed.  «---
     setUpCalculations() {
       this.$courseFlds = this.$form.find( this.courseFldsSel );
-      this.$cumGpa = this.$form.find( this.cumlGpaFldSel );
-      this.$semGpa = this.$form.find( this.semGpaFldSel );
+      this.$cumlGpa = this.$form.find( this.cumlGpaFldSel );
       const inst: setUpGpaCalc = this;
       this.$form.on( 'change', this.courseFldsSel + ' input', function ( e: Event ) {
         const $input: JQuery = $( this );
@@ -220,6 +279,7 @@ interface gradeLookup {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.2: Event initiated operations
 
+    // ---»  Respond intelligently to changes in course details input.  «---
     checkCourseDetailsRow( e: Event, $input: JQuery ) {
       const $prntFld: JQuery = $input.parent();
       const $prntRow: JQuery = $prntFld.parent();
@@ -247,11 +307,14 @@ interface gradeLookup {
       this.recalcGpas( e );
     }
 
+    // ---»  When instructed, calculate all GPAs.  «---
     recalcGpas( e: Event ) {
       this.recalcSemGpa( e );
+      this.recalcCumlGpa( e );
       // TODO: Finish writing function.
     }
 
+    // ---»  When instructed, calculate the semester GPAs.  «---
     recalcSemGpa( e: Event ) {
       console.log( 'Recalculating semester GPA.' );
       let semGpa: number = 0;
@@ -284,7 +347,6 @@ interface gradeLookup {
 
         // Before reporting results to reduce performance impacts, collapse the array of classes
         //   that will be included in the GPA calculation into a comma separated string.
-        const $semGpaLbl: JQuery = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
         const courseList = coursesUsed.reduce( (
             prevRslt: string,
             curVal: string,
@@ -299,24 +361,47 @@ interface gradeLookup {
         this.$semGpa.val( ( semGpa / totCredits ).toFixed( 2 ) );
 
         // Report the courses that were used in the GPA calculation.
-        $semGpaLbl.html( this.semGpaCoursesListStr + courseList );
+        this.$semGpaLbl.html( this.semGpaCoursesListStr + courseList );
       } else {
 
         // Since there are no courses being used in the GPA calculation, report the default 
         //   "awaiting input" message to the user.
-        const $semGpaLbl: JQuery = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
-        $semGpaLbl.html( this.semGpaNoCoursesMsg );
+        this.$semGpaLbl.html( this.semGpaNoCoursesMsg );
       }
     }
 
-    recalcCumGpa( e: Event ) {
+    // ---»  When instructed, calculate the cumulative GPA.  «---
+    recalcCumlGpa( e: Event ) {
       console.log( 'Recalculating cumulative GPA.' );
-      // TODO: Finish writing function.
+      let futCumlGpa: number = 0;
+      let futCreds: number = 0;
+      const inst: setUpGpaCalc = this; // «-- TODO: Needed?
+
+      // Determine whether we have inputs in the fields we need to calculate the cumulative GPA.
+      const semGpa: null | number = ( this.$semGpa.val().toString() !== "" ) ?
+        parseFloat( this.$semGpa.val().toString() ) :
+        null;
+      const totCreds: null | number = ( this.$totCreds.val().toString() !== "" ) ?
+        parseFloat( this.$totCreds.val().toString() ) :
+        null;
+      const curCumlGpa: null | number = ( this.$curCumlGpa.val().toString() !== "" ) ?
+        parseFloat( this.$curCumlGpa.val().toString() ) :
+        null;
+
+      // Create an index whose value is mapped to the appropriate message in the array containing a 
+      //   list of messages about how the cumulative GPA field is responding to form state.
+      const msgIdx: number = ( ( semGpa !== null ? 1 : 0 ) << 2 ) |
+        ( ( totCreds !== null ? 1 : 0 ) << 1 ) |
+        ( curCumlGpa !== null ? 1 : 0 );
+
+      // Use the message index to report field state to the
+      this.$cumlGpaLbl.html( this.cumlGpaMsgs[ msgIdx ] );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.3: Utility methods
 
+    // ---»  Deal with the case when a course's name is still missing.  «---
     chkCourseNameAbs( $row: JQuery ) {
       const $input: JQuery = $row.find( '.gfield_list_5_cell1 input' );
       const entry: string = $input.val().toString();
@@ -330,10 +415,12 @@ interface gradeLookup {
       }
     }
 
+    // ---»  Mark an input as missing so the user can more easily spot it.  «---
     markInpAsMissing( $input: JQuery ) {
       // TODO: Finish writing function.
     }
 
+    // ---»  Report on whether the inputs in a list field row are all totally empty.  «---
     rowIsEmpty( $row: JQuery ) {
       const $inputs: JQuery = $row.find( 'input' );
       let rowEmpty: boolean = true;
@@ -350,10 +437,10 @@ interface gradeLookup {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING
 
-  // Set up event handler to check for an instance of the GPA Calculator gravity form and set it up
-  //   if it is present.
+  // ---»  Set up event handler to check for an instance of the GPA Calculator gravity form and set
+  //   it up if it is present.  «---
   $( document ).on( 'gform_post_render', function () {
-    const setUpInst = new setUpGpaCalc( formSel, sbmtBtnSel, courseFldsSel, semGpaFldSel, semGpaNoCoursesMsg, semGpaCoursesListStr, cumlGpaFldSel );
+    const setUpInst = new setUpGpaCalc( formSel, sbmtBtnSel, curCumlGpaFldSel, totCredsFldSel, courseFldsSel, semGpaFldSel, semGpaNoCoursesMsg, semGpaCoursesListStr, cumlGpaFldSel, cumlGpaMsgs );
   } );
 } )( {
   // Reference to the jQuery instance.
@@ -379,5 +466,46 @@ interface gradeLookup {
   semGpaCoursesListStr: 'This GPA is based on the details entered for courses: ',
 
   // Selector string for isolating the semester GPA field within the DOM.
-  cumlGpaFldSel: '.gfield.gpa-calc-gf__cuml-gpa input'
+  cumlGpaFldSel: '.gfield.gpa-calc-gf__cuml-gpa input',
+
+  // Messages for issues with the cumulative GPA field.
+  cumlGpaMsgs: {
+
+    // Default description for the cumulative GPA field when no information has been entered.
+    noInputs: "Waiting for current cumulative GPA, total credits earned, and this semester's course details to be entered.",
+
+    // Default description for the cumulative GPA field when only the cumulative GPA has been
+    //   provided by the user.
+    onlyCumlGpa: "Waiting for total credits earned and this semester's course details to be entered.",
+
+    // Default description for the cumulative GPA field when only the total credits has been
+    //   provided by the user.
+    onlyTotCreds: "Waiting for current cumulative GPA and this semester's course details to be entered.",
+
+    // Default description for the cumulative GPA field when no details on courses for the current
+    //   semester have been entered.
+    noCourses: "Waiting for this semester's course details to be entered.",
+
+    // Default description for the cumulative GPA field when only the cumulative GPA has been
+    //   provided by the user.
+    onlyCourses: "Waiting for current cumulative GPA and total credits earned to be entered.",
+
+    // Default description for the cumulative GPA field when only the total credits still needs
+    //   to be provided by the user.
+    noTotCreds: "Waiting for total credits earned to be entered",
+
+    // Default description for the cumulative GPA field when only the current cumulative GPA still
+    //   needs to be provided by the user.
+    noCumlGpa: "Waiting for total credits earned to be entered",
+
+    // Description substring for the semester GPA field description for indicating to the user what
+    //   courses have been factored into the calculation.
+    allInputs: 'This anticipated future cumulative GPA is based on the current cumulative GPA, total earned credits, and the details for the courses used to calculate the anticipated GPA for this semester. ',
+  },
+
+  // Selector string for isolating the current cumulative GPA field within the DOM.
+  curCumlGpaFldSel: '.gfield.gpa-calc-gf__cur-cuml-gpa input',
+
+  // Selector string for isolating the total earned credits field within the DOM.
+  totCredsFldSel: '.gfield.gpa-calc-gf__tot-creds input',
 } );
