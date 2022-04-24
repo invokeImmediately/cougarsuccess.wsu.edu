@@ -35,7 +35,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.2.0
+ * @version 0.2.1
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -215,7 +215,7 @@ class setUpGpaCalc {
       this.$sbmtBtn.on( 'click', function( e ) {
         e.preventDefault();
       } );
-      this.$sbmtBtn.on( 'click', function( e ) {
+      this.$sbmtBtn.on( 'keydown', function( e ) {
         e.preventDefault();
       } );
       this.$sbmtBtn.attr( 'tabindex', '-1' );
