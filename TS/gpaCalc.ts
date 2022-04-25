@@ -35,7 +35,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.2.1
+ * @version 0.3.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -68,7 +68,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.2.0
+ * gpaCalc.js - v0.3.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -201,9 +201,31 @@ class setUpGpaCalc {
 
     // ---»  The cumulative GPA field should be read-only to avoid confusion.  «---
     disableCumlGpaField() {
+      // Find the semester GPA field and label within the DOM.
       this.$cumlGpa = this.$form.find( this.cumlGpaFldSel );
       this.$cumlGpaLbl = this.$cumlGpa.parents( '.gfield' ).first().find( '.gfield_description' );
-      // TODO: Finish writing function
+
+      // Disable most keyboard-mediated editing of the cumulative GPA field's input.
+      this.$cumlGpa.on( 'keydown', function( e ) {
+
+        // Only allow ctrl + A, ctrl + C, and left/right arrow navigation.
+        if ( !(
+          ( e.key.toUpperCase() == "A" && e.ctrlKey ) ||
+          ( e.key.toUpperCase() == "C" && e.ctrlKey ) ||
+          ( e.key == "ArrowRight" ) ||
+          ( e.key == "ArrowLeft" ) ||
+          ( e.key == "Tab" )
+        ) ) {
+          e.preventDefault();
+        }
+      } );
+
+      // Prevent cutting and pasting.
+      this.$cumlGpa.on( 'cut', function( e ) { e.preventDefault(); } );
+      this.$cumlGpa.on( 'paste', function( e ) { e.preventDefault(); } );
+
+      // Use WAI-ARIA to inform the user that the field is disabled.
+      this.$cumlGpa.attr( 'aria-disabled', 'true' );
     }
 
     // ---»  Since the form is a calculator, its submit button should not be used.  «---
@@ -227,9 +249,31 @@ class setUpGpaCalc {
 
     // ---»  The semester GPA field should be read-only to avoid confusion.  «---
     disableSemGpaField() {
+      // Find the semester GPA field and label within the DOM.
       this.$semGpa = this.$form.find( this.semGpaFldSel );
       this.$semGpaLbl = this.$semGpa.parents( '.gfield' ).first().find( '.gfield_description' );
-      // TODO: Finish writing function
+
+      // Disable most keyboard-mediated editing of the semester GPA field's input.
+      this.$semGpa.on( 'keydown', function( e ) {
+
+        // Only allow ctrl + A, ctrl + C, and left/right arrow navigation.
+        if ( !(
+          ( e.key.toUpperCase() == "A" && e.ctrlKey ) ||
+          ( e.key.toUpperCase() == "C" && e.ctrlKey ) ||
+          ( e.key == "ArrowRight" ) ||
+          ( e.key == "ArrowLeft" ) ||
+          ( e.key == "Tab" )
+        ) ) {
+          e.preventDefault();
+        }
+      } );
+
+      // Prevent cutting and pasting.
+      this.$semGpa.on( 'cut', function( e ) { e.preventDefault(); } );
+      this.$semGpa.on( 'paste', function( e ) { e.preventDefault(); } );
+
+      // Use WAI-ARIA to inform the user that the field is disabled.
+      this.$semGpa.attr( 'aria-disabled', 'true' );
     }
 
     // ---»  Relevant user input must follow a GPA format.  «---
