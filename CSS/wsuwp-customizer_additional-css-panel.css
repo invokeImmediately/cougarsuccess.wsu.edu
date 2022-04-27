@@ -1,0 +1,409 @@
+/*!*********************************************************
+
+█▀▀▀▐▄ ▄▌▐▀█▀▌█▀▀▄ ▄▀▀▄   ▄▀▀▀ ▄▀▀▀ ▄▀▀▀
+█▀▀   █    █  █▄▄▀ █▄▄█   █    ▀▀▀█ ▀▀▀█
+▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
+
+FOR THE COUGAR SUCCESS WEBSITE
+
+------------------------------------------------------------
+
+@version 0.5.0
+@author Daniel Rieck
+  [daniel.rieck@wsu.edu]
+  (https://github.com/invokeImmediately)`
+@license MIT - Copyright © 2021
+  Washington State University
+  https://mit-license.org/
+  
+***********************************************************/
+
+p:empty {
+  display: none !important;
+}
+
+/*! ----»  SITE HEADER MODIFICATIONS  «---- */
+
+.wsu-header-site {
+  background-color: #333;
+  color: #fff;
+}
+
+.wsu-header-site__subtitle,
+.wsu-header-site__title {
+  color: #fff;
+}
+
+.wsu-wrapper-content {
+  background-color: #fff;
+}
+
+.wsu-wrapper-site {
+  background-color: #f7f7f7;
+}
+
+.wsu-hero--no-bottom-bleed .wsu-image-frame--fill {
+  bottom: 0;
+}
+
+.wsu-hero--no-bottom-bleed:after {
+  content: none;
+}
+
+.wsu-wrapper-content::before {
+  background-color: transparent;
+}
+
+.wsu-wrapper-content:first-child::before {
+  box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
+  top: -3px;
+}
+
+/*! ---»  PRIMARY NAV MODIFICATIONS  «--- */
+
+.wsu-navigation-site-vertical--color-dark .wsu-navigation-site-vertical__open-button {
+  box-shadow: 1px 0 2px rgb(255 255 255 / 20%);
+  width: 61px;
+}
+
+.wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:focus, .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:hover {
+    background-color: #757575;
+  border-right: 1px solid rgb(230 230 230);
+  box-shadow: 1px 0 2px rgb(255 255 255 / 20%);
+  color: white;
+}
+
+/*! ---»  HYPERLINK STYLING ISSUE FIXES  «--- */
+
+.wsu-column a:hover {
+    background-color: rgba(0,0,0,.05);
+    text-decoration-thickness: .2em;
+}
+
+/*! ---»  EXPERIMENTAL ATOMIC CSS  «--- */
+
+.tt-upper {
+  text-transform: uppercase;
+}
+
+/*! ---»  EXPERIMENTAL CALLOUT MODS  «--- */
+
+.cta-linker,
+.cta-linker__link {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cta-linker {
+  margin: 0;
+}
+
+.cta-linker__link {
+  color: transparent;
+  text-decoration: none;
+}
+
+/*! ---»  FIXED HEIGHT ROWS  «--- */
+
+@media all and (min-width: 861px) {
+
+.wsu-row-fixed-h {
+  box-sizing: content-box;
+  display: flex;
+  height: 650px;
+}
+
+.wsu-row-fixed-h--xsmall {
+  height: 300px;
+}
+
+.wsu-row-fixed-h--small {
+  height: 500px;
+}
+
+.wsu-row-fixed-h--medium {
+  height: 800px;
+}
+
+.wsu-row-fixed-h--large {
+  height: 800px;
+}
+
+.wsu-row-fixed-h--medium {
+  height: 800px;
+}
+
+.wsu-row-fixed-h .wsu-column {
+  overflow-y: auto;
+}
+
+}
+
+/*! ---»  NEED ASSISTANCE BUTTON  «--- */
+
+.wsu-button--need-assistance {
+  width: 100%;
+}
+
+.wp-block-buttons .wsu-button--need-assistance .wp-block-button__link {
+  box-sizing: border-box;
+  border-color: #707070;
+  border-width: 3px;
+  font-size: 1.5em;
+  font-weight: 800;
+  padding: .5em 3em;
+  text-transform: uppercase;
+  transition: all .2s cubic-bezier(0,0,.03,1);
+  width: 100%;
+}
+
+
+.wp-block-buttons .wsu-button--need-assistance .wp-block-button__link:hover,
+.wp-block-buttons .wsu-button--need-assistance .wp-block-button__link:focus {
+  background-color: #707070;
+  border-color: #707070;
+  color: white;
+}
+
+/*! ---»  COMPONENT BACKGROUNDS  «--- */
+
+.bgi-cherry-blossoms {
+  background: #efefef url(https://s3.wp.wsu.edu/uploads/sites/2814/2021/11/calculate-your-gpa_CORE-Spring-Campus_sh_1780_559w559h.jpg) no-repeat center/cover;
+}
+
+/*! ---»  NEED ASSISTANCE FORM  «--- */
+
+.gf-need-assistance .ginput_container_checkbox .gchoice label {
+  font-weight: normal;
+}
+
+.gf-need-assistance .gsection {
+  margin-top: 2.25rem;
+}
+
+@media screen and (min-width: 769px) {
+.gravity-theme.gf-need-assistance_wrapper .gf-need-assistance .gf-need-assistance__area {
+  grid-area: 2 / 1 / 3 / 7;
+}
+
+.gravity-theme.gf-need-assistance_wrapper .gf-need-assistance .gf-need-assistance__topic {
+  grid-area: 3 / 1 / 4 / 7;
+}
+
+.gravity-theme.gf-need-assistance_wrapper .gf-need-assistance .gf-need-assistance__resource {
+  align-self: center;
+  grid-area: 2 / 7 / 4 / 13;
+}
+}
+
+.gf-need-assistance__resource .wsu-callout {
+  margin-bottom: 0;
+}
+
+/*! ---»  HOME PAGE ARTICLE SPACING OVERRIDES  «--- */
+
+.home .wsu-article-header {
+  display: none;
+}
+
+.home .wsu-article {
+  margin-bottom: 0;
+}
+
+.home .wsu-wrapper-content {
+  padding-bottom: 0;
+}
+
+/*! ---»  GRAVITY FORMS SELECT FIX  «--- */
+
+select.gfield_select:not([multiple]) {
+background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
+  padding-right:2.5rem;
+}
+
+select.gfield_select:not([multiple]):hover {
+background-image: linear-gradient(45deg,transparent 50%,#606060 50%),linear-gradient(135deg,#606060 50%,transparent 50%),radial-gradient(#c0c0c0 70%,transparent 75%);
+}
+
+select.gfield_select:not([multiple]):focus {
+background-image: linear-gradient(45deg,transparent 50%,#d0d0d0 50%),linear-gradient(135deg,#d0d0d0 50%,transparent 50%),radial-gradient(#303030 70%,transparent 75%);
+}
+
+select.gfield_select:not([multiple]):active {
+background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
+}
+
+/*! ---»  GRAVITY FORMS INPUT FIX  «--- */
+
+.gform_wrapper.gravity-theme .gfield-choice-input+label {
+  max-width: calc(100% - 32px - 1.8em);
+}
+
+/*! ---»  GRAVITY FORMS GPA CALCULATOR   «--- */
+
+.gpa-calc-gf_wrapper.gravity-theme {
+    border: 1px solid #a60f2d;
+    border-radius: 1rem;
+  box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075);
+    margin-bottom: 2.25rem;
+    padding: 2.5rem 1.75rem 0;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gpa-calc-gf__missing-input {
+  border-color: red;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gform_title {
+  margin-bottom: 2.25rem;
+}
+
+.gfield_header_item {
+  align-self: end;
+}
+
+.gpa-calc-gf__cuml-gpa {
+  display: flex;
+  flex-direction: column;
+}
+
+.gpa-calc-gf__sem-gpa {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 2.25rem;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text
+.gpa-calc-gf__sem-gpa .ginput_container_text {
+  order: 1;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text input[type=text],
+.gpa-calc-gf__sem-gpa .ginput_container_text input[type=text] {
+  position: relative;
+  z-index: 2;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text input[type=text]:not(:focus),
+.gpa-calc-gf__sem-gpa .ginput_container_text input[type=text]:not(:focus) {
+  border-color: transparent;
+  padding: 0;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text input[type=text]:placeholder-shown:not(:focus),
+.gpa-calc-gf__sem-gpa .ginput_container_text input[type=text]:placeholder-shown:not(:focus) {
+  opacity: 0;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text input[type=text]:placeholder {
+  color: #a60f2d;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text input[type=text],
+.gpa-calc-gf__cuml-gpa .ginput_container_text:after {
+  color: #a60f2d;
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.gpa-calc-gf__sem-gpa .ginput_container_text input[type=text],
+.gpa-calc-gf__sem-gpa .ginput_container_text:after {
+  color: #3a3a3a;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text,
+.gpa-calc-gf__sem-gpa .ginput_container_text {
+  position: relative;
+}
+
+.gpa-calc-gf__cuml-gpa .ginput_container_text:after,
+.gpa-calc-gf__sem-gpa .ginput_container_text:after {
+  content: "?";
+  opacity: .5;
+  position: absolute;
+  left: 0;
+  line-height: 1.15;
+  z-index: 1;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gpa-calc-gf__cuml-gpa .gfield_label {
+  font-size: 1.3rem;
+  order: 2;
+  margin: 0;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gpa-calc-gf__sem-gpa .gfield_label {
+  align-self: center;
+  display: flex;
+  font-size: 1.1rem;
+  margin: 0 .5rem 0 0;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gpa-calc-gf__sem-gpa .gfield_label {
+  font-size: 1.1rem;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gpa-calc-gf__cuml-gpa .gfield_description {
+  padding: 0;
+  margin-top: .25rem;
+  order: 3;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gpa-calc-gf__sem-gpa .gfield_description {
+  margin: 0;
+  padding: 0;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gsection {
+  border-top: 1px solid #ccc;
+  border-bottom: 0;
+  margin-top: 2.25rem;
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gsection:first-child {
+  margin-top: 0;  
+}
+
+.gpa-calc-gf_wrapper.gravity-theme .gsection_title {
+  margin-top: .3rem;
+  margin-bottom: 0;
+}
+
+.gpa-calc-gf_wrapper.gform_wrapper.gravity-theme .gpa-calc-gf__qualifiers {
+  align-self: center;
+  font-size: .875rem;
+  padding-right: .875rem;
+}
+
+@media (min-width: 641px) {
+  .gpa-calc-gf_wrapper.gform_wrapper.gravity-theme .gpa-calc-gf__qualifiers {
+  grid-column: span 7;
+}
+
+.gpa-calc-gf_wrapper.gform_wrapper.gravity-theme .gpa-calc-gf__cuml-gpa {
+  grid-column: span 5;
+}
+}
+
+@media only screen and (max-width: 641px) {
+.gform_wrapper.gravity-theme .gpa-calc-gf input:not([type=radio]):not([type=checkbox]):not([type=image]):not([type=file]) {
+  min-height: none;
+  line-height: 1.15;
+  }
+}
+
+/*! ---»  TO ADD LATER TO CUSTOM CSS STYLESHEET EDITOR  «--- */
+
+.callout-linker .wsu-callout {
+  margin-bottom: 0;
+}
