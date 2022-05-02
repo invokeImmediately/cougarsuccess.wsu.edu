@@ -35,7 +35,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.4.2
+ * @version 0.5.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -68,7 +68,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.4.2
+ * gpaCalc.js - v0.5.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -378,6 +378,7 @@ class setUpGpaCalc {
       const $prntFld: JQuery = $input.parent();
       const $prntRow: JQuery = $prntFld.parent();
       this.chkCourseNameAbs( $prntRow );
+      this.chkRetakeStatus( $prntRow );
       // if ( $prntFld.hasClass( 'gfield_list_5_cell1' ) ) {
       //   this.chkCourseNameAbs( $prntRow );
       // } else if ( $prntFld.hasClass( 'gfield_list_5_cell2' ) ) {
@@ -509,6 +510,23 @@ class setUpGpaCalc {
         const needle: RegExp = /Course Name, Row ([0-9]+)/;
         const match = ariaLbl.match( needle );
         $input.val( `Course ${match[1]}` );
+      }
+    }
+
+    // ---»  Ensure a retake status has been entered  «---
+    chkRetakeStatus( $row: JQuery ) {
+      const $rtInp: JQuery = $row.find( '.gfield_list_5_cell4 input' );
+      const $rtGrdInp: JQuery = $row.find( '.gfield_list_5_cell5 input' );
+      if ( !( !this.rowIsEmpty( $row ) && $rtInp.val().toString() === '' ) ) {
+        if ( $rtInp.val().toString() == 'No' && $rtGrdInp.val().toString() !== '' ) {
+          $rtInp.val( 'Yes' );
+        }
+        return;
+      }
+      if ( $rtGrdInp.val().toString() === '' ) {
+        $rtInp.val( 'No' );
+      } else {
+        $rtInp.val( 'Yes' );
       }
     }
 
