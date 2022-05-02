@@ -35,7 +35,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.3.0
+ * @version 0.4.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -68,7 +68,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.3.0
+ * gpaCalc.js - v0.4.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -182,7 +182,6 @@ class setUpGpaCalc {
       this.restrictGradeEntry();
       this.restrictCreditsEntry();
       this.restrictRetakeEntry();
-      this.restrictRetakeGradeEntry();
       this.setUpCalculations();
       this.addMoreInitialRows();
     }
@@ -212,8 +211,12 @@ class setUpGpaCalc {
         if ( !(
           ( e.key.toUpperCase() == "A" && e.ctrlKey ) ||
           ( e.key.toUpperCase() == "C" && e.ctrlKey ) ||
-          ( e.key == "ArrowRight" ) ||
+          ( e.key == "ArrowDown" ) ||
           ( e.key == "ArrowLeft" ) ||
+          ( e.key == "ArrowRight" ) ||
+          ( e.key == "ArrowUp" ) ||
+          ( e.key == "End" ) ||
+          ( e.key == "Home" ) ||
           ( e.key == "Tab" )
         ) ) {
           e.preventDefault();
@@ -276,20 +279,63 @@ class setUpGpaCalc {
       this.$semGpa.attr( 'aria-disabled', 'true' );
     }
 
+    getAllowedNavKeys(): string {
+      return 'ArrowDown|ArrowLeft|ArrowRight|ArrowUp|Backspace|Delete|End|Home|Tab';
+    }
+
     // ---»  Relevant user input must follow a GPA format.  «---
     restrictCurGpaEntry() {
       this.$curCumlGpa = this.$form.find( this.curCumlGpaFldSel );
-      // TODO: Finish writing function
+      const allowedKeys = new RegExp( '[0-9.]|' + this.getAllowedNavKeys() );
+      const decimalGpa = /[0-4]?\.[0-9.]*/;
+      this.$curCumlGpa.on( 'keydown', function( event ) {
+        const $this = $( this );
+        if ( event.key.match( allowedKeys ) === null ) {
+          event.preventDefault();
+        } else if ( event.key == "." && $this.val().toString().match( decimalGpa ) ) {
+          event.preventDefault();
+        } else if ( $this.val().toString() == "" && event.key.match( /[5-9]/ ) ) {
+          event.preventDefault();
+        }
+      } );
     }
 
     // ---»  Relevant user input must follow a numerical credits format.  «---
     restrictCreditsEntry() {
-      // TODO: Finish writing function
+      const allowedKeys = new RegExp( '[0-9.]|' + this.getAllowedNavKeys() );
+      const decimalCredits = /[0-9]*\.[0-9.]*/;
+      this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_cell3 input', function( event ) {
+        const $this = $( this );
+        if ( event.key.match( allowedKeys ) === null ) {
+          event.preventDefault();
+        } else if ( event.key == "." && $this.val().toString().match( decimalCredits ) ) {
+          event.preventDefault();
+        }
+      } );
     }
 
     // ---»  Relevant user input must follow a letter grade format.  «---
     restrictGradeEntry() {
-      // TODO: Finish writing function
+      const allGradeKeys: string = '[A-DFa-df+-]';
+      const gradeModKeys: string = '[+-]';
+      const letterGradeKeys: string = '[A-DFa-df]';
+      const allowedKeys: RegExp = new RegExp( allGradeKeys + '|' + this.getAllowedNavKeys() );
+      const modLetGrades: RegExp = /[a-dfA-Df][+-]/;
+      this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_cell2 input, ' + this.courseFldsSel + ' .gfield_list_5_cell5 input', function( event ) {
+        const $this: JQuery = $( this );
+        const curVal: string = $this.val().toString();
+        if ( event.key.match( allowedKeys ) === null ) {
+          event.preventDefault();
+        } else if ( event.key.match( new RegExp( '^' + allGradeKeys + '$', 'g' ) ) && curVal.match( modLetGrades ) ) {
+          event.preventDefault();
+        } else if ( event.key.match( new RegExp( '^' + letterGradeKeys + '$', 'g' ) ) && curVal.match( new RegExp( '^' + letterGradeKeys + '$', 'g' ) ) ) {
+          event.preventDefault();
+        } else if ( event.key == '+' && curVal.match( /[AaFf]/ ) ) {
+          event.preventDefault();
+        } else if ( event.key == '-' && curVal.match( /[Ff]/ ) ) {
+          event.preventDefault();
+        }
+      } );
     }
 
     // ---»  Relevant user input must follow acceptable course retake indicators.  «---
@@ -297,15 +343,19 @@ class setUpGpaCalc {
       // TODO: Finish writing function
     }
 
-    // ---»  Relevant user input must follow a letter grade format.  «---
-    restrictRetakeGradeEntry() {
-      // TODO: Finish writing function
-    }
-
     // ---»  Relevant user input must follow a numerical credits format.  «---
     restrictTotCreditsEntry() {
       this.$totCreds = this.$form.find( this.totCredsFldSel );
-      // TODO: Finish writing function
+      const allowedKeys = new RegExp( '[0-9.]|' + this.getAllowedNavKeys() );
+      const decimalCredits = /[0-9]*\.[0-9.]*/;
+      this.$totCreds.on( 'keydown', function( event ) {
+        const $this = $( this );
+        if ( event.key.match( allowedKeys ) === null ) {
+          event.preventDefault();
+        } else if ( event.key == "." && $this.val().toString().match( decimalCredits ) ) {
+          event.preventDefault();
+        }
+      } );
     }
 
     // ---»  Automatically calculate GPAs when needed.  «---
@@ -375,7 +425,7 @@ class setUpGpaCalc {
         const $grade: JQuery = $this.find( '.gfield_list_5_cell2 input' );
         const gradeStr: string = $grade.val().toString();
         const gradeVal: null | number = $grade.val() !== "" ?
-          inst.gradeLookupTbl[ gradeStr ] :
+          inst.gradeLookupTbl[ gradeStr.toUpperCase() ] :
           null;
         const $credits: JQuery = $this.find( '.gfield_list_5_cell3 input' );
         const credits: number = parseInt( $credits.val().toString(), 10 );
