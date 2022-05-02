@@ -16,6 +16,7 @@ interface gpaCalcOpts {
   cumlGpaMsgs: cumlGpaFldMsgs;
   curCumlGpaFldSel: string;
   formSel: string;
+  inpChngDelay: number;
   sbmtBtnSel: string;
   semGpaCoursesListStr: string;
   semGpaFldSel: string;
@@ -35,7 +36,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.5.0
+ * @version 0.6.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -57,18 +58,18 @@ interface gradeLookup {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: PERSISTENT DOCUMENTATION for final output................................................52
-// §2: SETUPGPACALC class.......................................................................70
-//   §2.1: Constructor initiated operations....................................................140
-//   §2.2: Event initiated operations..........................................................211
-//   §2.3: Utility methods.....................................................................294
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................327////////////////////////////////////////////////////////////////////////////////////////////////////
+// §1: PERSISTENT DOCUMENTATION for final output................................................69
+// §2: SETUPGPACALC class.......................................................................93
+//   §2.1: Constructor initiated operations....................................................201
+//   §2.2: Event initiated operations..........................................................392
+//   §2.3: Utility methods.....................................................................518
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................576////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.5.0
+ * gpaCalc.js - v0.6.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -81,6 +82,7 @@ interface gradeLookup {
   const cumlGpaMsgs: cumlGpaFldMsgs = opts.cumlGpaMsgs;
   const curCumlGpaFldSel: string = opts.curCumlGpaFldSel;
   const formSel: string = opts.formSel;
+  const inpChngDelay: number = opts.inpChngDelay;
   const sbmtBtnSel: string = opts.sbmtBtnSel;
   const semGpaCoursesListStr: string = opts.semGpaCoursesListStr;
   const semGpaFldSel: string = opts.semGpaFldSel;
@@ -107,6 +109,8 @@ class setUpGpaCalc {
     cumlGpaMsgs: string[];
     curCumlGpaFldSel: string;
     formSel: string;
+    inpChkTimerID: null | number;
+    inpChngDelay: number;
     gradeLookupTbl: gradeLookup;
     sbmtBtnSel: string;
     semGpaCoursesListStr: string;
@@ -126,6 +130,7 @@ class setUpGpaCalc {
       semGpaCoursesListStr: string,
       cumGpaFldSel: string,
       cumlGpaMsgs: cumlGpaFldMsgs,
+      inpChngDelay: number,
     ) {
       // Store a copy of selector strings with the instance.
       this.formSel = formSel;
@@ -137,6 +142,8 @@ class setUpGpaCalc {
       this.semGpaNoCoursesMsg = semGpaNoCoursesMsg;
       this.semGpaCoursesListStr = semGpaCoursesListStr;
       this.cumlGpaFldSel = cumlGpaFldSel;
+
+      // Store a copy of messages for field descriptions.
       this.cumlGpaMsgs = [
         cumlGpaMsgs.noInputs,
         cumlGpaMsgs.onlyCumlGpa,
@@ -147,6 +154,10 @@ class setUpGpaCalc {
         cumlGpaMsgs.noCumlGpa,
         cumlGpaMsgs.allInputs,
       ];
+
+      // Establish parameters for an input checking timer.
+      this.inpChngDelay = inpChngDelay;
+      this.inpChkTimerID = null;
 
       // Class for marking missing inputs.
       this.clMissingInp = "gpa-calc-gf__missing-inp";
@@ -367,6 +378,13 @@ class setUpGpaCalc {
         const $input: JQuery = $( this );
         inst.checkCourseDetailsRow( e, $input );
       } );
+      this.$form.on( 'keyup', this.courseFldsSel + ' input', function ( e: Event ) {
+        const $input: JQuery = $( this );
+        if ( inst.inpChkTimerID !== null ) {
+          clearTimeout( inst.inpChkTimerID );
+        }
+        inst.inpChkTimerID = setTimeout( inst.trigCourseDetailsInpChng.bind( inst ), inst.inpChngDelay, $input );
+      } );
       // TODO: Finish writing function
     }
 
@@ -547,6 +565,11 @@ class setUpGpaCalc {
       } );
       return rowEmpty;
     }
+
+    trigCourseDetailsInpChng( $input: JQuery ) {
+      this.inpChkTimerID = null;
+      $input.trigger( 'change' );
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -555,7 +578,7 @@ class setUpGpaCalc {
   // ---»  Set up event handler to check for an instance of the GPA Calculator gravity form and set
   //   it up if it is present.  «---
   $( document ).on( 'gform_post_render', function () {
-    const setUpInst = new setUpGpaCalc( formSel, sbmtBtnSel, curCumlGpaFldSel, totCredsFldSel, courseFldsSel, semGpaFldSel, semGpaNoCoursesMsg, semGpaCoursesListStr, cumlGpaFldSel, cumlGpaMsgs );
+    const setUpInst = new setUpGpaCalc( formSel, sbmtBtnSel, curCumlGpaFldSel, totCredsFldSel, courseFldsSel, semGpaFldSel, semGpaNoCoursesMsg, semGpaCoursesListStr, cumlGpaFldSel, cumlGpaMsgs, inpChngDelay );
   } );
 } )( {
   // Reference to the jQuery instance.
@@ -623,4 +646,6 @@ class setUpGpaCalc {
 
   // Selector string for isolating the total earned credits field within the DOM.
   totCredsFldSel: '.gfield.gpa-calc-gf__tot-creds input',
+
+  inpChngDelay: 500
 } );
