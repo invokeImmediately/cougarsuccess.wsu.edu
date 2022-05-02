@@ -35,7 +35,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.4.0
+ * @version 0.4.1
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -68,7 +68,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.4.0
+ * gpaCalc.js - v0.4.1
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -566,7 +566,7 @@ class setUpGpaCalc {
   cumlGpaMsgs: {
 
     // Default description for the cumulative GPA field when no information has been entered.
-    noInputs: "Waiting for current cumulative GPA, total credits earned, and this semester's course details to be entered.",
+    noInputs: "Waiting for current cumulative GPA, total credits attempted, and this semester's course details to be entered.",
 
     // Default description for the cumulative GPA field when only the cumulative GPA has been
     //   provided by the user.
