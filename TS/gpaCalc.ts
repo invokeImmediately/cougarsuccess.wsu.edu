@@ -36,7 +36,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.7.0
+ * @version 0.8.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -58,18 +58,19 @@ interface gradeLookup {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: PERSISTENT DOCUMENTATION for final output................................................69
-// §2: SETUPGPACALC class.......................................................................93
-//   §2.1: Constructor initiated operations....................................................201
-//   §2.2: Event initiated operations..........................................................392
-//   §2.3: Utility methods.....................................................................518
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................576////////////////////////////////////////////////////////////////////////////////////////////////////
+// §1: PERSISTENT DOCUMENTATION for final output................................................70
+// §2: SETUPGPACALC class.......................................................................94
+//   §2.1: Constructor initiated operations....................................................215
+//   §2.2: Event initiated operations..........................................................439
+//   §2.3: Utility methods.....................................................................582
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................651
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.6.1
+ * gpaCalc.js - v0.8.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -92,7 +93,7 @@ interface gradeLookup {
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // §2: SETUPGPACALC class
 
-// ---»  Declare the setUpGpaCalc class. «---
+// --»  Declare the setUpGpaCalc class. «--
 class setUpGpaCalc {
     $courseFlds: JQuery;
     $crsFldsRows: JQuery;
@@ -110,6 +111,7 @@ class setUpGpaCalc {
     crsDtlsRowsAdded: number;
     cumlGpaFldSel: string;
     cumlGpaMsgs: string[];
+    cumlInpChkTimerID: null | number;
     curCumlGpaFldSel: string;
     formSel: string;
     futCumlGpa: number;
@@ -125,7 +127,7 @@ class setUpGpaCalc {
     totCredsFldSel: string;
     totSemCreds: number;
 
-    // ---»  Construct a setUpGpaCalc object.  «---
+    // --»  Construct a setUpGpaCalc object.  «--
     constructor (
       formSel: string,
       sbmtBtnSel: string,
@@ -162,9 +164,10 @@ class setUpGpaCalc {
         cumlGpaMsgs.allInputs,
       ];
 
-      // Establish parameters for an input checking timer.
+      // Establish parameters for input checking timers.
       this.inpChngDelay = inpChngDelay;
       this.inpChkTimerID = null;
+      this.cumlInpChkTimerID = null;
 
       // Class for marking missing inputs.
       this.clMissingInp = "gpa-calc-gf__missing-inp";
@@ -211,7 +214,7 @@ class setUpGpaCalc {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.1: Constructor initiated operations
 
-    // ---»  Add more rows to the course details list field if necessary.  «---
+    // --»  Add more rows to the course details list field if necessary.  «--
     addMoreInitialRows() {
       // Gravity forms starts list fields with one row, so add more to make it more convenient for 
       //   the user. But start by checking to see how many rows already exist.
@@ -222,7 +225,7 @@ class setUpGpaCalc {
       }
     }
 
-    // ---»  The cumulative GPA field should be read-only to avoid confusion.  «---
+    // --»  The cumulative GPA field should be read-only to avoid confusion.  «--
     disableCumlGpaField() {
       // Find the semester GPA field and label within the DOM.
       this.$cumlGpa = this.$form.find( this.cumlGpaFldSel );
@@ -255,7 +258,7 @@ class setUpGpaCalc {
       this.$cumlGpa.attr( 'aria-disabled', 'true' );
     }
 
-    // ---»  Since the form is a calculator, its submit button should not be used.  «---
+    // --»  Since the form is a calculator, its submit button should not be used.  «--
     disableSbmtBtn() {
       // Find the submit button in the DOM.
       this.$sbmtBtn = $( this.sbmtBtnSel );
@@ -274,7 +277,7 @@ class setUpGpaCalc {
       this.$sbmtBtn.css( 'display', 'none' );
     }
 
-    // ---»  The semester GPA field should be read-only to avoid confusion.  «---
+    // --»  The semester GPA field should be read-only to avoid confusion.  «--
     disableSemGpaField() {
       // Find the semester GPA field and label within the DOM.
       this.$semGpa = this.$form.find( this.semGpaFldSel );
@@ -307,7 +310,7 @@ class setUpGpaCalc {
       return 'ArrowDown|ArrowLeft|ArrowRight|ArrowUp|Backspace|Delete|End|Home|Tab';
     }
 
-    // ---»  Relevant user input must follow a GPA format.  «---
+    // --»  Relevant user input must follow a GPA format.  «--
     restrictCurGpaEntry() {
       this.$curCumlGpa = this.$form.find( this.curCumlGpaFldSel );
       const allowedKeys = new RegExp( '[0-9.]|' + this.getAllowedNavKeys() );
@@ -324,7 +327,7 @@ class setUpGpaCalc {
       } );
     }
 
-    // ---»  Relevant user input must follow a numerical credits format.  «---
+    // --»  Relevant user input must follow a numerical credits format.  «--
     restrictCreditsEntry() {
       const allowedKeys = new RegExp( '[0-9.]|' + this.getAllowedNavKeys() );
       const decimalCredits = /[0-9]*\.[0-9.]*/;
@@ -338,7 +341,7 @@ class setUpGpaCalc {
       } );
     }
 
-    // ---»  Relevant user input must follow a letter grade format.  «---
+    // --»  Relevant user input must follow a letter grade format.  «--
     restrictGradeEntry() {
       const allGradeKeys: string = '[A-DFa-df+-]';
       const gradeModKeys: string = '[+-]';
@@ -362,12 +365,12 @@ class setUpGpaCalc {
       } );
     }
 
-    // ---»  Relevant user input must follow acceptable course retake indicators.  «---
+    // --»  Relevant user input must follow acceptable course retake indicators.  «--
     restrictRetakeEntry() {
       // TODO: Finish writing function
     }
 
-    // ---»  Relevant user input must follow a numerical credits format.  «---
+    // --»  Relevant user input must follow a numerical credits format.  «--
     restrictTotCreditsEntry() {
       this.$totCreds = this.$form.find( this.totCredsFldSel );
       const allowedKeys = new RegExp( '[0-9.]|' + this.getAllowedNavKeys() );
@@ -382,15 +385,20 @@ class setUpGpaCalc {
       } );
     }
 
-    // ---»  Automatically calculate GPAs when needed.  «---
+    // --»  Automatically calculate GPAs when needed.  «--
+    // TODO: Refactor method to better divide and conquer operations.
     setUpCalculations() {
       this.$courseFlds = this.$form.find( this.courseFldsSel );
       this.$cumlGpa = this.$form.find( this.cumlGpaFldSel );
       const inst: setUpGpaCalc = this;
+
+      // Check course details row after associated input changes are committed.
       this.$form.on( 'change', this.courseFldsSel + ' input', function ( e: Event ) {
         const $input: JQuery = $( this );
         inst.checkCourseDetailsRow( e, $input );
       } );
+
+      // Handle input changes associated with course details fields.
       this.$form.on( 'input', this.courseFldsSel + ' input', function ( e: Event ) {
         const $input: JQuery = $( this );
 
@@ -403,26 +411,34 @@ class setUpGpaCalc {
         // TODO: Filter incorrect inputs; these may be especially possible when users are relying
         //   on virtual keyboards.
       } );
+
+      // Check course details row after associated input changes are committed.
+      this.$form.on( 'change', this.totCredsFldSel + ', ' + this.curCumlGpaFldSel + ' input', function ( e: Event ) {
+        const $input: JQuery = $( this );
+        inst.checkCumlAcadFlds( e, $input );
+      } );
+
+      // Handle input changes associated with cumulative academic performance fields.
+      this.$form.on( 'input', this.totCredsFldSel + ', ' + this.curCumlGpaFldSel + ' input', function ( e: Event ) {
+        const $input: JQuery = $( this );
+
+        // Set up an automatic triggering of the change event if the user pauses on entering
+        //   additional input.
+        if ( inst.cumlInpChkTimerID !== null ) {
+          clearTimeout( inst.cumlInpChkTimerID );
+        }
+        inst.cumlInpChkTimerID = setTimeout( inst.trigCumlFldsInpChng.bind( inst ), inst.inpChngDelay, $input );
+        // TODO: Filter incorrect inputs; these may be especially possible when users are relying
+        //   on virtual keyboards.
+      } );
+
       // TODO: Finish writing function
-      // this.$form.on( 'input', this.totCredsFldSel + ' input, ' + this.curCumlGpaFldSel + ' input' ) {
-      //   const $input: JQuery = $( this );
-
-      //   // Set up an automatic triggering of the change event if the user pauses on entering
-      //   //   additional input.
-      //   if ( inst.inpChkTimerID !== null ) {
-      //     clearTimeout( inst.inpChkTimerID );
-      //   }
-      //   inst.inpChkTimerID = setTimeout( inst.trigCourseDetailsInpChng.bind( inst ), inst.inpChngDelay, $input );
-
-      //   // TODO: Filter incorrect inputs; these may be especially possible when users are relying
-      //   //   on virtual keyboards.
-      // }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.2: Event initiated operations
 
-    // ---»  Respond intelligently to changes in course details input.  «---
+    // --»  Respond intelligently to changes in course details input.  «--
     checkCourseDetailsRow( e: Event, $input: JQuery ) {
       const $prntFld: JQuery = $input.parent();
       const $prntRow: JQuery = $prntFld.parent();
@@ -451,14 +467,22 @@ class setUpGpaCalc {
       this.recalcGpas( e );
     }
 
-    // ---»  When instructed, calculate all GPAs.  «---
+    checkCumlAcadFlds( e: Event, $input: JQuery ) {
+      // this.chkCurCumlGpaAbs();
+      // this.chkTotCredsAbs();
+      this.recalcGpas( e );
+
+      // TODO: Finish writing function
+    }
+
+    // --»  When instructed, calculate all GPAs.  «--
     recalcGpas( e: Event ) {
       this.recalcSemGpa( e );
       this.recalcCumlGpa( e );
       // TODO: Finish writing function.
     }
 
-    // ---»  When instructed, calculate the semester GPAs.  «---
+    // --»  When instructed, calculate the semester GPAs.  «--
     recalcSemGpa( e: Event ) {
       console.log( 'Recalculating semester GPA.' );
       this.semGpa = 0;
@@ -518,7 +542,7 @@ class setUpGpaCalc {
       }
     }
 
-    // ---»  When instructed, calculate the cumulative GPA.  «---
+    // --»  When instructed, calculate the cumulative GPA.  «--
     recalcCumlGpa( e: Event ) {
       console.log( 'Recalculating cumulative GPA.' );
       this.futCumlGpa = 0;
@@ -557,13 +581,13 @@ class setUpGpaCalc {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.3: Utility methods
 
-    // ---»  Deal with the case when a course's name is still missing.  «---
+    // --»  Deal with the case when a course's name is still missing.  «--
     addCrsDtlsRow() {
       this.$courseFlds.find( '.gfield_list_group' ).first().find( '.add_list_item').trigger( 'click' );
       this.addCrsDtlsRowTimerID = setTimeout( this.addMoreInitialRows.bind( this ) , 100 );
     }
 
-    // ---»  Deal with the case when a course's name is still missing.  «---
+    // --»  Deal with the case when a course's name is still missing.  «--
     chkCourseNameAbs( $row: JQuery ) {
       const $input: JQuery = $row.find( '.gfield_list_5_cell1 input' );
       const entry: string = $input.val().toString();
@@ -577,7 +601,7 @@ class setUpGpaCalc {
       }
     }
 
-    // ---»  Ensure a retake status has been entered  «---
+    // --»  Ensure a retake status has been entered  «--
     chkRetakeStatus( $row: JQuery ) {
       const $rtInp: JQuery = $row.find( '.gfield_list_5_cell4 input' );
       const $rtGrdInp: JQuery = $row.find( '.gfield_list_5_cell5 input' );
@@ -594,12 +618,12 @@ class setUpGpaCalc {
       }
     }
 
-    // ---»  Mark an input as missing so the user can more easily spot it.  «---
+    // --»  Mark an input as missing so the user can more easily spot it.  «--
     markInpAsMissing( $input: JQuery ) {
       // TODO: Finish writing function.
     }
 
-    // ---»  Report on whether the inputs in a list field row are all totally empty.  «---
+    // --»  Report on whether the inputs in a list field row are all totally empty.  «--
     rowIsEmpty( $row: JQuery ) {
       const $inputs: JQuery = $row.find( 'input' );
       let rowEmpty: boolean = true;
@@ -616,13 +640,18 @@ class setUpGpaCalc {
       this.inpChkTimerID = null;
       $input.trigger( 'change' );
     }
+
+    trigCumlFldsInpChng( $input: JQuery ) {
+      this.cumlInpChkTimerID = null;
+      $input.trigger( 'change' );
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING
 
-  // ---»  Set up event handler to check for an instance of the GPA Calculator gravity form and set
-  //   it up if it is present.  «---
+  // --»  Set up event handler to check for an instance of the GPA Calculator gravity form and set
+  //   it up if it is present.  «--
   $( document ).on( 'gform_post_render', function () {
     const setUpInst = new setUpGpaCalc( formSel, sbmtBtnSel, curCumlGpaFldSel, totCredsFldSel, courseFldsSel, semGpaFldSel, semGpaNoCoursesMsg, semGpaCoursesListStr, cumlGpaFldSel, cumlGpaMsgs, inpChngDelay );
   } );
