@@ -36,7 +36,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.6.0
+ * @version 0.7.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -69,7 +69,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.6.0
+ * gpaCalc.js - v0.6.1
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -95,6 +95,7 @@ interface gradeLookup {
 // ---»  Declare the setUpGpaCalc class. «---
 class setUpGpaCalc {
     $courseFlds: JQuery;
+    $crsFldsRows: JQuery;
     $cumlGpa: JQuery;
     $cumlGpaLbl: JQuery;
     $curCumlGpa: JQuery;
@@ -103,20 +104,26 @@ class setUpGpaCalc {
     $semGpa: JQuery;
     $semGpaLbl: JQuery;
     $totCreds: JQuery;
+    addCrsDtlsRowTimerID: number;
     clMissingInp: string;
     courseFldsSel: string;
+    crsDtlsRowsAdded: number;
     cumlGpaFldSel: string;
     cumlGpaMsgs: string[];
     curCumlGpaFldSel: string;
     formSel: string;
+    futCumlGpa: number;
+    futTotCreds: number;
     inpChkTimerID: null | number;
     inpChngDelay: number;
     gradeLookupTbl: gradeLookup;
     sbmtBtnSel: string;
+    semGpa: number;
     semGpaCoursesListStr: string;
     semGpaFldSel: string;
     semGpaNoCoursesMsg: string;
     totCredsFldSel: string;
+    totSemCreds: number;
 
     // ---»  Construct a setUpGpaCalc object.  «---
     constructor (
@@ -184,6 +191,10 @@ class setUpGpaCalc {
         return;
       }
 
+      // Set the initial added course details rows to the default zero; Gravity Forms only has one
+      //   list field row present when a form freshly loads.
+      this.crsDtlsRowsAdded = 0;
+
       // Since a GPA Calculator was found, proceed with additional set up operations.
       this.disableSbmtBtn();
       this.disableSemGpaField();
@@ -200,13 +211,15 @@ class setUpGpaCalc {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.1: Constructor initiated operations
 
-    // ---»  Add more rows to the course details list field.  «---
+    // ---»  Add more rows to the course details list field if necessary.  «---
     addMoreInitialRows() {
       // Gravity forms starts list fields with one row, so add more to make it more convenient for 
-      //   the user.
-      // TODO: start with six rows.
-      // TODO: Check the number of rows that are present before adding more.
-      // TODO: Finish writing function
+      //   the user. But start by checking to see how many rows already exist.
+      this.$crsFldsRows = this.$courseFlds.find( '.gfield_list_group' );
+      this.crsDtlsRowsAdded = this.$crsFldsRows.length - 1;
+      if ( this.crsDtlsRowsAdded < 5 ) {
+        this.addCrsDtlsRowTimerID = setTimeout( this.addCrsDtlsRow.bind( this ) , 100 );
+      }
     }
 
     // ---»  The cumulative GPA field should be read-only to avoid confusion.  «---
@@ -378,14 +391,32 @@ class setUpGpaCalc {
         const $input: JQuery = $( this );
         inst.checkCourseDetailsRow( e, $input );
       } );
-      this.$form.on( 'keyup', this.courseFldsSel + ' input', function ( e: Event ) {
+      this.$form.on( 'input', this.courseFldsSel + ' input', function ( e: Event ) {
         const $input: JQuery = $( this );
+
+        // Set up an automatic triggering of the change event if the user pauses on entering
+        //   additional input.
         if ( inst.inpChkTimerID !== null ) {
           clearTimeout( inst.inpChkTimerID );
         }
         inst.inpChkTimerID = setTimeout( inst.trigCourseDetailsInpChng.bind( inst ), inst.inpChngDelay, $input );
+        // TODO: Filter incorrect inputs; these may be especially possible when users are relying
+        //   on virtual keyboards.
       } );
       // TODO: Finish writing function
+      // this.$form.on( 'input', this.totCredsFldSel + ' input, ' + this.curCumlGpaFldSel + ' input' ) {
+      //   const $input: JQuery = $( this );
+
+      //   // Set up an automatic triggering of the change event if the user pauses on entering
+      //   //   additional input.
+      //   if ( inst.inpChkTimerID !== null ) {
+      //     clearTimeout( inst.inpChkTimerID );
+      //   }
+      //   inst.inpChkTimerID = setTimeout( inst.trigCourseDetailsInpChng.bind( inst ), inst.inpChngDelay, $input );
+
+      //   // TODO: Filter incorrect inputs; these may be especially possible when users are relying
+      //   //   on virtual keyboards.
+      // }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -430,8 +461,8 @@ class setUpGpaCalc {
     // ---»  When instructed, calculate the semester GPAs.  «---
     recalcSemGpa( e: Event ) {
       console.log( 'Recalculating semester GPA.' );
-      let semGpa: number = 0;
-      let totCredits: number = 0;
+      this.semGpa = 0;
+      this.totSemCreds = 0;
       const $rows: JQuery = this.$courseFlds.find( '.gfield_list_group' );
       const inst: setUpGpaCalc = this;
       const coursesUsed: string[] = [];
@@ -449,14 +480,14 @@ class setUpGpaCalc {
         const $credits: JQuery = $this.find( '.gfield_list_5_cell3 input' );
         const credits: number = parseInt( $credits.val().toString(), 10 );
         if ( gradeVal !== null && credits > 0 ) {
-          semGpa += gradeVal * credits;
-          totCredits += credits;
+          inst.semGpa += gradeVal * credits;
+          inst.totSemCreds += credits;
           coursesUsed.push( $course.val().toString() );
         }
       } );
 
       // Complete the averaging calculation, if any, and report the result to the user.
-      if( totCredits > 0 ) {
+      if( this.totSemCreds > 0 ) {
 
         // Before reporting results to reduce performance impacts, collapse the array of classes
         //   that will be included in the GPA calculation into a comma separated string.
@@ -471,7 +502,8 @@ class setUpGpaCalc {
           }, '' );
 
         // Calculate and report the semester GPA rounded to the standard two decimal places.
-        this.$semGpa.val( ( semGpa / totCredits ).toFixed( 2 ) );
+        this.semGpa = this.semGpa / this.totSemCreds;
+        this.$semGpa.val( this.semGpa.toFixed( 2 ) );
 
         // Report the courses that were used in the GPA calculation.
         this.$semGpaLbl.html( this.semGpaCoursesListStr + courseList );
@@ -489,12 +521,12 @@ class setUpGpaCalc {
     // ---»  When instructed, calculate the cumulative GPA.  «---
     recalcCumlGpa( e: Event ) {
       console.log( 'Recalculating cumulative GPA.' );
-      let futCumlGpa: number = 0;
-      let futCreds: number = 0;
+      this.futCumlGpa = 0;
+      this.futTotCreds = 0;
       const inst: setUpGpaCalc = this; // «-- TODO: Needed?
 
       // Determine whether we have inputs in the fields we need to calculate the cumulative GPA.
-      const semGpa: null | number = ( this.$semGpa.val().toString() !== "" ) ?
+      const semGpaFldVal: null | number = ( this.$semGpa.val().toString() !== "" ) ?
         parseFloat( this.$semGpa.val().toString() ) :
         null;
       const totCreds: null | number = ( this.$totCreds.val().toString() !== "" ) ?
@@ -504,9 +536,17 @@ class setUpGpaCalc {
         parseFloat( this.$curCumlGpa.val().toString() ) :
         null;
 
-      // Create an index whose value is mapped to the appropriate message in the array containing a 
+      if ( curCumlGpa !== null !== null && totCreds !== null && semGpaFldVal ) {
+        this.futTotCreds = totCreds + this.totSemCreds;
+        this.futCumlGpa = ( curCumlGpa * totCreds + this.semGpa * this.totSemCreds ) / this.futTotCreds;
+        this.$cumlGpa.val( this.futCumlGpa.toFixed( 2 ) );
+      } else {
+        this.$cumlGpa.val( '' );
+      }
+
+      // Cre1ate an index whose value is mapped to the appropriate message in the array containing a 
       //   list of messages about how the cumulative GPA field is responding to form state.
-      const msgIdx: number = ( ( semGpa !== null ? 1 : 0 ) << 2 ) |
+      const msgIdx: number = ( ( semGpaFldVal !== null ? 1 : 0 ) << 2 ) |
         ( ( totCreds !== null ? 1 : 0 ) << 1 ) |
         ( curCumlGpa !== null ? 1 : 0 );
 
@@ -516,6 +556,12 @@ class setUpGpaCalc {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // §2.3: Utility methods
+
+    // ---»  Deal with the case when a course's name is still missing.  «---
+    addCrsDtlsRow() {
+      this.$courseFlds.find( '.gfield_list_group' ).first().find( '.add_list_item').trigger( 'click' );
+      this.addCrsDtlsRowTimerID = setTimeout( this.addMoreInitialRows.bind( this ) , 100 );
+    }
 
     // ---»  Deal with the case when a course's name is still missing.  «---
     chkCourseNameAbs( $row: JQuery ) {
