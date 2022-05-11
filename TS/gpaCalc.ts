@@ -36,7 +36,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.8.0
+ * @version 0.9.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -61,16 +61,16 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output................................................70
 // §2: SETUPGPACALC class.......................................................................94
 //   §2.1: Constructor initiated operations....................................................215
-//   §2.2: Event initiated operations..........................................................439
-//   §2.3: Utility methods.....................................................................582
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................651
+//   §2.2: Event initiated operations..........................................................466
+//   §2.3: Utility methods.....................................................................609
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................678
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.8.0
+ * gpaCalc.js - v0.9.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -306,6 +306,25 @@ class setUpGpaCalc {
       this.$semGpa.attr( 'aria-disabled', 'true' );
     }
 
+    filterCurGpaEntry() {
+      const allowedInp = new RegExp( '[0-9.]', 'g' );
+      let curVal = this.$curCumlGpa.val().toString();
+      const matchRes = curVal.match( allowedInp );
+      if ( matchRes !== null ) {
+        curVal = matchRes.join( '' );
+        const decimalGpa = /[0-4]\.[0-9]*|[0-4]/;
+        const gpaMatch = curVal.match( decimalGpa );
+        const gpaNumeric = parseFloat( gpaMatch[ 0 ] );
+        if ( gpaNumeric > 4 ) {
+          this.$curCumlGpa.val( "4." );
+        } else {
+          this.$curCumlGpa.val( gpaMatch[ 0 ] );
+        }
+      } else {
+        this.$curCumlGpa.val( '' );
+      }
+    }
+
     getAllowedNavKeys(): string {
       return 'ArrowDown|ArrowLeft|ArrowRight|ArrowUp|Backspace|Delete|End|Home|Tab';
     }
@@ -314,17 +333,25 @@ class setUpGpaCalc {
     restrictCurGpaEntry() {
       this.$curCumlGpa = this.$form.find( this.curCumlGpaFldSel );
       const allowedKeys = new RegExp( '[0-9.]|' + this.getAllowedNavKeys() );
-      const decimalGpa = /[0-4]?\.[0-9.]*/;
+      const decimalGpa = /[0-4]?\.[0-9]*/;
+      const partialGpa = /^[0-4]$/;
       this.$curCumlGpa.on( 'keydown', function( event ) {
         const $this = $( this );
+        const selStart = (<HTMLInputElement>$this[0]).selectionStart;
+        const selDiff = (<HTMLInputElement>$this[0]).selectionEnd - selStart;
         if ( event.key.match( allowedKeys ) === null ) {
           event.preventDefault();
-        } else if ( event.key == "." && $this.val().toString().match( decimalGpa ) ) {
+        } else if ( selDiff == 0 && event.key == "." && $this.val().toString().match( decimalGpa ) ) {
           event.preventDefault();
-        } else if ( $this.val().toString() == "" && event.key.match( /[5-9]/ ) ) {
+        } else if ( selDiff == 0 && event.key.match( /[0-9]/ ) && $this.val().toString().match( partialGpa ) ) {
+          event.preventDefault();
+        } else if ( selDiff == 0 && event.key.match( /[0-9]/ ) && $this.val().toString().match( decimalGpa ) && selStart <= 1 ) {
+          event.preventDefault();
+        } else if ( selDiff == 0 && $this.val().toString() == "" && event.key.match( /[5-9]/ ) ) {
           event.preventDefault();
         }
       } );
+      this.$curCumlGpa.on( 'input', this.filterCurGpaEntry.bind( this ) );
     }
 
     // --»  Relevant user input must follow a numerical credits format.  «--
