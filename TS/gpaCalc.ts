@@ -36,7 +36,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.10.0
+ * @version 0.11.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -61,16 +61,16 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output................................................70
 // §2: SETUPGPACALC class.......................................................................94
 //   §2.1: Constructor initiated operations....................................................215
-//   §2.2: Event initiated operations..........................................................483
-//   §2.3: Utility methods.....................................................................626
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................695
+//   §2.2: Event initiated operations..........................................................500
+//   §2.3: Utility methods.....................................................................643
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................712
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.10.0
+ * gpaCalc.js - v0.11.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -306,6 +306,22 @@ class setUpGpaCalc {
       this.$semGpa.attr( 'aria-disabled', 'true' );
     }
 
+    // --»  Input entered into the course credits fields must follow conventions.  «--
+    filterCredsEntry( e: Event ) {
+      const allowedInp = new RegExp( '[0-9.]', 'g' );
+      const $fld = $( e.target );
+      let curVal = $fld.val().toString();
+      const matchRes = curVal.match( allowedInp );
+      if ( matchRes !== null ) {
+        curVal = matchRes.join( '' );
+        const credsFrmt = /[0-9]+\.?[0-9]*/;
+        const credsMatch = curVal.match( credsFrmt );
+        $fld.val( credsMatch[ 0 ] );
+      } else {
+        $fld.val( '' );
+      }
+    }
+
     // --»  Input entered into the current cumulative GPA field must follow conventions.  «--
     filterCurGpaEntry() {
       const allowedInp = new RegExp( '[0-9.]', 'g' );
@@ -382,6 +398,7 @@ class setUpGpaCalc {
           event.preventDefault();
         }
       } );
+      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell3 input', this.filterCredsEntry.bind( this ) );
     }
 
     // --»  Relevant user input must follow a letter grade format.  «--
