@@ -33,10 +33,12 @@ interface gradeLookup {
  * █ ▀▄ █▄▄▀ █▄▄█ █    █▄▄█ █  ▄ █        █  ▀▀▀█
  * ▀▀▀▀ █    █  ▀  ▀▀▀ █  ▀ ▀▀▀   ▀▀▀ ▀   █  ▀▀▀
  *
- * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
- *   the Gravity Forms.
+ * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built
+ *   using the Gravity Forms plugin.
  *
- * @version 0.12.1
+ * The Gravity Forms version this script was last tested with was X.Y.Z. 
+ *
+ * @version 0.12.2
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -58,20 +60,20 @@ interface gradeLookup {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: PERSISTENT DOCUMENTATION for final output................................................70
-// §2: SETUPGPACALC class.......................................................................94
-//   §2.1: Constructor initiated operations....................................................215
-//   §2.2: Event initiated operations..........................................................518
-//   §2.3: Utility methods.....................................................................661
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................733
+// §1: PERSISTENT DOCUMENTATION for final output................................................72
+// §2: SETUPGPACALC class.......................................................................96
+//   §2.1: Constructor initiated operations....................................................217
+//   §2.2: Event initiated operations..........................................................520
+//   §2.3: Utility methods.....................................................................663
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................735
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.12.1
- * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
+ * gpaCalc.js - v0.12.2
+ * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in using the Gravity Forms plugin. The last version of Gravity Forms this script module was tested with was X.Y.Z. 
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
  ****/
