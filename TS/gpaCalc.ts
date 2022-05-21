@@ -36,7 +36,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.12.0
+ * @version 0.12.1
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -61,16 +61,16 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output................................................70
 // §2: SETUPGPACALC class.......................................................................94
 //   §2.1: Constructor initiated operations....................................................215
-//   §2.2: Event initiated operations..........................................................500
-//   §2.3: Utility methods.....................................................................643
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................712
+//   §2.2: Event initiated operations..........................................................518
+//   §2.3: Utility methods.....................................................................661
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................733
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.12.0
+ * gpaCalc.js - v0.12.1
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -680,10 +680,13 @@ class setUpGpaCalc {
       }
     }
 
-    // --»  Ensure a retake status has been entered  «--
+    // --»  Ensure a retake status has been entered and inputs entered are consistent.  «--
     chkRetakeStatus( $row: JQuery ) {
+      // Locate the fields in the row that triggered this handler call.
       const $rtInp: JQuery = $row.find( '.gfield_list_5_cell4 input' );
       const $rtGrdInp: JQuery = $row.find( '.gfield_list_5_cell5 input' );
+
+      // Force the retake field to be consistent with a retake grade having been entered.
       if ( !( !this.rowIsEmpty( $row ) && $rtInp.val().toString() === '' ) ) {
         if ( $rtInp.val().toString() == 'No' && $rtGrdInp.val().toString() !== '' ) {
           $rtInp.val( 'Yes' );
