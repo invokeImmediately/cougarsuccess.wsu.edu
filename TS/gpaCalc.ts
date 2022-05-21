@@ -38,7 +38,7 @@ interface gradeLookup {
  *
  * The Gravity Forms version this script was last tested with was X.Y.Z. 
  *
- * @version 0.12.2
+ * @version 0.12.3
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -72,7 +72,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.12.2
+ * gpaCalc.js - v0.12.3
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in using the Gravity Forms plugin. The last version of Gravity Forms this script module was tested with was X.Y.Z. 
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -426,6 +426,8 @@ class setUpGpaCalc {
       const letterGradeKeys: string = '[A-DFa-df]';
       const allowedKeys: RegExp = new RegExp( allGradeKeys + '|' + this.getAllowedNavKeys() );
       const modLetGrades: RegExp = /[a-dfA-Df][+-]/;
+
+      // Use keydown event handlers to restrict what keys are accepted for entering input.
       this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_cell2 input, ' + this.courseFldsSel + ' .gfield_list_5_cell5 input', function( event ) {
         const $this: JQuery = $( this );
         const curVal: string = $this.val().toString();
@@ -441,8 +443,11 @@ class setUpGpaCalc {
           event.preventDefault();
         }
       } );
-      // TODO: Handle keydown inputs
-      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell2 input', this.filterGradesEntry.bind( this ) );
+
+      // Use input event handlers to filter inputs that are accepted by the field. This is
+      //   especially important for responsive design since systems using virtual keyboards might
+      //   not fire keydown events.
+      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell2 input, ' + this.courseFldsSel + ' .gfield_list_5_cell5 input', this.filterGradesEntry.bind( this ) );
     }
 
     // --»  Relevant user input must follow acceptable course retake indicators.  «--
