@@ -36,7 +36,7 @@ interface gradeLookup {
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
  *   the Gravity Forms.
  *
- * @version 0.11.0
+ * @version 0.12.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -70,7 +70,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.11.0
+ * gpaCalc.js - v0.12.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -342,6 +342,22 @@ class setUpGpaCalc {
       }
     }
 
+    // --»  Input entered into the course credits fields must follow conventions.  «--
+    filterGradesEntry( e: Event ) {
+      const allowedInp = new RegExp( '[A-DFa-df+-]', 'g' );
+      const $fld = $( e.target );
+      let curVal = $fld.val().toString();
+      const matchRes = curVal.match( allowedInp );
+      if ( matchRes !== null ) {
+        curVal = matchRes.join( '' );
+        const validGrade = new RegExp( '[Aa]-?|[Bb][+-]?|[Cc][+-]?|[Dd][+-]?|[Ff]', 'g' );
+        const gradeMatch = curVal.match( validGrade );
+        $fld.val( gradeMatch[ 0 ] );
+      } else {
+        $fld.val( '' );
+      }
+    }
+
     // --»  Input entered into the total credits attempted field must follow conventions.  «--
     filterTotCredsEntry() {
       const allowedInp = new RegExp( '[0-9.]', 'g' );
@@ -423,6 +439,8 @@ class setUpGpaCalc {
           event.preventDefault();
         }
       } );
+      // TODO: Handle keydown inputs
+      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell2 input', this.filterGradesEntry.bind( this ) );
     }
 
     // --»  Relevant user input must follow acceptable course retake indicators.  «--
