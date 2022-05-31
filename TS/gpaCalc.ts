@@ -38,7 +38,7 @@ interface gradeLookup {
  *
  * The Gravity Forms version this script was last tested with was X.Y.Z. 
  *
- * @version 0.12.4
+ * @version 0.13.0
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -72,7 +72,7 @@ interface gradeLookup {
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.12.4
+ * gpaCalc.js - v0.13.0
  * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in using the Gravity Forms plugin. The last version of Gravity Forms this script module was tested with was X.Y.Z. 
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
@@ -360,6 +360,21 @@ class setUpGpaCalc {
       }
     }
 
+    // --»  Input entered into course retake indicator fields must follow conventions.  «--
+    filterRetakeEntry( e: Event) {
+      const allowedInp = new RegExp( '[No|Yes]', 'g' );
+      const $fld = $( e.target );
+      let curVal = $fld.val().toString();
+      const matchRes = curVal.match( allowedInp );
+      if ( matchRes !== null ) {
+        // 1. Try the combination Nn. If found, note the position of the match.
+        // 2. Try the combination Yy. If found, note the position of the match.
+        // 3. If both Yy and Nn were found, keep the one that occurred first in the string.
+        // 4. If not, handle either Yy or Nn as Yes or No, respectively.
+        // 5. If neither possibility was encountered, clear the input.
+      }
+    }
+
     // --»  Input entered into the total credits attempted field must follow conventions.  «--
     filterTotCredsEntry() {
       const allowedInp = new RegExp( '[0-9.]', 'g' );
@@ -452,7 +467,28 @@ class setUpGpaCalc {
 
     // --»  Relevant user input must follow acceptable course retake indicators.  «--
     restrictRetakeEntry() {
-      // TODO: Finish writing function
+      const allRetakeKeys: string = '[NYny]';
+      const allowedKeys: RegExp = new RegExp( allRetakeKeys + '|' + this.getAllowedNavKeys() );
+
+      // Use keydown event handlers to restrict what keys are accepted for entering input.
+      this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_c3ll4 input', function( event ) {
+        const $this: JQuery = $( this );
+        const curVal: string = $this.val().toString();
+        if ( event.key.match( allowedKeys ) === null ) {
+          event.preventDefault();
+        } else if ( event.key.match( /[Yy]/ ) ) {
+          event.preventDefault();
+          $this.val( 'Yes' );
+        } else if ( event.key.match( /[Nn]/ ) ) {
+          event.preventDefault();
+          $this.val( 'No' );
+        }
+      } );
+
+      // Use input event handlers to filter inputs that are accepted by the field. This is
+      //   especially important for responsive design since systems using virtual keyboards might
+      //   not fire keydown events.
+      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell4 input', this.filterRetakeEntry.bind( this ) );
     }
 
     // --»  Relevant user input must follow a numerical credits format.  «--
