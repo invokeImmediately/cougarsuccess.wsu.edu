@@ -33,10 +33,16 @@ interface gradeLookup {
  * █ ▀▄ █▄▄▀ █▄▄█ █    █▄▄█ █  ▄ █        █  ▀▀▀█
  * ▀▀▀▀ █    █  ▀  ▀▀▀ █  ▀ ▀▀▀   ▀▀▀ ▀   █  ▀▀▀
  *
- * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in
- *   the Gravity Forms.
+ * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built
+ *   using the Gravity Forms plugin.
  *
+<<<<<<< HEAD
  * @version 0.12.1
+=======
+ * The Gravity Forms version this script was last tested with was X.Y.Z. 
+ *
+ * @version 0.13.0
+>>>>>>> 45df48e052e0d263a5de5fb5de51c722b400fc59
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -58,20 +64,20 @@ interface gradeLookup {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: PERSISTENT DOCUMENTATION for final output................................................70
-// §2: SETUPGPACALC class.......................................................................94
-//   §2.1: Constructor initiated operations....................................................215
-//   §2.2: Event initiated operations..........................................................500
-//   §2.3: Utility methods.....................................................................643
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................712
+// §1: PERSISTENT DOCUMENTATION for final output................................................72
+// §2: SETUPGPACALC class.......................................................................96
+//   §2.1: Constructor initiated operations....................................................217
+//   §2.2: Event initiated operations..........................................................525
+//   §2.3: Utility methods.....................................................................668
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................740
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: PERSISTENT DOCUMENTATION for final output
 
 /*!***
- * gpaCalc.js - v0.12.0
- * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in the Gravity Forms.
+ * gpaCalc.js - v0.13.0
+ * Custom JS script module for functionalizing the Cougar Success website's GPA calculator built in using the Gravity Forms plugin. The last version of Gravity Forms this script module was tested with was X.Y.Z. 
  * By Daniel C. Rieck (daniel.rieck@wsu.edu). See [GitHub](https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js) for more info.
  * Copyright (c) 2022 Washington State University and governed by the MIT license.
  ****/
@@ -358,6 +364,21 @@ class setUpGpaCalc {
       }
     }
 
+    // —» Input entered into course retake indicator fields must follow conventions. «—
+    filterRetakeEntry( e: Event) {
+      const allowedInp = new RegExp( '[No|Yes]', 'g' );
+      const $fld = $( e.target );
+      let curVal = $fld.val().toString();
+      const matchRes = curVal.match( allowedInp );
+      if ( matchRes !== null ) {
+        // 1. Try the combination Nn. If found, note the position of the match.
+        // 2. Try the combination Yy. If found, note the position of the match.
+        // 3. If both Yy and Nn were found, keep the one that occurred first in the string.
+        // 4. If not, handle either Yy or Nn as Yes or No, respectively.
+        // 5. If neither possibility was encountered, clear the input.
+      }
+    }
+
     // —» Input entered into the total credits attempted field must follow conventions. «—
     filterTotCredsEntry() {
       const allowedInp = new RegExp( '[0-9.]', 'g' );
@@ -424,6 +445,8 @@ class setUpGpaCalc {
       const letterGradeKeys: string = '[A-DFa-df]';
       const allowedKeys: RegExp = new RegExp( allGradeKeys + '|' + this.getAllowedNavKeys() );
       const modLetGrades: RegExp = /[a-dfA-Df][+-]/;
+
+      // Use keydown event handlers to restrict what keys are accepted for entering input.
       this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_cell2 input, ' + this.courseFldsSel + ' .gfield_list_5_cell5 input', function( event ) {
         const $this: JQuery = $( this );
         const curVal: string = $this.val().toString();
@@ -439,13 +462,37 @@ class setUpGpaCalc {
           event.preventDefault();
         }
       } );
-      // TODO: Handle keydown inputs
-      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell2 input', this.filterGradesEntry.bind( this ) );
+
+      // Use input event handlers to filter inputs that are accepted by the field. This is
+      //   especially important for responsive design since systems using virtual keyboards might
+      //   not fire keydown events.
+      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell2 input, ' + this.courseFldsSel + ' .gfield_list_5_cell5 input', this.filterGradesEntry.bind( this ) );
     }
 
     // —» Relevant user input must follow acceptable course retake indicators. «—
     restrictRetakeEntry() {
-      // TODO: Finish writing function
+      const allRetakeKeys: string = '[NYny]';
+      const allowedKeys: RegExp = new RegExp( allRetakeKeys + '|' + this.getAllowedNavKeys() );
+
+      // Use keydown event handlers to restrict what keys are accepted for entering input.
+      this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_c3ll4 input', function( event ) {
+        const $this: JQuery = $( this );
+        const curVal: string = $this.val().toString();
+        if ( event.key.match( allowedKeys ) === null ) {
+          event.preventDefault();
+        } else if ( event.key.match( /[Yy]/ ) ) {
+          event.preventDefault();
+          $this.val( 'Yes' );
+        } else if ( event.key.match( /[Nn]/ ) ) {
+          event.preventDefault();
+          $this.val( 'No' );
+        }
+      } );
+
+      // Use input event handlers to filter inputs that are accepted by the field. This is
+      //   especially important for responsive design since systems using virtual keyboards might
+      //   not fire keydown events.
+      this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell4 input', this.filterRetakeEntry.bind( this ) );
     }
 
     // —» Relevant user input must follow a numerical credits format. «—
@@ -680,10 +727,13 @@ class setUpGpaCalc {
       }
     }
 
-    // —» Ensure a retake status has been entered «—
+    // —» Ensure a retake status has been entered and inputs entered are consistent. «—
     chkRetakeStatus( $row: JQuery ) {
+      // Locate the fields in the row that triggered this handler call.
       const $rtInp: JQuery = $row.find( '.gfield_list_5_cell4 input' );
       const $rtGrdInp: JQuery = $row.find( '.gfield_list_5_cell5 input' );
+
+      // Force the retake field to be consistent with a retake grade having been entered.
       if ( !( !this.rowIsEmpty( $row ) && $rtInp.val().toString() === '' ) ) {
         if ( $rtInp.val().toString() == 'No' && $rtGrdInp.val().toString() !== '' ) {
           $rtInp.val( 'Yes' );
