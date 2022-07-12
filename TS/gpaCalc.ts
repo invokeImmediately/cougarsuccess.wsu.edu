@@ -37,7 +37,7 @@ interface gradeLookup {
  *   using the Gravity Forms plugin. The Gravity Forms version this script was last tested with was
  *   2.6.4.
  *
- * @version 0.13.0
+ * @version 0.13.1 - Filter course retake fields
  *
  * @author Daniel C. Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/JS/gpaCalc.js
@@ -59,12 +59,12 @@ interface gradeLookup {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: PERSISTENT DOCUMENTATION for final output................................................72
-// §2: SETUPGPACALC class.......................................................................96
-//   §2.1: Constructor initiated operations....................................................217
-//   §2.2: Event initiated operations..........................................................525
-//   §2.3: Utility methods.....................................................................668
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................740
+// §1: PERSISTENT DOCUMENTATION for final output................................................71
+// §2: SETUPGPACALC class.......................................................................95
+//   §2.1: Constructor initiated operations....................................................216
+//   §2.2: Event initiated operations..........................................................585
+//   §2.3: Utility methods.....................................................................728
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................800
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -361,16 +361,43 @@ class setUpGpaCalc {
 
     // —» Input entered into course retake indicator fields must follow conventions. «—
     filterRetakeEntry( e: Event) {
-      const allowedInp = new RegExp( '[No|Yes]', 'g' );
+      const allowedInp = new RegExp( '^No$|^Yes$', 'g' );
       const $fld = $( e.target );
       let curVal = $fld.val().toString();
       const matchRes = curVal.match( allowedInp );
-      if ( matchRes !== null ) {
-        // 1. Try the combination Nn. If found, note the position of the match.
-        // 2. Try the combination Yy. If found, note the position of the match.
-        // 3. If both Yy and Nn were found, keep the one that occurred first in the string.
-        // 4. If not, handle either Yy or Nn as Yes or No, respectively.
-        // 5. If neither possibility was encountered, clear the input.
+      if ( matchRes === null ) {
+        console.log( 'Checking garbled retake match.' );
+        let noMtchPos: null | number = null;
+        let yesMtchPos: null | number = null;
+
+        // Try the combination Nn. If found, note the position of the match.
+        let nxtMtchRes = curVal.match( /[Nn]/ );
+        if ( nxtMtchRes !== null ) {
+          noMtchPos = nxtMtchRes.index;
+          console.log( `noMtchPos = ${noMtchPos}` );
+        }
+
+        // Try the combination Yy. If found, note the position of the match.
+        nxtMtchRes = curVal.match( /[Yy]/ );
+        if ( nxtMtchRes !== null ) {
+          yesMtchPos = nxtMtchRes.index;
+          console.log( `yesMtchPos = ${yesMtchPos}` );
+        }
+
+        // If both Yy and Nn were found, keep the one that occurred first in the string.
+        // If not, handle either Yy or Nn as Yes or No, respectively.
+        // If neither possibility was encountered, clear the input.
+        if ( ( noMtchPos !== null && yesMtchPos !== null ) && noMtchPos < yesMtchPos ) {
+          $fld.val( 'No' );
+        } else if ( ( noMtchPos !== null && yesMtchPos !== null ) && noMtchPos > yesMtchPos ) {
+          $fld.val( 'Yes' );
+        } else if ( ( noMtchPos === null && yesMtchPos !== null ) ) {
+          $fld.val( 'Yes' );
+        } else if ( ( noMtchPos !== null && yesMtchPos === null ) ) {
+          $fld.val( 'No' );
+        } else {
+          $fld.val( '' );
+        }
       }
     }
 
@@ -470,7 +497,7 @@ class setUpGpaCalc {
       const allowedKeys: RegExp = new RegExp( allRetakeKeys + '|' + this.getAllowedNavKeys() );
 
       // Use keydown event handlers to restrict what keys are accepted for entering input.
-      this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_c3ll4 input', function( event ) {
+      this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_cell4 input', function( event ) {
         const $this: JQuery = $( this );
         const curVal: string = $this.val().toString();
         if ( event.key.match( allowedKeys ) === null ) {
@@ -846,5 +873,5 @@ class setUpGpaCalc {
   // Selector string for isolating the total earned credits field within the DOM.
   totCredsFldSel: '.gfield.gpa-calc-gf__tot-creds input',
 
-  inpChngDelay: 500
+  inpChngDelay: 250
 } );
