@@ -6,7 +6,7 @@
  * Gulp automation task definition file for setting up tasks that build CSS and JS files for use on
  *   the Cougar Success website, which is maintained in WSUWP.
  *
- * @version 0.0.0
+ * @version 0.1.0
  *
  * @link https://github.com/invokeImmediately/cougarsuccess.wsu.edu/blob/main/gulpfile.js
  * @author Daniel Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
@@ -28,28 +28,35 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: Gulp task dependencies..................................................................39
-// §2: Specification of build settings.........................................................55
-//   §2.1: logUpdate().........................................................................58
-// §3: Entry point: Set up of tasks............................................................70
-//   §3.1: Compile TS into JS..................................................................73
+// §1: Gulp task dependencies..................................................................40
+// §2: Specification of build settings.........................................................62
+//   §2.1: logUpdate().........................................................................65
+// §3: Entry point: Set up of tasks............................................................77
+//   §3.1: Compile TS into JS..................................................................80
+//   §3.2: Merge JS modules into single source file...........................................135
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §1: Gulp task dependencies
 
-// -------»  Import Node.js Modules  «-------
-const extName = require( 'gulp-extname' );
+// —» Import Node.js package modules for task automation «—
 const gulp = require( "gulp" );
-const preserveTsWs = require( "gulp-preserve-typescript-whitespace" );
-const prettier = require( "gulp-prettier" );
 const pump = require( "pump" );
-const terser = require( 'gulp-terser' );
 
-// -------»  Import Node.js Modules  «-------
+// —» Import Node.js package modules for working with TypeScript and JavaScript «—
 const ts = require( "gulp-typescript" );
 const tsProject = ts.createProject( "tsconfig.json" );
+const preserveTsWs = require( "gulp-preserve-typescript-whitespace" );
+const prettier = require( "gulp-prettier" );
+const terser = require( 'gulp-terser' );
+const extName = require( 'gulp-extname' );
+const concat = require( 'gulp-concat' );
+const replace = require( 'gulp-replace' );
+
+// —» Define task names «—
 const compTsTaskNm = "compileTs"
+const combJsModlTaskNm = "combineJs"
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // §2: Additional operations performed by task
@@ -97,7 +104,7 @@ gulp.task( compTsTaskNm, function ( cb ) {
     } ),
     extName( '.min.js' ),
     gulp.dest( 'JS' ).on( 'end', () => {
-      logUpdate( "Minified JS file has been written; '\u001b[36m" + compTsTaskNm + "\u001b[39m' now truly finished." );
+      logUpdate( "Minified JS file has been written; task '\u001b[36m" + compTsTaskNm + "\u001b[39m' now truly finished." );
     } )
   ], cb );
 } );
@@ -123,3 +130,39 @@ gulp.task( compTsTaskNm, function ( cb ) {
 //     ], cb
 //   );
 // });
+
+//////////
+//// §3.2: Merge JS modules into single source file for distribution to Custom JavaScript Editor
+
+function fixFileHeaderComments( match, p1, offset, string ) {
+  var replacementStr = match;
+  if ( offset == 0 ) {
+    replacementStr = '/*!';
+  }
+  return replacementStr;
+}
+
+gulp.task( combJsModlTaskNm, function ( cb ) {
+  pump( [
+    gulp.src( [
+      'JS/stageUrlPatcher.js',
+      'JS/gpaCalc.js',
+    ] ),
+    replace( /^(\/\*)(?!!)(?!-)/g, fixFileHeaderComments ).on( 'end', () => {
+      logUpdate( 'Removed comments not marked as persistent.' );
+    } ),
+    concat( 'cust-js-ed-src.js' ).on( 'end', () => {
+      logUpdate( 'Finished combining separate script modules into a single file.');
+    } ),
+    gulp.dest( 'JS' ).on( 'end', () => {
+      logUpdate( 'Unminified JS file has been written.' );
+    } ),
+    terser( { output: { comments: /^!/ } } ).on( 'end', () => {
+      logUpdate( 'Finished minifying JS with Terser.' );
+    } ),
+    extName( '.min.js' ),
+    gulp.dest( 'JS' ).on( 'end', () => {
+      logUpdate( "Minified JS file has been written; task '\u001b[36m" + compTsTaskNm + "\u001b[39m' now complete." );
+    } )
+  ], cb );
+} );
