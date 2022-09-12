@@ -56,15 +56,17 @@ interface gradeLookup {
  *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **************************************************************************************************/
 
+// TODO: Decide whether the yes/no flag on course repeats is too confusing.
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 // -----------------
-// §1: PERSISTENT DOCUMENTATION for final output................................................71
-// §2: SETUPGPACALC class.......................................................................95
-//   §2.1: Constructor initiated operations....................................................217
-//   §2.2: Event initiated operations..........................................................601
-//   §2.3: Utility methods.....................................................................743
-// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................818
+// §1: PERSISTENT DOCUMENTATION for final output................................................72
+// §2: SETUPGPACALC class.......................................................................96
+//   §2.1: Constructor initiated operations....................................................220
+//   §2.2: Event initiated operations..........................................................612
+//   §2.3: Utility methods.....................................................................779
+// §3: Code execution TRIGGERED BY GRAVITY FORM RENDERING......................................857
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,6 +122,8 @@ class setUpGpaCalc {
     inpChkTimerID: null | number;
     inpChngDelay: number;
     gradeLookupTbl: gradeLookup;
+    retakenCreds: number;
+    retakenPts: number;
     sbmtBtnSel: string;
     semGpa: number;
     semGpaCoursesListStr: string;
@@ -189,15 +193,15 @@ class setUpGpaCalc {
         "F": 0
       };
 
-      // ···> If it is present, obtain a reference to the GPA Calculator Gravity Forms form within
-      //     the web page's DOM. <···
+      // ·> If it is present, obtain a reference to the GPA Calculator Gravity Forms form within
+      //    the web page's DOM. <·
       this.$form = $( formSel );
       if ( this.$form.length !== 1 ) {
         return;
       }
 
-      // ···> Set the initial added course details rows to the default zero; Gravity Forms only has
-      //      one list field row present when a form freshly loads. <···
+      // ·> Set the initial added course details rows to the default zero; Gravity Forms only has
+      //    one list field row present when a form freshly loads. <·
       this.crsDtlsRowsAdded = 0;
 
       // Since a GPA Calculator was found, proceed with additional set up operations.
@@ -219,8 +223,8 @@ class setUpGpaCalc {
     // —» Add more rows to the course details list field if necessary. «—
     addMoreInitialRows() {
 
-      // ···> Gravity forms starts list fields with one row, so add more to make it more convenient
-      //     for the user. But start by checking to see how many rows already exist. <···
+      // ·> Gravity forms starts list fields with one row, so add more to make it more convenient
+      //     for the user. But start by checking to see how many rows already exist. <·
       this.$crsFldsRows = this.$courseFlds.find( '.gfield_list_group' );
       this.crsDtlsRowsAdded = this.$crsFldsRows.length - 1;
       if ( this.crsDtlsRowsAdded < 5 ) {
@@ -391,9 +395,9 @@ class setUpGpaCalc {
           console.log( `yesMtchPos = ${yesMtchPos}` );
         }
 
-        // ···> If both Yy and Nn were found, keep the one that occurred first in the string.
-        //      If not, handle either Yy or Nn as Yes or No, respectively.
-        //      If neither possibility was encountered, clear the input. <···
+        // ·> If both Yy and Nn were found, keep the one that occurred first in the string. If not,
+        //    handle either Yy or Nn as Yes or No, respectively. If neither possibility was
+        //    encountered, clear the input. <·
         if ( ( noMtchPos !== null && yesMtchPos !== null ) && noMtchPos < yesMtchPos ) {
           $fld.val( 'No' );
         } else if ( ( noMtchPos !== null && yesMtchPos !== null ) && noMtchPos > yesMtchPos ) {
@@ -484,22 +488,28 @@ class setUpGpaCalc {
       this.$form.on( 'keydown', this.courseFldsSel + ' .gfield_list_5_cell2 input, ' + this.courseFldsSel + ' .gfield_list_5_cell5 input', function( event ) {
         const $this: JQuery = $( this );
         const curVal: string = $this.val().toString();
+        const inpElem: HTMLInputElement = <HTMLInputElement>$this[0];
+
+        // ·> Use input element selection state properties to allow overwriting of inputs that
+        //    are actively selected. <·
+        const selStart: number = inpElem.selectionStart;
+        const selEnd: number = inpElem.selectionEnd;
         if ( event.key.match( allowedKeys ) === null ) {
           event.preventDefault();
-        } else if ( event.key.match( new RegExp( '^' + allGradeKeys + '$', 'g' ) ) && curVal.match( modLetGrades ) ) {
+        } else if ( event.key.match( new RegExp( '^' + allGradeKeys + '$', 'g' ) ) && curVal.match( modLetGrades ) && selStart == selEnd ) {
           event.preventDefault();
-        } else if ( event.key.match( new RegExp( '^' + letterGradeKeys + '$', 'g' ) ) && curVal.match( new RegExp( '^' + letterGradeKeys + '$', 'g' ) ) ) {
+        } else if ( event.key.match( new RegExp( '^' + letterGradeKeys + '$', 'g' ) ) && curVal.match( new RegExp( '^' + letterGradeKeys + '$', 'g' ) ) && selStart == selEnd ) {
           event.preventDefault();
-        } else if ( event.key == '+' && curVal.match( /[AaFf]/ ) ) {
+        } else if ( event.key == '+' && curVal.match( /[AaFf]/ ) && selStart == selEnd ) {
           event.preventDefault();
-        } else if ( event.key == '-' && curVal.match( /[Ff]/ ) ) {
+        } else if ( event.key == '-' && curVal.match( /[Ff]/ ) && selStart == selEnd ) {
           event.preventDefault();
         }
       } );
 
-      // Use input event handlers to filter inputs that are accepted by the field. This is
-      //   especially important for responsive design since systems using virtual keyboards might
-      //   not fire keydown events.
+      // ·> Use input event handlers to filter inputs that are accepted by the field. This is
+      //    especially important for responsive design since systems using virtual keyboards might
+      //    not fire keydown events. <·
       this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell2 input, ' + this.courseFldsSel + ' .gfield_list_5_cell5 input', this.filterGradesEntry.bind( this ) );
     }
 
@@ -518,15 +528,17 @@ class setUpGpaCalc {
         } else if ( event.key.match( /[Yy]/ ) ) {
           event.preventDefault();
           $this.val( 'Yes' );
+          $this.trigger( 'change' );
         } else if ( event.key.match( /[Nn]/ ) ) {
           event.preventDefault();
           $this.val( 'No' );
+          $this.trigger( 'change' );
         }
       } );
 
-      // Use input event handlers to filter inputs that are accepted by the field. This is
-      //   especially important for responsive design since systems using virtual keyboards might
-      //   not fire keydown events.
+      // ·> Use input event handlers to filter inputs that are accepted by the field. This is
+      //    especially important for responsive design since systems using virtual keyboards might
+      //    not fire keydown events. <·
       this.$form.on( 'input', this.courseFldsSel + ' .gfield_list_5_cell4 input', this.filterRetakeEntry.bind( this ) );
     }
 
@@ -564,34 +576,34 @@ class setUpGpaCalc {
       this.$form.on( 'input', this.courseFldsSel + ' input', function ( e: Event ) {
         const $input: JQuery = $( this );
 
-        // Set up an automatic triggering of the change event if the user pauses on entering
-        //   additional input.
+        // ·> Set up an automatic triggering of the change event if the user pauses on entering
+        //    additional input. <·
         if ( inst.inpChkTimerID !== null ) {
           clearTimeout( inst.inpChkTimerID );
         }
         inst.inpChkTimerID = setTimeout( inst.trigCourseDetailsInpChng.bind( inst ), inst.inpChngDelay, $input );
-        // TODO: Filter incorrect inputs; these may be especially possible when users are relying
-        //   on virtual keyboards.
+        // ·> TODO: Filter incorrect inputs; these may be especially possible when users are relying
+        //   on virtual keyboards. <·
       } );
 
       // Check course details row after associated input changes are committed.
-      this.$form.on( 'change', this.totCredsFldSel + ', ' + this.curCumlGpaFldSel + ' input', function ( e: Event ) {
+      this.$form.on( 'change', this.totCredsFldSel + ', ' + this.curCumlGpaFldSel, function ( e: Event ) {
         const $input: JQuery = $( this );
         inst.checkCumlAcadFlds( e, $input );
       } );
 
       // Handle input changes associated with cumulative academic performance fields.
-      this.$form.on( 'input', this.totCredsFldSel + ', ' + this.curCumlGpaFldSel + ' input', function ( e: Event ) {
+      this.$form.on( 'input', this.totCredsFldSel + ', ' + this.curCumlGpaFldSel, function ( e: Event ) {
         const $input: JQuery = $( this );
 
-        // Set up an automatic triggering of the change event if the user pauses on entering
-        //   additional input.
+        // ·> Set up an automatic triggering of the change event if the user pauses on entering
+        //    additional input. <·
         if ( inst.cumlInpChkTimerID !== null ) {
           clearTimeout( inst.cumlInpChkTimerID );
         }
         inst.cumlInpChkTimerID = setTimeout( inst.trigCumlFldsInpChng.bind( inst ), inst.inpChngDelay, $input );
-        // TODO: Filter incorrect inputs; these may be especially possible when users are relying
-        //   on virtual keyboards.
+        // ·> TODO: Filter incorrect inputs; these may be especially possible when users are relying
+        //    on virtual keyboards. <·
       } );
 
       // TODO: Finish writing function
@@ -648,6 +660,8 @@ class setUpGpaCalc {
       console.log( 'Recalculating semester GPA.' );
       this.semGpa = 0;
       this.totSemCreds = 0;
+      this.retakenCreds = 0;
+      this.retakenPts = 0;
       const $rows: JQuery = this.$courseFlds.find( '.gfield_list_group' );
       const inst: setUpGpaCalc = this;
       const coursesUsed: string[] = [];
@@ -659,7 +673,7 @@ class setUpGpaCalc {
         const $course: JQuery = $this.find( '.gfield_list_5_cell1 input' );
         const $grade: JQuery = $this.find( '.gfield_list_5_cell2 input' );
         const gradeStr: string = $grade.val().toString();
-        const gradeVal: null | number = $grade.val() !== "" ?
+        const gradeVal: null | number = gradeStr !== "" ?
           inst.gradeLookupTbl[ gradeStr.toUpperCase() ] :
           null;
         const $credits: JQuery = $this.find( '.gfield_list_5_cell3 input' );
@@ -669,13 +683,28 @@ class setUpGpaCalc {
           inst.totSemCreds += credits;
           coursesUsed.push( $course.val().toString() );
         }
+
+        // Factor in the possibility that this course is a retake.
+        const $isRetake: JQuery = $this.find( '.gfield_list_5_cell4 input' );
+        const $prevGrade: JQuery = $this.find( '.gfield_list_5_cell5 input' );
+        const prevGradeStr: string = $prevGrade.val().toString();
+        const prevGradeVal: null | number = prevGradeStr !== "" ?
+          inst.gradeLookupTbl[ prevGradeStr.toUpperCase() ] :
+          null;
+
+        // ·> Course repeats are allowed in accordance with academic regulation 34 if the
+        //    in the previous attempt for the course, the student received a C- or below. <·
+        if ( $isRetake.val().toString() == 'Yes' && prevGradeVal !== null && prevGradeVal <= 1.7 && credits > 0 && prevGradeVal < gradeVal ) {
+          inst.retakenCreds += credits;
+          inst.retakenPts += prevGradeVal * credits;
+        }
       } );
 
       // Complete the averaging calculation, if any, and report the result to the user.
       if( this.totSemCreds > 0 ) {
 
-        // Before reporting results to reduce performance impacts, collapse the array of classes
-        //   that will be included in the GPA calculation into a comma separated string.
+        // ·> Before reporting results to reduce performance impacts, collapse the array of classes
+        //    that will be included in the GPA calculation into a comma separated string. <·
         const courseList = coursesUsed.reduce( (
             prevRslt: string,
             curVal: string,
@@ -694,8 +723,8 @@ class setUpGpaCalc {
         this.$semGpaLbl.html( this.semGpaCoursesListStr + courseList );
       } else {
 
-        // Since there are no courses being used in the GPA calculation, report the default 
-        //   "awaiting input" message to the user.
+        // ·> Since there are no courses being used in the GPA calculation, report the default
+        //    "awaiting input" message to the user. <·
         this.$semGpaLbl.html( this.semGpaNoCoursesMsg );
 
         // Be sure the reset the semester GPA field to blank.
@@ -721,21 +750,29 @@ class setUpGpaCalc {
         parseFloat( this.$curCumlGpa.val().toString() ) :
         null;
 
+      // Ensure purportedly retaken credits are greater than or equal to total credits.
+      if ( totCreds !== null && totCreds < this.retakenCreds ) {
+        this.retakenCreds = 0;
+        this.retakenPts = 0;
+      }
+
       if ( curCumlGpa !== null !== null && totCreds !== null && semGpaFldVal ) {
-        this.futTotCreds = totCreds + this.totSemCreds;
-        this.futCumlGpa = ( curCumlGpa * totCreds + this.semGpa * this.totSemCreds ) / this.futTotCreds;
+        this.futTotCreds = totCreds + this.totSemCreds - this.retakenCreds;
+        this.futCumlGpa = ( curCumlGpa * totCreds + this.semGpa * this.totSemCreds - this.retakenPts ) / this.futTotCreds;
         this.$cumlGpa.val( this.futCumlGpa.toFixed( 2 ) );
       } else {
         this.$cumlGpa.val( '' );
       }
 
-      // Cre1ate an index whose value is mapped to the appropriate message in the array containing a 
-      //   list of messages about how the cumulative GPA field is responding to form state.
+      // ·> Create an index whose value is mapped to the appropriate message in the array
+      //   containing a list of messages about how the cumulative GPA field is responding to form
+      //   state. <·
       const msgIdx: number = ( ( semGpaFldVal !== null ? 1 : 0 ) << 2 ) |
         ( ( totCreds !== null ? 1 : 0 ) << 1 ) |
         ( curCumlGpa !== null ? 1 : 0 );
 
-      // Use the message index to report field state to the
+      // Use the message index to report field state to the user.
+      // TODO: May need to update this to mention retaken grades.
       this.$cumlGpaLbl.html( this.cumlGpaMsgs[ msgIdx ] );
     }
 
@@ -768,16 +805,19 @@ class setUpGpaCalc {
       const $rtInp: JQuery = $row.find( '.gfield_list_5_cell4 input' );
       const $rtGrdInp: JQuery = $row.find( '.gfield_list_5_cell5 input' );
 
-      // Force the retake field to be consistent with a retake grade having been entered.
-      if ( !( !this.rowIsEmpty( $row ) && $rtInp.val().toString() === '' ) ) {
-        if ( $rtInp.val().toString() == 'No' && $rtGrdInp.val().toString() !== '' ) {
-          $rtInp.val( 'Yes' );
-        }
-        return;
-      }
-      if ( $rtGrdInp.val().toString() === '' ) {
-        $rtInp.val( 'No' );
-      } else {
+      // TODO: Remove this code; it has proven to be unhelpful/confusing during testing.
+      // if ( !( !this.rowIsEmpty( $row ) && $rtInp.val().toString() === '' ) ) {
+      //   if ( $rtInp.val().toString() == 'No' && $rtGrdInp.val().toString() !== '' ) {
+      //     $rtInp.val( 'Yes' );
+      //   }
+      //   return;
+      // }
+
+      // The retake field must be either "No" or "Yes."
+      const rtGrd = $rtGrd.val().toString();
+      if ( $rtGrdInp.val().toString() != '' && rtGrd == '' ) {
+        $rtInp.val( 'Yes' );
+      } else if ( rtGrd != '' || rtGrd != 'No' ) {
         $rtInp.val( 'Yes' );
       }
     }
@@ -841,8 +881,8 @@ class setUpGpaCalc {
   // Default description for the semester GPA field when no courses have been entered.
   semGpaNoCoursesMsg: 'Waiting for course details to be entered.',
 
-  // Description substring for the semester GPA field description for indicating to the user what
-  //   courses have been factored into the calculation.
+  // —» Description substring for the semester GPA field description for indicating to the user what
+  //    courses have been factored into the calculation. «—
   semGpaCoursesListStr: 'This GPA is based on the details entered for courses: ',
 
   // Selector string for isolating the semester GPA field within the DOM.
@@ -854,32 +894,32 @@ class setUpGpaCalc {
     // Default description for the cumulative GPA field when no information has been entered.
     noInputs: "Waiting for current cumulative GPA, total credits attempted, and this semester's course details to be entered.",
 
-    // Default description for the cumulative GPA field when only the cumulative GPA has been
-    //   provided by the user.
+    // —» Default description for the cumulative GPA field when only the cumulative GPA has been
+    //    provided by the user. «—
     onlyCumlGpa: "Waiting for total credits earned and this semester's course details to be entered.",
 
-    // Default description for the cumulative GPA field when only the total credits has been
-    //   provided by the user.
+    // —» Default description for the cumulative GPA field when only the total credits has been
+    //    provided by the user. «—
     onlyTotCreds: "Waiting for current cumulative GPA and this semester's course details to be entered.",
 
-    // Default description for the cumulative GPA field when no details on courses for the current
-    //   semester have been entered.
+    // —» Default description for the cumulative GPA field when no details on courses for the
+    //    current semester have been entered. «—
     noCourses: "Waiting for this semester's course details to be entered.",
 
-    // Default description for the cumulative GPA field when only the cumulative GPA has been
-    //   provided by the user.
+    // —» Default description for the cumulative GPA field when only the cumulative GPA has been
+    //    provided by the user. «—
     onlyCourses: "Waiting for current cumulative GPA and total credits earned to be entered.",
 
-    // Default description for the cumulative GPA field when only the total credits still needs
-    //   to be provided by the user.
+    // —» Default description for the cumulative GPA field when only the total credits still needs
+    //    to be provided by the user. «—
     noTotCreds: "Waiting for total credits earned to be entered",
 
-    // Default description for the cumulative GPA field when only the current cumulative GPA still
-    //   needs to be provided by the user.
+    // —» Default description for the cumulative GPA field when only the current cumulative GPA
+    //    needs to be provided by the user. «—
     noCumlGpa: "Waiting for total credits earned to be entered",
 
-    // Description substring for the semester GPA field description for indicating to the user what
-    //   courses have been factored into the calculation.
+    // —» Description substring for the semester GPA field description for indicating to the user
+    //    what courses have been factored into the calculation. «—
     allInputs: 'This anticipated future cumulative GPA is based on the current cumulative GPA, total earned credits, and the details for the courses used to calculate the anticipated GPA for this semester. ',
   },
 
