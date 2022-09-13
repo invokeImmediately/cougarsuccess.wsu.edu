@@ -4,13 +4,11 @@
 ▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
 FOR THE COUGAR SUCCESS WEBSITE
 -----------------------------------------------------------
-@version 0.6.1
+@version 0.6.2
 @author Daniel Rieck
   [daniel.rieck@wsu.edu]
-  (https://github.com/invokeImmediately)`
-@license MIT - Copyright © 2021
-  Washington State University
-  https://mit-license.org/
+  (https://github.com/invokeImmediately)
+@license MIT - Copyright © 2022
 **********************************************************/
 
 /*! —» Issue fix: Avoid fuzzy downsampled images on Chrome «— */
@@ -19,127 +17,7 @@ body {
   image-rendering: -webkit-optimize-contrast;
 }
 
-/*! —» Issue Fix: WDS paragraph elements → Hide when empty «— */
-
-p:empty {
-  display: none !important;
-}
-
-/*! —» Issue fixes: WDS global header module → Bordering «— */
-
-.wsu-header-global:after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: calc((100vw - 100%)/ -2);
-    right: calc((100vw - 100%)/ -2);
-    top: 100%;
-    /* top: calc(100% - 3px); */
-    width: auto;
-    height: 3px;
-    background-color: #e6e6e6;
-    /* bottom: 0; */
-}
-
-/*! —» Enhancement: WDS site header modules → Coloring «— */
-
-.wsu-header-site {
-  background-color: #333;
-  color: #fff;
-}
-
-.wsu-header-site__subtitle,
-.wsu-header-site__title {
-  color: inherit;
-}
-
-/*! —» Issue fixes: WDS hero banner modules → Presentation «— */
-
-.wsu-hero--no-bottom-bleed .wsu-image-frame--fill {
-  bottom: 0;
-}
-
-.wsu-hero--no-bottom-bleed:after {
-  content: none;
-}
-
-/*! —» Issue fixes: WDS primary navigation modules → Presentation «— */
-
-.wsu-navigation-site-vertical--color-dark .wsu-navigation-site-vertical__panel {
-  border: 0;
-}
-
-.wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:focus, .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:hover {
-    border-right: 0;
-  color: black;
-}
-
-.wsu-navigation-site-vertical__open-button {
-  border: 0;
-}
-
-.wsu-navigation-site-vertical .wsu-menu a+button:focus::before, .wsu-navigation-site-vertical .wsu-menu a+button:hover::before, .wsu-navigation-site-vertical .wsu-menu button:first-child:focus::before, .wsu-navigation-site-vertical .wsu-menu button:first-child:hover::before {
-    bottom: 50%;
-    transform: translateY(0.65rem);
-}
-
-.wsu-navigation-site-vertical .wsu-menu button:first-child {
-    padding-right: 50px;
-}
-
-/*! —» Issue fixes: WDS content wrapper components → Overall presentation «— */
-
-.wsu-wrapper-site {
-  background-color: #f7f7f7;
-}
-
-.wsu-wrapper-content {
-  background-color: #fff;
-}
-
-.wsu-wrapper-content::before {
-  background-color: transparent;
-}
-
-.wsu-wrapper-content:first-child::before {
-  box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
-  top: -3px;
-}
-
-.wsu-wrapper-content::after {
-    bottom: 0;
-    content: "";
-    display: block;
-    position: absolute;
-    left: calc((100vw - 100%)/ -2);
-    right: calc((100vw - 100%)/ -2);
-    width: auto;
-    height: 3px;
-    background-color: #e6e6e6;
-}
-
-/*! —» Issue fix: WDS breadcrumb components → Home icon spacing «— */
-
-.breadcrumbs .wsu-i-home {
-  margin-right: .5rem;
-}
-
-/*! —» Issue fix: WDS list elements → Typographical sizing «— */
-
-ul ul,
-ol ol,
-ul ol,
-ol ul {
-  font-size: inherit;
-}
-
-/*! —» Issue fix: WDS list elements → Improve presentation when ordered and nested «— */
-
-ol li li li {
-  list-style-type: lower-roman;
-}
-
-/*! —» Issue fixes: WDS link elements → Coloring «— */
+/*! —» Issue fixes: WDS link elements → Coloring «— */
 
 .wsu-color-background--gray-85 a,
 .wsu-color-background--gray-95 a {
@@ -201,92 +79,114 @@ h6 a::after {
   background-color: white;
 }
 
-/*! —» Enhancement: Page header assemblies → Sharper presentation «— */
+/*! —» Issue fix: WDS list elements → Typographical sizing «— */
 
-.breadcrumbs {
-    border-bottom: 1px solid #e6e6e6;
-    box-sizing: border-box;
-    margin-bottom: 1.125rem;
-    padding-bottom: .625rem;
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+  font-size: inherit;
 }
 
-.wsu-column--white-text .breadcrumbs {
-  border-color: rgb(230 230 230 / 60%);
+/*! —» Issue fix: WDS list elements → Improve presentation when ordered and nested «— */
+
+ol li li li {
+  list-style-type: lower-roman;
 }
 
-h1::after {
-  background: linear-gradient(315deg, transparent 0, transparent calc(100% - 4.95rem), white calc(100% - 4.95rem), white 100%), repeating-linear-gradient(-45deg, #999 -1px, white 0, white 2px, #999 3px, #999 4px);
-  width: 100%
+/*! —» Issue Fix: WDS paragraph elements → Hide when empty «— */
+
+p:empty {
+  display: none !important;
 }
 
-.wsu-column--white-text h1::after {
-  background: repeating-linear-gradient(-45deg, rgb(230 230 230 / 60%) -1px, transparent 0, transparent 2px, rgb(230 230 230 / 60%) 3px, rgb(230 230 230 / 60%) 4px);
+/*! —» Issue fix: WDS breadcrumb components → Home icon spacing «— */
+
+.breadcrumbs .wsu-i-home {
+  margin-right: .5rem;
 }
 
-h1::before {
-  box-sizing: border-box;
-  border-right: .375rem solid transparent;  
-  border-top: .375rem solid #a60f2d;
+/*! —» Issue fixes: WDS content wrapper components → Overall presentation «— */
+
+.wsu-wrapper-site {
+  background-color: #f7f7f7;
+}
+
+.wsu-wrapper-content {
+  background-color: #fff;
+}
+
+.wsu-wrapper-content::before {
+  background-color: transparent;
+}
+
+.wsu-wrapper-content:first-child::before {
+  box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
+  top: -3px;
+}
+
+.wsu-wrapper-content::after {
     bottom: 0;
-    box-sizing: border-box;
-    content: '';
-    display: inline-block;
-    height: .375rem;
+    content: "";
+    display: block;
     position: absolute;
-    width: 6.87rem;
+    left: calc((100vw - 100%)/ -2);
+    right: calc((100vw - 100%)/ -2);
+    width: auto;
+    height: 3px;
+    background-color: #e6e6e6;
 }
 
-.wsu-hero__caption h1::before {
+/*! —» Issue fixes: WDS global header module  → Bordering «— */
+
+.wsu-header-global:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: calc((100vw - 100%)/ -2);
+    right: calc((100vw - 100%)/ -2);
+    top: 100%;
+    /* top: calc(100% - 3px); */
+    width: auto;
+    height: 3px;
+    background-color: #e6e6e6;
+}
+
+/*! —» Issue fixes: WDS hero banner modules → Presentation «— */
+
+.wsu-hero--no-bottom-bleed .wsu-image-frame--fill {
+  bottom: 0;
+}
+
+.wsu-hero--no-bottom-bleed:after {
   content: none;
 }
 
-/*! —» Enhancement: WDS link elements → Heading/hX-style «— */
+/*! —» Issue fixes: WDS primary navigation modules → Presentation «— */
 
-.hx-style-link:not(:hover) {
-  color: inherit;
-  text-decoration-color: transparent;
+.wsu-navigation-site-vertical--color-dark .wsu-navigation-site-vertical__panel {
+  border: 0;
 }
 
-.hx-style-link:hover {
-  text-decoration-color: inherit;
+.wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:focus, .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:hover {
+    border-right: 0;
+  color: black;
 }
 
-.hx-style-link::after {
-    content: '\F126';
-    font-family: wsu-icons;
-    font-size: .7em;
-  color: inherit;
-    margin-left: .5em;
-    text-decoration: none;
+.wsu-navigation-site-vertical__open-button {
+  border: 0;
 }
 
-/*! —» Issue fixes: Home page → Typographical sizing «— */
-
-@media only screen and (min-width: 993px) {
-  .home .wsu-hero .wsu-title,
-  .page-id-3252 .wsu-hero .wsu-title {
-    font-size: 3.5rem;
-    line-height: 1.2;
-  }
-
-  .home .wsu-hero .wsu-hero__caption,
-  .page-id-3252 .wsu-hero .wsu-hero__caption {
-    max-width: 960px;
-  }
+.wsu-navigation-site-vertical .wsu-menu a+button:focus::before, .wsu-navigation-site-vertical .wsu-menu a+button:hover::before, .wsu-navigation-site-vertical .wsu-menu button:first-child:focus::before, .wsu-navigation-site-vertical .wsu-menu button:first-child:hover::before {
+    bottom: 50%;
+    transform: translateY(0.65rem);
 }
 
-.home .breadcrumbs {
-  display: none;
+.wsu-navigation-site-vertical .wsu-menu button:first-child {
+    padding-right: 50px;
 }
 
-/*! —» Custom WDS element: Heading tail text «— */
-
-.hX-tail-text {
-  display: block;
-  font-size: 1rem;
-}
-
-/*! —» Issue fixes: WDS cards → Overall presentation «— */
+/*! —» Issue fixes: WDS card modules → Overall presentation «— */
 
 .wsu-card.wsu-color-background--white {
   border-bottom: 1px solid #e6e6e6;
@@ -298,94 +198,19 @@ h1::before {
   border-radius: 4px;
 }
 
-/*! —» Enhancement: FULL BLEED ROW DESIGN «— */
+/*! —» Issue fix: WDS card module → Advising cards design «— */
 
-.wsu-row.wsu-row--full-bleed:after {
-  bottom: 0;
-  content: "";
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+.advising-cards .advising-text {
+  margin-bottom: 0;
 }
 
-.wsu-row--full-bleed > .wsu-column {
-  z-index: 1;
+/*! —» Issue fixes: WSUWP Content Syndicate modules → Font sizing «— */
+
+.wsuwp-content-syndicate-list {
+  font-size: inherit;
 }
 
-/*! —» Enhancement: WDS column components → Full-bleed row coloring «— */
-
-.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
-  margin-left: calc((100vw - 100%)/ -2);
-  margin-right: calc((100vw - 100%)/ -2);
-}
-
-@media screen and (min-width: 1260px) {
-  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
-    margin-left: calc(((100vw - 100%) - 60px)/ -2);
-    margin-right: calc(((100vw - 100%) - 60px)/ -2);
-  }
-}
-
-@media screen and (min-width: 1260px) {
-  .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
-    margin-left: calc(((100vw - 100%) - 280px)/ -2);
-    margin-right: calc(((100vw - 100%) - 280px)/ -2);
-  }
-  
-  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
-    margin-left: calc(((100vw - 100%) - 60px)/ -2);
-    margin-right: calc(((100vw - 100%) - 60px)/ -2);
-  }
-}
-
-.wsu-row--full-bleed.wsu-color-background--gray-0:after {
-  background-color: #f7f7f7;
-}
-
-.wsu-row--full-bleed.wsu-color-background--gray-5:after {
-  background-color: #f2f2f2;
-}
-
-.wsu-row--full-bleed.wsu-color-background--gray-10:after {
-  background-color: #e6e6e6;
-}
-
-.wsu-row--full-bleed.wsu-color-background--gray-85:after {
-  background-color: #262626;
-}
-
-.wsu-row--full-bleed.wsu-color-background--gray-95:after {
-  background-color: #262626;
-}
-
-/*! —» Enhancement: WDS hero banner modules → Design variants «— */
-
-.wsu-hero--hide-tail {
-  overflow-y: hidden;
-}
-
-.wsu-hero--shadow-text .wsu-title {
-  text-shadow: 0 0 1px #000, 0 0 3px rgb(0 0 0 / 50%), 0 0 5px  rgb(0 0 0 / 50%), 0 0 16px #000, 0 0 24px #000, 0 0 32px #000;
-}
-
-.wsu-hero--box-bg .wsu-hero__caption:before {
-  background: rgb(0 0 0 / 65%);
-}
-
-.wsu-hero--box-bg-darker .wsu-hero__caption:before {
-  background: rgb(0 0 0 / 85%);
-}
-
-.wsu-hero--invert-axis .wsu-hero__caption {
-  margin-left: auto;
-}
-
-.wsu-hero--invert-axis .wsu-hero__caption:before {
-  clip-path: polygon(100% 0, 100% 100%, 80px 100%, 0 calc(100% - 100px), 0 0);
-}
-
-/*! —» Issue fixes: TablePress modules → Overall presentation «— */
+/*! —» Issue fixes: TablePress modules → Overall presentation «— */
 
 .tablepress thead th,
 .dataTables_wrapper .tablepress.dataTable thead th:not(:hover):not(:focus) {
@@ -400,18 +225,32 @@ h1::before {
   border-bottom-color: #bbb;
 }
 
-/*! —» Enhancement: WDS accordion component → Improved interaction reactivity «— */
+/*! —» Issue fix: Gravity Forms → Select field indicator «— */
 
-.wsu-accordion__content {
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
+select.gfield_select:not([multiple]) {
+background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
+  padding-right:2.5rem;
 }
 
-.wsu-accordion--open .wsu-accordion__title:hover + .wsu-accordion__content {
-  border-color: #ccc;
+select.gfield_select:not([multiple]):hover {
+background-image: linear-gradient(45deg,transparent 50%,#606060 50%),linear-gradient(135deg,#606060 50%,transparent 50%),radial-gradient(#c0c0c0 70%,transparent 75%);
 }
 
-/*! —» Issue Fixes: Tribe Events calendar assemblies → Overall presentation «— */
+select.gfield_select:not([multiple]):focus {
+background-image: linear-gradient(45deg,transparent 50%,#d0d0d0 50%),linear-gradient(135deg,#d0d0d0 50%,transparent 50%),radial-gradient(#303030 70%,transparent 75%);
+}
+
+select.gfield_select:not([multiple]):active {
+background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
+}
+
+/*! —» Issue fix: Gravity Forms → Choice field layout «— */
+
+.gform_wrapper.gravity-theme .gfield-choice-input+label {
+  max-width: calc(100% - 32px - 1.8em);
+}
+
+/*! —» Issue Fixes: Tribe Events calendar assemblies → Overall presentation «— */
 
 #tribe-events {
   padding-top: 0;
@@ -442,101 +281,7 @@ h1::before {
   transform: translateY(-50%);
 }
 
-/*! —» Enhancement: WDS icon ICON → Design variants «— */
-.wsu-i-arrow-right--offsite {
-  margin-right: 0;
-  position: relative;
-}
-
-.wsu-i-arrow-right--offsite:before {
-  display: inline-block;
-    font-size: .6em;
-    transform: translate(-15%, 40%) rotate(-45deg);
-    margin-left: .5em;
-}
-
-@media not all and (prefers-reduced-motion) {
-  a:hover .wsu-i-arrow-right--offsite:before {
-    transform: rotate(-45deg);
-    transition: transform 0.2s ease;
-  }
-}
-
-/*! —» Enhancement: WDS separator component → Design variants «— */
-
-hr:not([class*=separator--style-]) {
-  background-color: #f7f7f7;
-    border: 1px solid #e7e7e7;
-  box-sizing: border-box;
-  height: .375rem;
-    margin: 3.125rem 0;
-}
-
-.wsu-separator--subtle {
-  border: 1px solid #e7e7e7 !important;
-}
-
-/*! —» Atomic CSS: Width «— */
-
-.mw-1x {
-  max-width: 900px;
-}
-
-.w-full {
-  width: 100%;
-}
-
-/*! —» Atomic CSS: Grid «— */
-
-.dy-gr {
-  display: grid;
-}
-
-.alni-start {
-  align-items: start;
-}
-
-.alns-end {
-  align-self: end;
-}
-
-/*! —» Atomic CSS: Font weights «— */
-
-.fw-lb {
-  font-weight: 300;
-}
-
-.fw-nb {
-  font-weight: 400;
-}
-
-.fw-sb {
-  font-weight: 600;
-}
-
-.fw-b {
-  font-weight: 700;
-}
-
-.fw-eb {
-  font-weight: 800;
-}
-
-/*! —» Atomic CSS: Responsive design «— */
-
-@media (max-width: 768px) {
-  .hide-on-tablet {
-    display: none !important;
-  }
-}
-
-@media (min-width: 769px) {
-  .show-on-tablet {
-    display: none !important;
-  }
-}
-
-/*! —» Issue Fixes: News page assemblies → Overall presentation «— */
+/*! —» Issue Fixes: News page assemblies → Overall presentation «— */
 
 .archive .wsu-meta-byline {
   display: none;
@@ -632,16 +377,233 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   margin-bottom: 0;
 }
 
-/*! —» Issue fixes: WSUWP Content Syndicate modules → Font sizing «— */
+/*! —» Issue fixes: Home page → Typographical sizing «— */
 
-.wsuwp-content-syndicate-list {
-  font-size: inherit;
+@media only screen and (min-width: 993px) {
+  .home .wsu-hero .wsu-title,
+  .page-id-3252 .wsu-hero .wsu-title {
+    font-size: 3.5rem;
+    line-height: 1.2;
+  }
+
+  .home .wsu-hero .wsu-hero__caption,
+  .page-id-3252 .wsu-hero .wsu-hero__caption {
+    max-width: 960px;
+  }
 }
 
-/*! —» Atomic CSS: Text transformations «— */
+.home .breadcrumbs {
+  display: none;
+}
 
-.tt-upper {
-  text-transform: uppercase;
+/*! —» Enhancement: WDS site header modules → Coloring «— */
+
+.wsu-header-site {
+  background-color: #333;
+  color: #fff;
+}
+
+.wsu-header-site__subtitle,
+.wsu-header-site__title {
+  color: inherit;
+}
+
+/*! —» Enhancement: Page header assemblies → Sharper presentation «— */
+
+.breadcrumbs {
+    border-bottom: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    margin-bottom: 1.125rem;
+    padding-bottom: .625rem;
+}
+
+.wsu-column--white-text .breadcrumbs {
+  border-color: rgb(230 230 230 / 60%);
+}
+
+h1::after {
+  background: linear-gradient(315deg, transparent 0, transparent calc(100% - 4.95rem), white calc(100% - 4.95rem), white 100%), repeating-linear-gradient(-45deg, #999 -1px, white 0, white 2px, #999 3px, #999 4px);
+  width: 100%
+}
+
+.wsu-column--white-text h1::after {
+  background: repeating-linear-gradient(-45deg, rgb(230 230 230 / 60%) -1px, transparent 0, transparent 2px, rgb(230 230 230 / 60%) 3px, rgb(230 230 230 / 60%) 4px);
+}
+
+h1::before {
+  box-sizing: border-box;
+  border-right: .375rem solid transparent;  
+  border-top: .375rem solid #a60f2d;
+    bottom: 0;
+    box-sizing: border-box;
+    content: '';
+    display: inline-block;
+    height: .375rem;
+    position: absolute;
+    width: 6.87rem;
+}
+
+.wsu-hero__caption h1::before {
+  content: none;
+}
+
+/*! —» Enhancement: WDS link elements → Heading/hX-style «— */
+
+.hx-style-link:not(:hover) {
+  color: inherit;
+  text-decoration-color: transparent;
+}
+
+.hx-style-link:hover {
+  text-decoration-color: inherit;
+}
+
+.hx-style-link::after {
+    content: '\F126';
+    font-family: wsu-icons;
+    font-size: .7em;
+  color: inherit;
+    margin-left: .5em;
+    text-decoration: none;
+}
+
+/*! —» Enhancement: WDS heading element → Heading tail text «— */
+
+.hX-tail-text {
+  display: block;
+  font-size: 1rem;
+}
+
+/*! —» Enhancement: WDS column components → Full-bleed row design «— */
+
+.wsu-row.wsu-row--full-bleed:after {
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.wsu-row--full-bleed > .wsu-column {
+  z-index: 1;
+}
+
+/*! —» Enhancement: WDS column components → Full-bleed row coloring «— */
+
+.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+  margin-left: calc((100vw - 100%)/ -2);
+  margin-right: calc((100vw - 100%)/ -2);
+}
+
+@media screen and (min-width: 1260px) {
+  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+    margin-left: calc(((100vw - 100%) - 60px)/ -2);
+    margin-right: calc(((100vw - 100%) - 60px)/ -2);
+  }
+}
+
+@media screen and (min-width: 1260px) {
+  .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+    margin-left: calc(((100vw - 100%) - 280px)/ -2);
+    margin-right: calc(((100vw - 100%) - 280px)/ -2);
+  }
+  
+  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+    margin-left: calc(((100vw - 100%) - 60px)/ -2);
+    margin-right: calc(((100vw - 100%) - 60px)/ -2);
+  }
+}
+
+.wsu-row--full-bleed.wsu-color-background--gray-0:after {
+  background-color: #f7f7f7;
+}
+
+.wsu-row--full-bleed.wsu-color-background--gray-5:after {
+  background-color: #f2f2f2;
+}
+
+.wsu-row--full-bleed.wsu-color-background--gray-10:after {
+  background-color: #e6e6e6;
+}
+
+.wsu-row--full-bleed.wsu-color-background--gray-85:after {
+  background-color: #262626;
+}
+
+.wsu-row--full-bleed.wsu-color-background--gray-95:after {
+  background-color: #262626;
+}
+
+/*! —» Enhancement: WDS hero banner modules → Design variants «— */
+
+.wsu-hero--hide-tail {
+  overflow-y: hidden;
+}
+
+.wsu-hero--shadow-text .wsu-title {
+  text-shadow: 0 0 1px #000, 0 0 3px rgb(0 0 0 / 50%), 0 0 5px  rgb(0 0 0 / 50%), 0 0 16px #000, 0 0 24px #000, 0 0 32px #000;
+}
+
+.wsu-hero--box-bg .wsu-hero__caption:before {
+  background: rgb(0 0 0 / 65%);
+}
+
+.wsu-hero--box-bg-darker .wsu-hero__caption:before {
+  background: rgb(0 0 0 / 85%);
+}
+
+.wsu-hero--invert-axis .wsu-hero__caption {
+  margin-left: auto;
+}
+
+.wsu-hero--invert-axis .wsu-hero__caption:before {
+  clip-path: polygon(100% 0, 100% 100%, 80px 100%, 0 calc(100% - 100px), 0 0);
+}
+
+/*! —» Enhancement: WDS accordion component → Improved interaction reactivity «— */
+
+.wsu-accordion__content {
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+
+.wsu-accordion--open .wsu-accordion__title:hover + .wsu-accordion__content {
+  border-color: #ccc;
+}
+
+/*! —» Enhancement: WDS icon ICON → Design variants «— */
+.wsu-i-arrow-right--offsite {
+  margin-right: 0;
+  position: relative;
+}
+
+.wsu-i-arrow-right--offsite:before {
+  display: inline-block;
+    font-size: .6em;
+    transform: translate(-15%, 40%) rotate(-45deg);
+    margin-left: .5em;
+}
+
+@media not all and (prefers-reduced-motion) {
+  a:hover .wsu-i-arrow-right--offsite:before {
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease;
+  }
+}
+
+/*! —» Enhancement: WDS separator component → Design variants «— */
+
+hr:not([class*=separator--style-]) {
+  background-color: #f7f7f7;
+    border: 1px solid #e7e7e7;
+  box-sizing: border-box;
+  height: .375rem;
+    margin: 3.125rem 0;
+}
+
+.wsu-separator--subtle {
+  border: 1px solid #e7e7e7 !important;
 }
 
 /*! —» Enhancement: WDS card modules → Call-to-action linker «— */
@@ -753,31 +715,6 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
 
 .gf-need-assistance__resource .wsu-callout {
   margin-bottom: 0;
-}
-
-/*! —» Issue fix: Gravity Forms → Select field indicator «— */
-
-select.gfield_select:not([multiple]) {
-background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
-  padding-right:2.5rem;
-}
-
-select.gfield_select:not([multiple]):hover {
-background-image: linear-gradient(45deg,transparent 50%,#606060 50%),linear-gradient(135deg,#606060 50%,transparent 50%),radial-gradient(#c0c0c0 70%,transparent 75%);
-}
-
-select.gfield_select:not([multiple]):focus {
-background-image: linear-gradient(45deg,transparent 50%,#d0d0d0 50%),linear-gradient(135deg,#d0d0d0 50%,transparent 50%),radial-gradient(#303030 70%,transparent 75%);
-}
-
-select.gfield_select:not([multiple]):active {
-background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
-}
-
-/*! —» Issue fix: Gravity Forms → Choice field layout «— */
-
-.gform_wrapper.gravity-theme .gfield-choice-input+label {
-  max-width: calc(100% - 32px - 1.8em);
 }
 
 /*! —» Enhancement: Gravity Forms → "GPA Calculator" form  «— */
@@ -943,12 +880,6 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   }
 }
 
-/*! —» Issue fix: WDS card module → Advising cards design «— */
-
-.advising-cards .advising-text {
-  margin-bottom: 0;
-}
-
 /*! —» Enhancement: WDS card modules → Callout linker «— */
 
 .callout-linker .wsu-callout {
@@ -1030,4 +961,70 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
     margin-left: calc(((100vw - 100%) - 280px)/ -2);
     margin-right: calc(((100vw - 100%) - 280px)/ -2);
   }
+}
+
+/*! —» Atomic CSS: Width «— */
+
+.mw-1x {
+  max-width: 900px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/*! —» Atomic CSS: Grid «— */
+
+.dy-gr {
+  display: grid;
+}
+
+.alni-start {
+  align-items: start;
+}
+
+.alns-end {
+  align-self: end;
+}
+
+/*! —» Atomic CSS: Font weights «— */
+
+.fw-lb {
+  font-weight: 300;
+}
+
+.fw-nb {
+  font-weight: 400;
+}
+
+.fw-sb {
+  font-weight: 600;
+}
+
+.fw-b {
+  font-weight: 700;
+}
+
+.fw-eb {
+  font-weight: 800;
+}
+
+/*! —» Atomic CSS: Responsive design «— */
+
+@media (max-width: 768px) {
+  .hide-on-tablet {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .show-on-tablet {
+    display: none !important;
+  }
+}
+
+/*! —» Atomic CSS: Text transformations «— */
+
+.tt-upper {
+  text-transform: uppercase;
 }
