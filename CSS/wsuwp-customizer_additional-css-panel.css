@@ -4,7 +4,7 @@
 ▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
 FOR THE COUGAR SUCCESS WEBSITE
 -----------------------------------------------------------
-@version 0.6.0
+@version 0.6.1
 @author Daniel Rieck
   [daniel.rieck@wsu.edu]
   (https://github.com/invokeImmediately)`
@@ -13,19 +13,19 @@ FOR THE COUGAR SUCCESS WEBSITE
   https://mit-license.org/
 **********************************************************/
 
-/*! ---»  DO NOT DISPLAY EMPTY PARAGRAPH ELEMENTS  «--- */
-
-p:empty {
-  display: none !important;
-}
-
-/*! ---»  FIX FOR FUZZY DOWNSAMPLED IMAGES ON CHROME  «--- */
+/*! —» Issue fix: Avoid fuzzy downsampled images on Chrome «— */
 
 body {
   image-rendering: -webkit-optimize-contrast;
 }
 
-/*! —» ISSUE FIXES FOR WDS GLOBAL HEADER «— */
+/*! —» Issue Fix: WDS paragraph elements → Hide when empty «— */
+
+p:empty {
+  display: none !important;
+}
+
+/*! —» Issue fixes: WDS global header module → Bordering «— */
 
 .wsu-header-global:after {
     content: "";
@@ -41,7 +41,7 @@ body {
     /* bottom: 0; */
 }
 
-/*! ----»  SITE HEADER MODIFICATIONS  «---- */
+/*! —» Enhancement: WDS site header modules → Coloring «— */
 
 .wsu-header-site {
   background-color: #333;
@@ -50,16 +50,10 @@ body {
 
 .wsu-header-site__subtitle,
 .wsu-header-site__title {
-  color: #fff;
+  color: inherit;
 }
 
-.wsu-wrapper-content {
-  background-color: #fff;
-}
-
-.wsu-wrapper-site {
-  background-color: #f7f7f7;
-}
+/*! —» Issue fixes: WDS hero banner modules → Presentation «— */
 
 .wsu-hero--no-bottom-bleed .wsu-image-frame--fill {
   bottom: 0;
@@ -69,16 +63,7 @@ body {
   content: none;
 }
 
-.wsu-wrapper-content::before {
-  background-color: transparent;
-}
-
-.wsu-wrapper-content:first-child::before {
-  box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
-  top: -3px;
-}
-
-/*! —» ISSUE FIXES FOR WDS PRIMARY NAV «— */
+/*! —» Issue fixes: WDS primary navigation modules → Presentation «— */
 
 .wsu-navigation-site-vertical--color-dark .wsu-navigation-site-vertical__panel {
   border: 0;
@@ -102,7 +87,24 @@ body {
     padding-right: 50px;
 }
 
-/*! —» ISSUE FIXES FOR WDS CONTENT WRAPPER «— */
+/*! —» Issue fixes: WDS content wrapper components → Overall presentation «— */
+
+.wsu-wrapper-site {
+  background-color: #f7f7f7;
+}
+
+.wsu-wrapper-content {
+  background-color: #fff;
+}
+
+.wsu-wrapper-content::before {
+  background-color: transparent;
+}
+
+.wsu-wrapper-content:first-child::before {
+  box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
+  top: -3px;
+}
 
 .wsu-wrapper-content::after {
     bottom: 0;
@@ -116,13 +118,13 @@ body {
     background-color: #e6e6e6;
 }
 
-/*! —» ISSUE FIXES FOR BREADCRUMBS «— */
+/*! —» Issue fix: WDS breadcrumb components → Home icon spacing «— */
 
 .breadcrumbs .wsu-i-home {
   margin-right: .5rem;
 }
 
-/*! —» ISSUE FIXES FOR LISTS «— */
+/*! —» Issue fix: WDS list elements → Typographical sizing «— */
 
 ul ul,
 ol ol,
@@ -131,13 +133,13 @@ ol ul {
   font-size: inherit;
 }
 
-/*! --»  Improve styling of nested ordered lists.  «-- */
+/*! —» Issue fix: WDS list elements → Improve presentation when ordered and nested «— */
 
 ol li li li {
   list-style-type: lower-roman;
 }
 
-/*! —» ISSUE FIXES FOR LINKS «— */
+/*! —» Issue fixes: WDS link elements → Coloring «— */
 
 .wsu-color-background--gray-85 a,
 .wsu-color-background--gray-95 a {
@@ -199,7 +201,7 @@ h6 a::after {
   background-color: white;
 }
 
-/*! —» SHARPER PAGE HEADERS ENHANCEMENT «— */
+/*! —» Enhancement: Page header assemblies → Sharper presentation «— */
 
 .breadcrumbs {
     border-bottom: 1px solid #e6e6e6;
@@ -238,7 +240,7 @@ h1::before {
   content: none;
 }
 
-/*! —» HX STYLE LINKS «— */
+/*! —» Enhancement: WDS link elements → Heading/hX-style «— */
 
 .hx-style-link:not(:hover) {
   color: inherit;
@@ -258,18 +260,7 @@ h1::before {
     text-decoration: none;
 }
 
-/*! —» CUSTOMIZE APPEARANCE OF SITE HEADER «— */
-
-.wsu-header-site {
-    background-color: #333;
-    color: #fff;
-}
-
-.wsu-header-site__title {
-    color: inherit;
-}
-
-/*! —» ISSUE FIXES FOR HOME PAGE «— */
+/*! —» Issue fixes: Home page → Typographical sizing «— */
 
 @media only screen and (min-width: 993px) {
   .home .wsu-hero .wsu-title,
@@ -288,14 +279,14 @@ h1::before {
   display: none;
 }
 
-/*! —» HEADING TAIL TEXT «— */
+/*! —» Custom WDS element: Heading tail text «— */
 
 .hX-tail-text {
   display: block;
   font-size: 1rem;
 }
 
-/*! —» ISSUE FIXES FOR WDS CARDS «— */
+/*! —» Issue fixes: WDS cards → Overall presentation «— */
 
 .wsu-card.wsu-color-background--white {
   border-bottom: 1px solid #e6e6e6;
@@ -307,26 +298,7 @@ h1::before {
   border-radius: 4px;
 }
 
-.wsu-card-wrapper--univ-courses .wsu-card p + p {
-  margin-top: 1.675rem;
-}
-
-.wsu-card-wrapper--univ-courses h3 {
-  font-size: 1.5rem;
-}
-
-/*! —» MORE PROGRAM HEADLINES DESIGN «— */
-
-.more-news__associated-unit {
-  color: #5a5a5a;
-  display: block;
-}
-
-.wsu-color-background--gray-85 .more-news__associated-unit, .wsu-color-background--gray-95 .more-news__associated-unit {
-  color: #f2f2f2;
-}
-
-/*! —» FULL BLEED ROW DESIGN «— */
+/*! —» Enhancement: FULL BLEED ROW DESIGN «— */
 
 .wsu-row.wsu-row--full-bleed:after {
   bottom: 0;
@@ -341,7 +313,7 @@ h1::before {
   z-index: 1;
 }
 
-/*! —» FULL BLEED ROW COLORING «— */
+/*! —» Enhancement: WDS column components → Full-bleed row coloring «— */
 
 .wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
   margin-left: calc((100vw - 100%)/ -2);
@@ -367,8 +339,6 @@ h1::before {
   }
 }
 
-/*! —» FULL BLEED ROW COLORING «— */
-
 .wsu-row--full-bleed.wsu-color-background--gray-0:after {
   background-color: #f7f7f7;
 }
@@ -389,29 +359,7 @@ h1::before {
   background-color: #262626;
 }
 
-/*! —» FULL BLEED ROW COLORING «— */
-
-.wsu-menu-deep-links > li:first-child {
-    width: 100%;
-}
-
-@media all and (min-width: 769px) {
-  .wsu-menu-deep-links > li:first-child > .sub-menu {
-    display: flex;
-    flex-wrap: wrap
-  }
-
-  .wsu-menu-deep-links > li:first-child > .sub-menu > li:not(:last-child):after {
-    content: ", ";
-    white-space: pre;
-  }
-
-  .wsu-menu-deep-links > li:first-child > .sub-menu > li:not(:last-child) a {
-    display: inline;
-  }
-}
-
-/*! —» BANNER DESIGN VARIANTS «— */
+/*! —» Enhancement: WDS hero banner modules → Design variants «— */
 
 .wsu-hero--hide-tail {
   overflow-y: hidden;
@@ -437,7 +385,8 @@ h1::before {
   clip-path: polygon(100% 0, 100% 100%, 80px 100%, 0 calc(100% - 100px), 0 0);
 }
 
-/*! —» TABLEPRESS «— */
+/*! —» Issue fixes: TablePress modules → Overall presentation «— */
+
 .tablepress thead th,
 .dataTables_wrapper .tablepress.dataTable thead th:not(:hover):not(:focus) {
   background: #f0f0f0!important;
@@ -451,7 +400,7 @@ h1::before {
   border-bottom-color: #bbb;
 }
 
-/*! —» ACCORDION ENHANCEMENTS «— */
+/*! —» Enhancement: WDS accordion component → Improved interaction reactivity «— */
 
 .wsu-accordion__content {
   border-left: 1px solid transparent;
@@ -462,7 +411,7 @@ h1::before {
   border-color: #ccc;
 }
 
-/*! —» TRIBE EVENTS PAGES «— */
+/*! —» Issue Fixes: Tribe Events calendar assemblies → Overall presentation «— */
 
 #tribe-events {
   padding-top: 0;
@@ -493,7 +442,7 @@ h1::before {
   transform: translateY(-50%);
 }
 
-/*! —» ICON VARIANTS «— */
+/*! —» Enhancement: WDS icon ICON → Design variants «— */
 .wsu-i-arrow-right--offsite {
   margin-right: 0;
   position: relative;
@@ -513,7 +462,7 @@ h1::before {
   }
 }
 
-/*! —» SEPARATOR VARIANTS «— */
+/*! —» Enhancement: WDS separator component → Design variants «— */
 
 hr:not([class*=separator--style-]) {
   background-color: #f7f7f7;
@@ -527,18 +476,7 @@ hr:not([class*=separator--style-]) {
   border: 1px solid #e7e7e7 !important;
 }
 
-/*! —» PEOPLE CARD COLUMN «— */
-
-.wsu-column--auto-aligns-people-card {
-  display: grid;
-  grid-template-rows: auto auto auto auto 1fr;
-}
-
-.wsu-column--auto-aligns-people-card .wsu-card {
-  align-self: end;
-}
-
-/*! —» WIDTH UTILITY CLASSES «— */
+/*! —» Atomic CSS: Width «— */
 
 .mw-1x {
   max-width: 900px;
@@ -548,7 +486,7 @@ hr:not([class*=separator--style-]) {
   width: 100%;
 }
 
-/*! —» GRID UTILITY CLASSES «— */
+/*! —» Atomic CSS: Grid «— */
 
 .dy-gr {
   display: grid;
@@ -562,7 +500,7 @@ hr:not([class*=separator--style-]) {
   align-self: end;
 }
 
-/*! —» TYPOGRAPHIC UTILITY CLASSES «— */
+/*! —» Atomic CSS: Font weights «— */
 
 .fw-lb {
   font-weight: 300;
@@ -584,7 +522,7 @@ hr:not([class*=separator--style-]) {
   font-weight: 800;
 }
 
-/*! —» RESPONSIVE DESIGN UTILITY CLASSES «— */
+/*! —» Atomic CSS: Responsive design «— */
 
 @media (max-width: 768px) {
   .hide-on-tablet {
@@ -598,7 +536,7 @@ hr:not([class*=separator--style-]) {
   }
 }
 
-/*! —» NEWS PAGES «— */
+/*! —» Issue Fixes: News page assemblies → Overall presentation «— */
 
 .archive .wsu-meta-byline {
   display: none;
@@ -652,7 +590,7 @@ hr:not([class*=separator--style-]) {
   }
 }
 
-/*! ---»  GRAVITY FORMS SELECT FIX  «--- */
+/*! —» Issue fixes: Gravity Forms assemblies → Select fields «— */
 
 select.gfield_select:not([multiple]) {
 background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
@@ -671,19 +609,19 @@ select.gfield_select:not([multiple]):active {
 background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
 }
 
-/*! ---»  GRAVITY FORMS INPUT FIX  «--- */
+/*! —» Issue fixes: Gravity Forms assemblies → Input fields «— */
 
 .gform_wrapper.gravity-theme .gfield-choice-input+label {
   max-width: calc(100% - 32px - 1.8em);
 }
 
-/*! ---»  GRAVITY FORMS GRID GAP FIX  «--- */
+/*! —» Issue fixes: Gravity Forms assemblies → Grid gap «— */
 
 .gform_wrapper.gravity-theme .gform_fields {
   grid-row-gap: 1.75rem;
 }
 
-/*! ---»  NESTED GRAVITY FORMS FIXES  «--- */
+/*! —» Issue fixes: Gravity Forms assemblies → Nested entries «— */
 
 .gpnf-nested-entries,
 .gpnf-row-actions > ul {
@@ -694,19 +632,19 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   margin-bottom: 0;
 }
 
-/*! --»  Font sizing of WSUWP Content Syndicate lists.  «-- */
+/*! —» Issue fixes: WSUWP Content Syndicate modules → Font sizing «— */
 
 .wsuwp-content-syndicate-list {
   font-size: inherit;
 }
 
-/*! ---»  EXPERIMENTAL ATOMIC CSS  «--- */
+/*! —» Atomic CSS: Text transformations «— */
 
 .tt-upper {
   text-transform: uppercase;
 }
 
-/*! ---»  EXPERIMENTAL CALLOUT MODS  «--- */
+/*! —» Enhancement: WDS card modules → Call-to-action linker «— */
 
 .cta-linker,
 .cta-linker__link {
@@ -726,7 +664,7 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   text-decoration: none;
 }
 
-/*! ---»  FIXED HEIGHT ROWS  «--- */
+/*! —» Enhancement: WDS row components → Fixed height rows «— */
 
 @media all and (min-width: 861px) {
 
@@ -762,7 +700,7 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
 
 }
 
-/*! ---»  NEED ASSISTANCE BUTTON  «--- */
+/*! —» Enhancement: WDS button components → "Need Assistance" design «— */
 
 .wsu-button--need-assistance .wsu-button {
   box-sizing: border-box;
@@ -775,7 +713,6 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   transition: all .2s cubic-bezier(0,0,.03,1);
 }
 
-
 .wp-block-buttons .wsu-button--need-assistance .wp-block-button__link:hover,
 .wp-block-buttons .wsu-button--need-assistance .wp-block-button__link:focus {
   background-color: #707070;
@@ -783,13 +720,13 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   color: white;
 }
 
-/*! ---»  COMPONENT BACKGROUNDS  «--- */
+/*! —» Enhancement: WDS components → Background art «— */
 
 .bgi-cherry-blossoms {
   background: #efefef url(https://s3.wp.wsu.edu/uploads/sites/2814/2021/11/calculate-your-gpa_CORE-Spring-Campus_sh_1780_559w559h.jpg) no-repeat center/cover;
 }
 
-/*! ---»  NEED ASSISTANCE FORM  «--- */
+/*! —» Enhancement: Gravity Forms → "Need Assistance" form «— */
 
 .gf-need-assistance .ginput_container_checkbox .gchoice label {
   font-weight: normal;
@@ -818,21 +755,7 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   margin-bottom: 0;
 }
 
-/*! ---»  HOME PAGE ARTICLE SPACING OVERRIDES  «--- */
-
-.home .wsu-article-header {
-  display: none;
-}
-
-.home .wsu-article {
-  margin-bottom: 0;
-}
-
-.home .wsu-wrapper-content {
-  padding-bottom: 0;
-}
-
-/*! ---»  GRAVITY FORMS SELECT FIX  «--- */
+/*! —» Issue fix: Gravity Forms → Select field indicator «— */
 
 select.gfield_select:not([multiple]) {
 background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
@@ -851,13 +774,13 @@ select.gfield_select:not([multiple]):active {
 background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
 }
 
-/*! ---»  GRAVITY FORMS INPUT FIX  «--- */
+/*! —» Issue fix: Gravity Forms → Choice field layout «— */
 
 .gform_wrapper.gravity-theme .gfield-choice-input+label {
   max-width: calc(100% - 32px - 1.8em);
 }
 
-/*! ---»  GRAVITY FORMS GPA CALCULATOR   «--- */
+/*! —» Enhancement: Gravity Forms → "GPA Calculator" form  «— */
 
 .gpa-calc-gf_wrapper.gravity-theme {
     border: 1px solid #a60f2d;
@@ -1020,19 +943,19 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
   }
 }
 
-/*! ---»  TO ADD LATER TO CUSTOM CSS STYLESHEET EDITOR  «--- */
+/*! —» Issue fix: WDS card module → Advising cards design «— */
 
 .advising-cards .advising-text {
   margin-bottom: 0;
 }
 
-/*! ---» TO ADD LATER TO CUSTOM CSS STYLESHEET EDITOR «--- */
+/*! —» Enhancement: WDS card modules → Callout linker «— */
 
 .callout-linker .wsu-callout {
   margin-bottom: 0;
 }
 
-/*! ---» Home Page Cougar Success Website Intro «--- */
+/*! —» Enhancement: WDS column components → Home page website intro «— */
 
 .wsu-row--hmpg-cg-sccss-intro {
   box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
