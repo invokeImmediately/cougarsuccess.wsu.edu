@@ -4,7 +4,7 @@
 ▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
 FOR THE COUGAR SUCCESS WEBSITE
 -----------------------------------------------------------
-@version 0.6.4
+@version 0.6.5
 @author Daniel Rieck
   [daniel.rieck@wsu.edu]
   (https://github.com/invokeImmediately)
@@ -879,6 +879,15 @@ hr:not([class*=separator--style-]) {
 }
 
 /*! —» Enhancement: WDS column components → Home page website intro «— */
+
+.wsu-row--hmpg-cg-sccss-intro h1 {
+  border-bottom: .1875rem solid #e6e6e6;
+}
+
+.wsu-row--hmpg-cg-sccss-intro h1::before,
+.wsu-row--hmpg-cg-sccss-intro h1::after {
+    bottom: -.5675rem;
+}
 
 .wsu-row--hmpg-cg-sccss-intro {
   box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
