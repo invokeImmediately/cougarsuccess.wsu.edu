@@ -4,7 +4,7 @@
 ▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
 FOR THE COUGAR SUCCESS WEBSITE
 -----------------------------------------------------------
-@version 0.6.3
+@version 0.6.4
 @author Daniel Rieck
   [daniel.rieck@wsu.edu]
   (https://github.com/invokeImmediately)
@@ -401,19 +401,32 @@ select.gfield_select:not([multiple]):active {
   border-color: rgb(230 230 230 / 60%);
 }
 
+h1 {
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 1.375rem;
+}
+
+.wsu-column--white-text h1 {
+  border-bottom: 1px solid rgb(230 230 230 / 60%);
+}
+
 h1::after {
-  background: linear-gradient(315deg, transparent 0, transparent calc(100% - 4.95rem), white calc(100% - 4.95rem), white 100%), repeating-linear-gradient(-45deg, #999 -1px, white 0, white 2px, #999 3px, #999 4px);
-  width: 100%
+  background: repeating-linear-gradient(45deg, #e6e6e6 0, white 1px, white 3px, #e6e6e6 4px, #e6e6e6 5px);
+  bottom: calc(-.375rem - 1px);
+  margin: 0;
+  position: absolute;
+  right:0;
+  width: 6.55rem;
 }
 
 .wsu-column--white-text h1::after {
-  background: repeating-linear-gradient(-45deg, rgb(230 230 230 / 60%) -1px, transparent 0, transparent 2px, rgb(230 230 230 / 60%) 3px, rgb(230 230 230 / 60%) 4px);
+  background: repeating-linear-gradient(45deg, rgb(230 230 230 / 60%) 0, transparent 1px, transparent 3px, rgb(230 230 230 / 60%) 4px, rgb(230 230 230 / 60%) 5px);
 }
 
 h1::before {
   border-right: .375rem solid transparent;  
   border-top: .375rem solid #a60f2d;
-  bottom: 0;
+  bottom: -.375rem;
   box-sizing: border-box;
   box-sizing: border-box;
   content: '';
