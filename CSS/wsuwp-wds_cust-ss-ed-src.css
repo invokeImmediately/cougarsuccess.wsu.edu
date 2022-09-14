@@ -1,0 +1,946 @@
+/*! ================================================================================================
+ *  ▐   ▌█▀▀▄ ▄▀▀▀   ▄▀▀▀▐▀█▀▌█  █ █    ▀█▀ ▐▀▀▄ █▀▀▀   █▀▀▀ ▐▀▀▄ █  █ ▄▀▀▄ ▐▀▀▄ ▄▀▀▀ █▀▀▀
+ *  ▐ █ ▌█  █ ▀▀▀█   ▀▀▀█  █  ▀▄▄█ █  ▄  █  █  ▐ █ ▀▄   █▀▀  █  ▐ █▀▀█ █▄▄█ █  ▐ █    █▀▀  ▀
+ *   ▀ ▀ ▀▀▀  ▀▀▀    ▀▀▀   █  ▄▄▄▀ ▀▀▀  ▀▀▀ ▀  ▐ ▀▀▀▀   ▀▀▀▀ ▀  ▐ █  ▀ █  ▀ ▀  ▐  ▀▀▀ ▀▀▀▀
+ *
+ *       ▐▀▄▀▌█▀▀▀ ▐▀▀▄▐▀█▀▌▄▀▀▀
+ *     ▀ █ ▀ ▌█▀▀  █  ▐  █  ▀▀▀█
+ *       █   ▀▀▀▀▀ ▀  ▐  █  ▀▀▀
+ *  ================================================================================================
+ *  The following section of this stylesheet contains CSS code written for use on all websites
+ *    designed, built, and maintained by the Division of Academic Engagement and Student Achievement
+ *    (DAESA) in the Office of the Provost at Washington State University (WSU).
+ *
+ *  The CSS code in this section was designed to enhance to the styling associated with the [Web
+ *    Design System 2.0 theme](https://github.com/wsuwebteam/wsuwp-theme-web-design-system-two). It
+ *    was generated from precompiled CSS written in the Less language extension of CSS. It is
+ *    intended to be applied via the WSUWP CSS Stylesheet Editor functioning in add-on mode.
+ *
+ *  Please refer to the linked GitHub project for fully documented, precompiled source code.
+ *
+ *  @version 0.1.0
+ *
+ *  @link https://github.com/invokeImmediately/WSU-DAESA-CSS-WDS
+ *  @author Daniel Rieck [daniel.rieck@wsu.edu] (https://github.com/invokeImmediately)
+ *  @author Alexis Gantz [alexis.gantz@wsu.edu]
+ *  @license MIT Copyright (c) 2022 Washington State University
+ *    Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ *      and associated documentation files (the "Software"), to deal in the Software without
+ *      restriction, including without limitation the rights to use, copy, modify, merge, publish,
+ *      distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom
+ *      the Software is furnished to do so, subject to the following conditions:
+ *    The above copyright notice and this permission notice shall be included in all copies or
+ *      substantial portions of the Software.
+ *    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ *      BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *      NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ *      DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *      FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *      SOFTWARE.
+ *  ================================================================================================
+ */
+/*! ================================================================
+ *  WDS ROWS
+ *  ================================================================
+ */
+/*! -------- ACADEMIC POLICY PAGE -------- */
+.AP-inner-list {
+  padding-left: 50px;
+}
+
+.AP-inner-inner-list {
+  padding-left: 125px;
+}
+
+.p-longer {
+  max-width: 100% !important;
+}
+
+.wsu-accordion__title::before {
+  color: white;
+}
+
+.help-accordion:hover .wsu-accordion__title::before {
+  color: black;
+}
+
+.gen-rules-accordion .wsu-accordion__title::before {
+  color: black;
+}
+
+.link-crimson-bg a {
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 2px solid white;
+}
+
+.link-crimson-bg a:hover {
+  text-decoration: none;
+  border-bottom: 2px solid #1a1919;
+  color: #1a1919;
+}
+
+.list-crimson-bg li::marker {
+  color: white;
+  font-weight: bold;
+}
+
+/*! -------- FULL BLEED ROW DESIGN -------- */
+.wsu-article-footer {
+  display: hidden;
+}
+
+.wsu-article {
+  margin-bottom: 0 !important;
+}
+
+.wsu-wrapper-content {
+  padding-bottom: 0 !important;
+}
+
+/*.advising-header h1 {
+  margin-top: 2rem !important;
+}*/
+.wsu-row.wsu-row--full-bleed:after {
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.wsu-row--full-bleed > .wsu-column {
+  z-index: 1;
+}
+
+.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+  margin-left: calc((100vw - 100%)/ -2);
+  margin-right: calc((100vw - 100%)/ -2);
+}
+
+@media screen and (min-width: 1260px) {
+  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+    margin-left: calc(((100vw - 100%) - 60px)/ -2);
+    margin-right: calc(((100vw - 100%) - 60px)/ -2);
+  }
+}
+
+@media screen and (min-width: 1260px) {
+  .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+    margin-left: calc(((100vw - 100%) - 280px)/ -2);
+    margin-right: calc(((100vw - 100%) - 280px)/ -2);
+  }
+  
+  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
+    margin-left: calc(((100vw - 100%) - 60px)/ -2);
+    margin-right: calc(((100vw - 100%) - 60px)/ -2);
+  }
+}
+
+/*! -------- WSU BACK PATTERNING FOR ROWS -------- */
+.wsu-row--bkpt-wsu-black:after {
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 163.87 108'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:none;stroke:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon stroke='%230000001a' fill='none' points='64.91 1.24 53.35 33.66 42.93 1.24 33.95 1.24 23.49 33.7 12.04 1.57 11.94 1.24 0.71 1.24 18.38 50.89 29.23 50.89 38.42 22.21 47.64 50.89 58.44 50.89 76.16 1.24 64.91 1.24'/%3E%3Cpath stroke='%230000001a' fill='none' d='M86.63,14.71c0-3,2.53-5,7.07-5a21.29,21.29,0,0,1,14.43,5.43L114,7.42C109.1,2.88,102.55.5,94.67.5,83,.5,75.84,7.35,75.84,15.61c0,18.67,28.57,12.65,28.57,21.43,0,2.83-2.82,5.5-8.63,5.5A21.77,21.77,0,0,1,80,35.85l-5.73,8c4.61,4.69,11.46,7.89,21,7.89,13.4,0,19.87-6.85,19.87-15.92C115.13,17.32,86.63,22.6,86.63,14.71Z'/%3E%3Cpath stroke='%230000001a' fill='none' d='M118.37,31.08V1.24h10.71V30.71c0,6.92,4,11.68,11.68,11.68s11.61-4.76,11.61-11.68V1.24h10.79V31c0,12.35-7.29,20.76-22.4,20.76S118.37,43.29,118.37,31.08Z'/%3E%3Cpolygon stroke='%230000001a' fill='none' points='98.96 105.3 110.52 72.88 120.94 105.3 129.91 105.3 140.38 72.84 151.83 104.97 151.93 105.3 163.16 105.3 145.49 55.66 134.64 55.66 125.45 84.33 116.23 55.66 105.43 55.66 87.72 105.3 98.96 105.3'/%3E%3Cpath stroke='%230000001a' fill='none' d='M77.24,91.83c0,3-2.53,5-7.07,5a21.3,21.3,0,0,1-14.43-5.44l-5.88,7.74C54.77,103.66,61.32,106,69.2,106,80.89,106,88,99.2,88,90.94c0-18.68-28.57-12.65-28.57-21.43,0-2.83,2.82-5.51,8.63-5.51a21.71,21.71,0,0,1,15.77,6.7l5.73-8C85,58,78.13,54.77,68.61,54.77c-13.4,0-19.87,6.85-19.87,15.93C48.74,89.23,77.24,83.94,77.24,91.83Z'/%3E%3Cpath stroke='%230000001a' fill='none' d='M45.51,75.46V105.3H34.79V75.83c0-6.92-4-11.68-11.68-11.68S11.5,68.91,11.5,75.83V105.3H.71V75.53C.71,63.18,8,54.77,23.11,54.77S45.51,63.26,45.51,75.46Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 100px;
+  background-position: center center;
+}
+
+.wsu-row--bkpt-wsu-crimson {
+  color: white;
+}
+
+.wsu-row--bkpt-wsu-crimson a {
+  outline-color: white;
+}
+
+.wsu-row--bkpt-wsu-crimson ol li::marker,
+.wsu-row--bkpt-wsu-crimson ul li::marker {
+  color: inherit;
+}
+
+.wsu-row--bkpt-wsu-crimson:after {
+  background-color: #a60f2d;
+}
+
+.wsu-row--ch-inh-clr * {
+  color: inherit;
+  text-decoration-color: inherit;
+}
+
+.wsu-row--bkpt-white:after {
+  background-color: white;
+}
+
+/*! -------- COMMENCEMENT BACKGROUND FOR ROWS -------- */
+.wsu-row--bgimg-commencement:after {
+  background: black url(https://s3.wp.wsu.edu/uploads/sites/2814/2021/11/commencement_ELXQOhpUcAE6-sy-2_ntft_1920w1280h.jpg) no-repeat center 75%/cover;
+}
+
+/*! -------- BORDERING FOR ROWS -------- */
+.wsu-row--btm-crimson-brdr:after {
+  border-bottom: 3px solid #a60f2d;
+}
+
+/*! ================================================================
+ *  WDS COLUMNS
+ *  ================================================================
+ */
+/*! -------- GENERAL COLUMN FORMATS -------- */
+.wsu-column--white-text {
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 4px;
+  color: white;
+}
+
+.wsu-column--white-text a:not(:hover) {
+  color: white;
+  text-decoration-color: white;
+}
+
+.wsu-column--ch-inh-clr * {
+  color: inherit;
+  text-decoration-color: inherit;
+}
+
+.wsu-column--white-text .breadcrumbs span[typeof=ListItem]:not(:last-child)::after,
+.wsu-column--white-text a:hover {
+  color: white;
+}
+
+.wsu-column--white-text .breadcrumbs .current-item {
+  color: #ddd;
+}
+
+/*! -------- HALVES COLUMN FORMATS -------- */
+@media screen and (max-width: 860px) {
+  .wsu-row--halves.wsu-row--stacks-in-reverse .wsu-column:first-child {
+    order: 2;
+  }
+}
+
+/*! ================================================================
+ *  WDS CALLOUTS
+ *  ================================================================
+ */
+/*! -------- CALLOUT CATEGORIZATION -------- */
+.wsu-callout--featured {
+  padding-top: 4rem;
+  position: relative;
+}
+
+.wsu-callout--featured:before {
+  background: #ca1237;
+  border: 1px solid rgba(0,0,0,.5);
+  content: "Featured";
+  color: white;
+  padding: .25rem 1.5rem;
+  position: absolute;
+  text-transform: uppercase;
+  top: 1.5rem;
+}
+
+/*! -------- FULL-HEIGHT CALLOUTS -------- */
+.wsu-callout--full-height {
+  height: calc(100% - 2.25rem);
+}
+
+/*! -------- CALLOUT HEADINGS -------- */
+.wsu-callout .wsu-callout__hx {
+  font-size: 2.7em;
+}
+
+.wsu-callout .wsu-callout__hx:after {
+  content: "\F108";
+  font-family: wsu-icons !important;
+  font-size: .7em;
+  margin-left: .4em;
+}
+
+@media all and (min-width: 861px) and (max-width: 1260px) {
+  .wsu-row--halves .wsu-callout {
+    font-size: .9em;
+  }
+  
+  .wsu-row--halves .wsu-callout__hx {
+    font-size: 2.1em;
+  }
+}
+
+/*! -------- CALLOUT LINKERS -------- */
+@media all and (max-width: 860px) {
+  .wsu-column:first-child .callout-linker {
+    margin-bottom: 2.25rem;
+  }
+}
+
+.callout-linker__link {
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  color: inherit;
+  display: block;
+  position: relative;
+  text-decoration: none;
+}
+
+.callout-linker__link:before {
+  background-color: black;
+  bottom: 0;
+  border-radius: 4px;
+  content: "";
+  left: 0;
+  opacity: .6;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s cubic-bezier(0,.33,.75,1);
+  z-index: 1;
+}
+
+.callout-linker__link:hover,
+.callout-linker__link:focus {
+  border-color: #ca1237;
+  border-radius: 5px;
+  outline: 0;
+}
+
+.callout-linker__link:hover:before,
+.callout-linker__link:focus:before {
+  background-color: #a60f2d;
+  opacity: .8;
+}
+
+.callout-linker__link:hover .callout-linker__link-text,
+.callout-linker__link:focus .callout-linker__link-text {
+  text-decoration: underline;
+}
+
+.callout-linker .wsu-callout {
+  border-radius: 4px;
+  color: white;
+/*text-shadow: 0 0 2px black, 0 0 2px black;*/
+}
+
+.callout-linker .wsu-callout > *,
+.callout-linker .wsu-callout--featured:before {
+  z-index: 2;
+}
+
+/*.callout-linker__link:hover .wsu-callout,
+.callout-linker__link:focus .wsu-callout {
+  filter: invert(12%) sepia(56%) saturate(6000%) hue-rotate(340deg);
+}*/
+/*! -------- ADDITIONAL FORMATS FOR CALLOUT LINKERS -------- */
+.callout-linker--full-h-xxm {
+  height: 92.8%;
+  height: calc(100% - 2.25rem);
+}
+
+.callout-linker--wht-brdr .callout-linker__link:hover,
+.callout-linker--wht-brdr .callout-linker__link:focus {
+  border-color: white;
+}
+
+.callout-linker--blk-brdr .callout-linker__link:hover,
+.callout-linker--blk-brdr .callout-linker__link:focus {
+  border-color: black;
+}
+
+.callout-linker--plain-white .callout-linker__link:before {
+  background-color: white;
+  opacity: 1;
+}
+
+.callout-linker--plain-white .wsu-callout {
+  background-color: transparent;
+  color: black !important;
+}
+
+.callout-linker--plain-white .callout-linker__link:hover:before,
+.callout-linker--plain-white .callout-linker__link:focus:before {
+  background-color: white;
+  opacity: .85;
+}
+
+/*! ================================================================
+ *  WDS IMAGES
+ *  ================================================================
+ */
+/*! -------- IMAGES MODS ---------- */
+img.img--rounded,
+figure.img--rounded > img {
+  border-radius: 50%;
+}
+
+/*! ================================================================
+ *  WDS HYPERLINKS
+ *  ================================================================
+ */
+/*! -------- HYPERLINK STYLING ISSUE FIXES ---------- */
+.wsu-footer-site__offsite-menu li a::before {
+  overflow: hidden;
+}
+
+/*.wsu-column a {
+  background-color: rgba(0,0,0,0);
+  transition: background-color .2s cubic-bezier(0,0,.03,1), text-decoration-thickness .2s cubic-bezier(0,0,.03,1);
+}*/
+/*! --- Added to additional CSS panel of theme customizer. --→
+.wsu-column a:hover {
+    background-color: rgba(0,0,0,.05);
+    text-decoration-thickness: .2em;
+}
+←-- */
+/*! ================================================================
+ *  CUSTOM COMPONENTS
+ *  ================================================================
+ */
+/*! -------- IMPORTANT UPDATES ---------- */
+.important-update {
+  animation: important-update--fift .6s;
+  display: inline-block;
+  padding-left: 3.25rem;
+  padding-right: 3.25rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  width: auto;
+}
+
+.important-update:before,
+.important-update:after {
+  background-color: #a60f2d;
+  content: "";
+  height: .25rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(0,-50%);
+  width: 2rem;
+}
+
+.important-update:before {
+  animation: important-update--pifl .6s;
+  left: 0;
+}
+
+.important-update:after {
+  animation: important-update--pifr .6s;
+  right: 0;
+}
+
+/*! fift - Fade in from top. */
+@keyframes important-update--fift {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  
+  17% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*! pifl - Peek in from left. */
+@keyframes important-update--pifl {
+  0% {
+    transform: translate(-2rem,-50%);
+  }
+  
+  17% {
+    transform: translate(-2rem,-50%);
+  }
+  
+  100% {
+    transform: translate(0,-50%);
+  }
+}
+
+/*! pifr - Peek in from right. */
+@keyframes important-update--pifr {
+  0% {
+    transform: translate(2rem,-50%);
+  }
+  
+  17% {
+    transform: translate(2rem,-50%);
+  }
+  
+  100% {
+    transform: translate(0,-50%);
+  }
+}
+
+/*! -------- COMPONENT BACKGROUNDS ---------- */
+.bgi-cherry-blossoms {
+  background: #efefef url(https://s3.wp.wsu.edu/uploads/sites/2814/2021/11/calculate-your-gpa_CORE-Spring-Campus_sh_1780_559w559h.jpg) no-repeat center/cover;
+}
+
+.bgi-undergrad-res-1 {
+  background: #efefef url(https://s3.wp.wsu.edu/uploads/sites/2814/2021/11/GEN-2019_UR_LAB-3-Diaz-Alonzo-DSC_1671_2048w1365h-792x528.jpg) no-repeat 65% center/cover;
+}
+
+/*! ================================================================
+ *  COMPONENTS BY PAGE
+ *  ================================================================
+ */
+/*! -------- HOMEPAGE LAYOUT TWEAKS ---------- */
+.home .wsu-wrapper-content {
+  padding-top: 3px;
+}
+
+.home #wsu-content h2 {
+  font-size: 2.9rem;
+}
+
+/*! -------- ADVSING PAGE CSS ---------- */
+.page-id-524 .wsu-article-header__title {
+  visibility: hidden;
+}
+
+.page-id-524 .wsu-wrapper-content {
+  padding: .001rem 4.125rem 4.125rem;
+}
+
+.advising-cards {
+  margin: 10px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.a-r-text-box {
+  padding-bottom: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.advising-text {
+  color: white !important;
+  background-color: rgba(77,77,77,0.8);
+  padding: 15px 10px;
+  border: 2px solid white;
+  background-size: cover;
+  font-size: 150%;
+  text-transform: uppercase;
+}
+
+.advising-cards:hover .advising-text {
+  color: white;
+  background-color: rgba(166,15,45,0.8);
+}
+
+.advising-text a {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.art-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/art-college-img.jpg");
+  background-size: cover;
+}
+
+.business-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/business-coll-img.jpg");
+  background-size: cover;
+}
+
+.cahnrs-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/cahnrs-coll-img.jpg");
+  background-size: cover;
+}
+
+.comm-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/comm-coll-img.jpg");
+  background-size: cover;
+}
+
+.edu-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/edu-coll-img.jpg");
+  background-size: cover;
+}
+
+.honors-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/honors-coll-img.jpg");
+  background-size: cover;
+}
+
+.pre-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/pre-coll-img.jpg");
+  background-size: cover;
+}
+
+.vcea-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/VCEA-coll-img.jpg");
+  background-size: cover;
+}
+
+.vet-bg {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/vet-coll-img.jpg");
+  background-size: cover;
+}
+
+/*----- Hover BG for Tiles ----------------------------------------------------------------------------------------------------*/
+.advising-text:hover {
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+
+.art-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/art-college-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.business-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/business-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.cahnrs-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/cahnrs-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.comm-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/comm-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 115%;
+}
+
+.edu-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/edu-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.honors-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/honors-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.pre-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/pre-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.vcea-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/VCEA-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.vet-bg:hover {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/vet-coll-img-1.jpg");
+  background-size: cover;
+  font-size: 125%;
+}
+
+.shrink {
+  transition: all .2s ease-in-out;
+}
+
+.shrink:hover {
+  transform: scale(0.95);
+}
+
+@media screen and (max-width: 450px) {
+  .wsu-row--thirds .wsu-column {
+    flex-shrink: 1 !important;
+  }
+  
+  .advising-text {
+    font-size: 110%;
+    padding: 5px;
+    margin-bottom: 0 !important;
+  }
+  
+  .advising-cards {
+    margin: 5px;
+    height: 150px;
+  }
+}
+
+/*----------- Videos/Tutorials ---------------------------------------------------------------------*/
+.help-accordion button:hover {
+  color: #A60F2D;
+}
+
+.help-accordion button:focus {
+  color: #A60F2D;
+}
+
+.wsu-row--bkpt-wsu-grey {
+  color: white;
+}
+
+.wsu-row--bkpt-wsu-grey a {
+  outline-color: white;
+}
+
+.wsu-row--bkpt-wsu-grey ol li::marker,
+.wsu-row--bkpt-wsu-grey ul li::marker {
+  color: inherit;
+}
+
+.wsu-row--bkpt-wsu-grey:after {
+  background-color: #4D4D4D;
+}
+
+.wsu-row--bgimg-white:after {
+  background-color: white;
+}
+
+/*--------- Resource Section on Advising Page --------------------------------------------------------------------*/
+.resource-container-link {
+  margin-bottom: 2.25rem;
+}
+
+.resource-card {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding-top: 1.75rem;
+  border-radius: 15px;
+  flex-shrink: 1 !important;
+  display: flex;
+  align-items: center;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+.resource-card a {
+  padding: .25rem;
+  text-decoration: none !important;
+}
+
+p.resource-text {
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+.resource-card:hover {
+  background-color: #A60F2D;
+  box-shadow: 3px 3px 8px #888888;
+}
+
+.resource-card:hover a {
+  color: white;
+  font-weight: bold;
+  text-decoration: underline !important;
+  text-decoration-color: white bold;
+}
+
+.resource-header {
+  margin-top: 1rem;
+}
+
+/*------------- Icon Images -----------------------*/
+.resource-icon-list {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons_list.png");
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+.resource-icon-calendar {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons_calendar.png");
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+.resource-icon-withdrawl {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons_withdraw.png");
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+.resource-icon-important-date {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons_important-date.png");
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+.resource-icon-bookie {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons_bookie.png");
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+.resource-icon-access {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons_access.png");
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+.resource-icon-transfer {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons_transfer.png");
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background-size: cover;
+  margin-bottom: 1rem;
+}
+
+.resource-card:hover .resource-icon-list {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons-inverted_list.png");
+}
+
+.resource-card:hover .resource-icon-calendar {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons-inverted_calendar.png");
+}
+
+.resource-card:hover .resource-icon-withdrawl {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons-inverted_withdraw.png");
+}
+
+.resource-card:hover .resource-icon-important-date {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons-inverted_important-date.png");
+}
+
+.resource-card:hover .resource-icon-bookie {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons-inverted_bookie.png");
+}
+
+.resource-card:hover .resource-icon-access {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons-inverted_access.png");
+}
+
+.resource-card:hover .resource-icon-transfer {
+  background-image: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/04/resource-icons-inverted_transfer.png");
+}
+
+.wsu-column a:hover {
+  background-color: rgba(0,0,0,.0);
+}
+
+.grow {
+  transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.05);
+}
+
+/*! ================================================================
+ *  ATOMIC CSS
+ *  ================================================================
+ */
+/*! -------- DISPLAY ---------- */
+.dy-bl {
+  display: block;
+}
+
+.dy-ib {
+  display: inline-block;
+}
+
+.dy-il {
+  display: inline;
+}
+
+.dy-0,
+.dy-no {
+  display: none;
+}
+
+.for-scr-rdr {
+  border: 0;
+  clip: rect(1px,1px,1px,1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}/*! -------- DIMENSIONS ---------- */
+  
+}
+
+/*! -------- FONT SIZING ---------- */
+.fs-inh {
+  font-size: inherit;
+}
+
+.fs-1x {
+  font-size: 1em;
+}
+
+.fs-1xs {
+  font-size: .9em;
+}
+
+.fs-2xs {
+  font-size: .8em;
+}
+
+.fs-h1 {
+  font-size: 3.125rem;
+}
+
+.fs-h2 {
+  font-size: 2rem;
+}
+
+.fs-h3 {
+  font-size: 1.5rem;
+}
+
+.fs-h4 {
+  font-size: 1.25rem;
+}
+
+.fs-h5 {
+  font-size: 1.125rem;
+}
+
+.fs-h6 {
+  font-size: 1rem;
+}
+
+/*! -------- SPACING ---------- */
+.ml-0 {
+  margin-left: 0;
+}
+
+/*! -------- LISTS ---------- */
+.lst-none {
+  list-style-type: none;
+}
+
+/*! -------- FLEXBOX ---------- */
+.flxai-center {
+  align-items: center;
+}
