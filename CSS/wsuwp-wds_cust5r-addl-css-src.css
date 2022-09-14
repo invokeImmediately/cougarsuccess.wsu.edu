@@ -4,7 +4,7 @@
 ▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
 FOR THE COUGAR SUCCESS WEBSITE
 -----------------------------------------------------------
-@version 0.6.2
+@version 0.6.3
 @author Daniel Rieck
   [daniel.rieck@wsu.edu]
   (https://github.com/invokeImmediately)
@@ -26,11 +26,11 @@ body {
 }
 
 .wsu-footer-site a {
-    outline-color: white;
+  outline-color: white;
 }
 
 .wsu-footer-site__offsite-menu li a:before {
-    background-color: white;
+  background-color: white;
 }
 
 .wsu-footer-site__offsite-menu li a:focus::before {
@@ -47,32 +47,13 @@ h3 a::after,
 h4 a::after,
 h5 a::after,
 h6 a::after {
-    /*display: inline;*/
   font-size: .65em;
-    margin-left: .5em;
+  margin-left: .5em;
 }
-
-/*TODO: ↓ Remove soon; code is being covered by a change to the WDS system. ↓ */
-
-/*a:hover {
-  text-decoration-color: transparent;
-}
-
-@media not all and (prefers-reduced-motion) {
-  a {
-    transition: color .01s linear, text-decoration .01s linear;
-  }
-  
-  a:hover {
-    transition: color .2s ease, text-decoration .1s ease;
-  }
-}*/
-
-/*TODO: ↑ Remove soon; code is being covered by a change to the WDS system. ↑ */
 
 .wsu-footer-site__offsite-menu a,
 .wsu-menu-deep-links a {
-   border-bottom-color: transparent;
+  border-bottom-color: transparent;
 }
 
 .wsu-menu-deep-links a:after {
@@ -126,30 +107,29 @@ p:empty {
 }
 
 .wsu-wrapper-content::after {
-    bottom: 0;
-    content: "";
-    display: block;
-    position: absolute;
-    left: calc((100vw - 100%)/ -2);
-    right: calc((100vw - 100%)/ -2);
-    width: auto;
-    height: 3px;
-    background-color: #e6e6e6;
+  background-color: #e6e6e6;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 3px;
+  left: calc((100vw - 100%)/ -2);
+  position: absolute;
+  right: calc((100vw - 100%)/ -2);
+  width: auto;
 }
 
 /*! —» Issue fixes: WDS global header module  → Bordering «— */
 
 .wsu-header-global:after {
+    background-color: #e6e6e6;
     content: "";
     display: block;
-    position: absolute;
+    height: 3px;
     left: calc((100vw - 100%)/ -2);
+    position: absolute;
     right: calc((100vw - 100%)/ -2);
     top: 100%;
-    /* top: calc(100% - 3px); */
     width: auto;
-    height: 3px;
-    background-color: #e6e6e6;
 }
 
 /*! —» Issue fixes: WDS hero banner modules → Presentation «— */
@@ -169,7 +149,7 @@ p:empty {
 }
 
 .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:focus, .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical__open-button:hover {
-    border-right: 0;
+  border-right: 0;
   color: black;
 }
 
@@ -178,12 +158,12 @@ p:empty {
 }
 
 .wsu-navigation-site-vertical .wsu-menu a+button:focus::before, .wsu-navigation-site-vertical .wsu-menu a+button:hover::before, .wsu-navigation-site-vertical .wsu-menu button:first-child:focus::before, .wsu-navigation-site-vertical .wsu-menu button:first-child:hover::before {
-    bottom: 50%;
-    transform: translateY(0.65rem);
+  bottom: 50%;
+  transform: translateY(0.65rem);
 }
 
 .wsu-navigation-site-vertical .wsu-menu button:first-child {
-    padding-right: 50px;
+  padding-right: 50px;
 }
 
 /*! —» Issue fixes: WDS card modules → Overall presentation «— */
@@ -228,20 +208,20 @@ p:empty {
 /*! —» Issue fix: Gravity Forms → Select field indicator «— */
 
 select.gfield_select:not([multiple]) {
-background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
+  background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
   padding-right:2.5rem;
 }
 
 select.gfield_select:not([multiple]):hover {
-background-image: linear-gradient(45deg,transparent 50%,#606060 50%),linear-gradient(135deg,#606060 50%,transparent 50%),radial-gradient(#c0c0c0 70%,transparent 75%);
+  background-image: linear-gradient(45deg,transparent 50%,#606060 50%),linear-gradient(135deg,#606060 50%,transparent 50%),radial-gradient(#c0c0c0 70%,transparent 75%);
 }
 
 select.gfield_select:not([multiple]):focus {
-background-image: linear-gradient(45deg,transparent 50%,#d0d0d0 50%),linear-gradient(135deg,#d0d0d0 50%,transparent 50%),radial-gradient(#303030 70%,transparent 75%);
+  background-image: linear-gradient(45deg,transparent 50%,#d0d0d0 50%),linear-gradient(135deg,#d0d0d0 50%,transparent 50%),radial-gradient(#303030 70%,transparent 75%);
 }
 
 select.gfield_select:not([multiple]):active {
-background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
+  background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
 }
 
 /*! —» Issue fix: Gravity Forms → Choice field layout «— */
@@ -338,20 +318,20 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
 /*! —» Issue fixes: Gravity Forms assemblies → Select fields «— */
 
 select.gfield_select:not([multiple]) {
-background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
+  background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
   padding-right:2.5rem;
 }
 
 select.gfield_select:not([multiple]):hover {
-background-image: linear-gradient(45deg,transparent 50%,#606060 50%),linear-gradient(135deg,#606060 50%,transparent 50%),radial-gradient(#c0c0c0 70%,transparent 75%);
+  background-image: linear-gradient(45deg,transparent 50%,#606060 50%),linear-gradient(135deg,#606060 50%,transparent 50%),radial-gradient(#c0c0c0 70%,transparent 75%);
 }
 
 select.gfield_select:not([multiple]):focus {
-background-image: linear-gradient(45deg,transparent 50%,#d0d0d0 50%),linear-gradient(135deg,#d0d0d0 50%,transparent 50%),radial-gradient(#303030 70%,transparent 75%);
+  background-image: linear-gradient(45deg,transparent 50%,#d0d0d0 50%),linear-gradient(135deg,#d0d0d0 50%,transparent 50%),radial-gradient(#303030 70%,transparent 75%);
 }
 
 select.gfield_select:not([multiple]):active {
-background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
+  background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
 }
 
 /*! —» Issue fixes: Gravity Forms assemblies → Input fields «— */
@@ -411,10 +391,10 @@ background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradie
 /*! —» Enhancement: Page header assemblies → Sharper presentation «— */
 
 .breadcrumbs {
-    border-bottom: 1px solid #e6e6e6;
-    box-sizing: border-box;
-    margin-bottom: 1.125rem;
-    padding-bottom: .625rem;
+  border-bottom: 1px solid #e6e6e6;
+  box-sizing: border-box;
+  margin-bottom: 1.125rem;
+  padding-bottom: .625rem;
 }
 
 .wsu-column--white-text .breadcrumbs {
@@ -431,16 +411,16 @@ h1::after {
 }
 
 h1::before {
-  box-sizing: border-box;
   border-right: .375rem solid transparent;  
   border-top: .375rem solid #a60f2d;
-    bottom: 0;
-    box-sizing: border-box;
-    content: '';
-    display: inline-block;
-    height: .375rem;
-    position: absolute;
-    width: 6.87rem;
+  bottom: 0;
+  box-sizing: border-box;
+  box-sizing: border-box;
+  content: '';
+  display: inline-block;
+  height: .375rem;
+  position: absolute;
+  width: 6.87rem;
 }
 
 .wsu-hero__caption h1::before {
@@ -459,12 +439,12 @@ h1::before {
 }
 
 .hx-style-link::after {
-    content: '\F126';
-    font-family: wsu-icons;
-    font-size: .7em;
   color: inherit;
-    margin-left: .5em;
-    text-decoration: none;
+  content: '\F126';
+  font-family: wsu-icons;
+  font-size: .7em;
+  margin-left: .5em;
+  text-decoration: none;
 }
 
 /*! —» Enhancement: WDS heading element → Heading tail text «— */
@@ -580,9 +560,9 @@ h1::before {
 
 .wsu-i-arrow-right--offsite:before {
   display: inline-block;
-    font-size: .6em;
-    transform: translate(-15%, 40%) rotate(-45deg);
-    margin-left: .5em;
+  font-size: .6em;
+  margin-left: .5em;
+  transform: translate(-15%, 40%) rotate(-45deg);
 }
 
 @media not all and (prefers-reduced-motion) {
@@ -595,11 +575,11 @@ h1::before {
 /*! —» Enhancement: WDS separator component → Design variants «— */
 
 hr:not([class*=separator--style-]) {
+  border: 1px solid #e7e7e7;
+  margin: 3.125rem 0;
   background-color: #f7f7f7;
-    border: 1px solid #e7e7e7;
   box-sizing: border-box;
   height: .375rem;
-    margin: 3.125rem 0;
 }
 
 .wsu-separator--subtle {
@@ -720,16 +700,16 @@ hr:not([class*=separator--style-]) {
 /*! —» Enhancement: Gravity Forms → "GPA Calculator" form  «— */
 
 .gpa-calc-gf_wrapper.gravity-theme {
-    border: 1px solid #a60f2d;
-    border-radius: 1rem;
+  border: 1px solid #a60f2d;
+  border-radius: 1rem;
   box-shadow:
-      0 1px 1px hsl(0deg 0% 0% / 0.075),
-      0 2px 2px hsl(0deg 0% 0% / 0.075),
-      0 4px 4px hsl(0deg 0% 0% / 0.075),
-      0 8px 8px hsl(0deg 0% 0% / 0.075),
-      0 16px 16px hsl(0deg 0% 0% / 0.075);
-    margin-bottom: 2.25rem;
-    padding: 2.5rem 1.75rem 0;
+    0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075),
+    0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075),
+    0 16px 16px hsl(0deg 0% 0% / 0.075);
+  margin-bottom: 2.25rem;
+  padding: 2.5rem 1.75rem 0;
 }
 
 .gpa-calc-gf_wrapper.gravity-theme .gpa-calc-gf__missing-inp:not(:focus) {
@@ -770,7 +750,6 @@ hr:not([class*=separator--style-]) {
 .gpa-calc-gf__cuml-gpa .ginput_container_text input[type=text]:not(:focus),
 .gpa-calc-gf__sem-gpa .ginput_container_text input[type=text]:not(:focus) {
   border-color: transparent;
-  /*padding: 0;*/
 }
 
 .gpa-calc-gf__cuml-gpa .ginput_container_text input[type=text]:placeholder-shown:not(:focus),
@@ -865,18 +844,18 @@ hr:not([class*=separator--style-]) {
 
 @media (min-width: 641px) {
   .gpa-calc-gf_wrapper.gform_wrapper.gravity-theme .gpa-calc-gf__qualifiers {
-  grid-column: span 7;
-}
+    grid-column: span 7;
+  }
 
-.gpa-calc-gf_wrapper.gform_wrapper.gravity-theme .gpa-calc-gf__cuml-gpa {
-  grid-column: span 5;
-}
+  .gpa-calc-gf_wrapper.gform_wrapper.gravity-theme .gpa-calc-gf__cuml-gpa {
+    grid-column: span 5;
+  }
 }
 
 @media only screen and (max-width: 641px) {
-.gform_wrapper.gravity-theme .gpa-calc-gf input:not([type=radio]):not([type=checkbox]):not([type=image]):not([type=file]) {
-  min-height: none;
-  line-height: 1.15;
+  .gform_wrapper.gravity-theme .gpa-calc-gf input:not([type=radio]):not([type=checkbox]):not([type=image]):not([type=file]) {
+    min-height: none;
+    line-height: 1.15;
   }
 }
 
@@ -890,10 +869,10 @@ hr:not([class*=separator--style-]) {
 
 .wsu-row--hmpg-cg-sccss-intro {
   box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
-      0 2px 2px hsl(0deg 0% 0% / 0.075),
-      0 4px 4px hsl(0deg 0% 0% / 0.075),
-      0 8px 8px hsl(0deg 0% 0% / 0.075),
-      0 16px 16px hsl(0deg 0% 0% / 0.075);
+    0 2px 2px hsl(0deg 0% 0% / 0.075),
+    0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075),
+    0 16px 16px hsl(0deg 0% 0% / 0.075);
   padding-bottom: 2.25rem!important;
   z-index: 1;
 }
