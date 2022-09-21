@@ -4,7 +4,7 @@
 ▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
 FOR THE COUGAR SUCCESS WEBSITE
 -----------------------------------------------------------
-@version 0.6.5
+@version 0.7.0
 @author Daniel Rieck
   [daniel.rieck@wsu.edu]
   (https://github.com/invokeImmediately)
@@ -423,7 +423,7 @@ h1 {
 }
 
 h1::after {
-  background: repeating-linear-gradient(45deg, #e6e6e6 0, white 1px, white 3px, #e6e6e6 4px, #e6e6e6 5px);
+  background: repeating-linear-gradient(45deg, #e6e6e6 0, transparent 1px, transparent 3px, #e6e6e6 4px, #e6e6e6 5px);
   bottom: calc(-.375rem - 1px);
   margin: 0;
   position: absolute;
@@ -667,10 +667,88 @@ hr:not([class*=separator--style-]) {
   color: white;
 }
 
+/*! —» Enhancement: WDS decorator components → Background art «— */
+
+.wsu-decorator--bg-zigzag-gray {
+  background:
+linear-gradient(135deg, #e8e8e8 25%, transparent 25%) -2rem 0,
+linear-gradient(225deg, #e8e8e8 25%, transparent 25%) -2rem 0,
+linear-gradient(315deg, #e8e8e8 25%, transparent 25%),
+linear-gradient(45deg, #e8e8e8 25%, transparent 25%);
+background-size: 4rem 4rem;
+background-color: #f2f2f2;
+}
+
+.wsu-decorator--bg-wavy-zigzag-gray {
+  background:
+linear-gradient(135deg, #e8e8e8 25%, transparent 25%) -2rem 0,
+linear-gradient(225deg, #e8e8e8 25%, transparent 25%) -2rem 0,
+linear-gradient(315deg, #e8e8e8 25%, transparent 25%),
+linear-gradient(45deg, #e8e8e8 25%, transparent 25%);
+background-size: 2.5rem 2rem;
+background-color: #f2f2f2;
+}
+
+.wsu-decorator--bg-steps-gray {
+  background-color: #e8e8e8;
+  background-size: 58px 58px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 33px 6px, 0px 36px, 4px 2px, 29px 6px, 33px 30px;
+  background-image:
+    linear-gradient(335deg, #f2f2f2 23px, transparent 23px),
+    linear-gradient(155deg, #f2f2f2 23px, transparent 23px),
+    linear-gradient(335deg, #f2f2f2 23px, transparent 23px),
+    linear-gradient(155deg, #f2f2f2 23px, transparent 23px),
+    linear-gradient(335deg, #f2f2f2 10px, transparent 10px),
+    linear-gradient(155deg, #f2f2f2 10px, transparent 10px),
+    linear-gradient(335deg, #f2f2f2 10px, transparent 10px),
+    linear-gradient(155deg, #f2f2f2 10px, transparent 10px);
+}
+
+.wsu-decorator--bg-steps-dark-gray {
+  background-color: #777;
+  background-size: 58px 58px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 33px 6px, 0px 36px, 4px 2px, 29px 6px, 33px 30px;
+  background-image:
+    linear-gradient(335deg, #303030 23px, transparent 23px),
+    linear-gradient(155deg, #303030 23px, transparent 23px),
+    linear-gradient(335deg, #303030 23px, transparent 23px),
+    linear-gradient(155deg, #303030 23px, transparent 23px),
+    linear-gradient(335deg, #303030 10px, transparent 10px),
+    linear-gradient(155deg, #303030 10px, transparent 10px),
+    linear-gradient(335deg, #303030 10px, transparent 10px),
+    linear-gradient(155deg, #303030 10px, transparent 10px);
+}
+
 /*! —» Enhancement: WDS general components → Background art «— */
 
 .bgi-cherry-blossoms {
   background: #efefef url(https://s3.wp.wsu.edu/uploads/sites/2814/2021/11/calculate-your-gpa_CORE-Spring-Campus_sh_1780_559w559h.jpg) no-repeat center/cover;
+}
+
+.wsu-background--style-wsu-crimson.wsu-background--style-no-pattern {
+    background-image: radial-gradient(ellipse at center,#ca1237 0,#78001e 100%);
+}
+
+.wsu-bg-acronym-white {
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 163.87 108'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:none;stroke:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon stroke='%230000001a' fill='none' points='64.91 1.24 53.35 33.66 42.93 1.24 33.95 1.24 23.49 33.7 12.04 1.57 11.94 1.24 0.71 1.24 18.38 50.89 29.23 50.89 38.42 22.21 47.64 50.89 58.44 50.89 76.16 1.24 64.91 1.24'/%3E%3Cpath stroke='%230000001a' fill='none' d='M86.63,14.71c0-3,2.53-5,7.07-5a21.29,21.29,0,0,1,14.43,5.43L114,7.42C109.1,2.88,102.55.5,94.67.5,83,.5,75.84,7.35,75.84,15.61c0,18.67,28.57,12.65,28.57,21.43,0,2.83-2.82,5.5-8.63,5.5A21.77,21.77,0,0,1,80,35.85l-5.73,8c4.61,4.69,11.46,7.89,21,7.89,13.4,0,19.87-6.85,19.87-15.92C115.13,17.32,86.63,22.6,86.63,14.71Z'/%3E%3Cpath stroke='%230000001a' fill='none' d='M118.37,31.08V1.24h10.71V30.71c0,6.92,4,11.68,11.68,11.68s11.61-4.76,11.61-11.68V1.24h10.79V31c0,12.35-7.29,20.76-22.4,20.76S118.37,43.29,118.37,31.08Z'/%3E%3Cpolygon stroke='%230000001a' fill='none' points='98.96 105.3 110.52 72.88 120.94 105.3 129.91 105.3 140.38 72.84 151.83 104.97 151.93 105.3 163.16 105.3 145.49 55.66 134.64 55.66 125.45 84.33 116.23 55.66 105.43 55.66 87.72 105.3 98.96 105.3'/%3E%3Cpath stroke='%230000001a' fill='none' d='M77.24,91.83c0,3-2.53,5-7.07,5a21.3,21.3,0,0,1-14.43-5.44l-5.88,7.74C54.77,103.66,61.32,106,69.2,106,80.89,106,88,99.2,88,90.94c0-18.68-28.57-12.65-28.57-21.43,0-2.83,2.82-5.51,8.63-5.51a21.71,21.71,0,0,1,15.77,6.7l5.73-8C85,58,78.13,54.77,68.61,54.77c-13.4,0-19.87,6.85-19.87,15.93C48.74,89.23,77.24,83.94,77.24,91.83Z'/%3E%3Cpath stroke='%230000001a' fill='none' d='M45.51,75.46V105.3H34.79V75.83c0-6.92-4-11.68-11.68-11.68S11.5,68.91,11.5,75.83V105.3H.71V75.53C.71,63.18,8,54.77,23.11,54.77S45.51,63.26,45.51,75.46Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 100px;
+  background-position: center center;
+}
+
+.wsu-bg-week-of-welcome {
+  background: url("https://s3.wp.wsu.edu/uploads/sites/2814/2022/09/bgi_week-of-welcome_1856w1238h.jpg") center bottom/cover;
+}
+
+.wsu-bg-week-of-welcome::after {
+  content: "";
+  background: rgba(0,0,0,.7);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
 }
 
 /*! —» Enhancement: WDS card modules → Call-to-action linker «— */
@@ -693,10 +771,168 @@ hr:not([class*=separator--style-]) {
   text-decoration: none;
 }
 
+/*! —» Enhancement: WDS sticky nav module → "On this page" design variant «— */
+
+.wsu-section--on-this-page {
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 1.25rem;
+  padding: 0;
+  position: relative;
+  overflow: show;
+}
+
+.wsu-section--on-this-page::after {
+  display: block;
+  background: linear-gradient(to bottom,rgba(0,0,0,.1) 0,rgba(0,0,0,0) 100%);
+  bottom: -1.25rem;
+  content: "";
+  height: 1.25rem;
+  position: absolute;
+  width: 200vw;
+  z-index: 1;
+}
+
+.wsu-section--on-this-page .wsu-sticky-nav {
+  padding: 0;
+  background-color: #fff;
+  justify-content: space-between;
+  position: relative;
+}
+
+.wsu-section--on-this-page .wsu-anchor-menu {
+  background-color: #fff;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  list-style-type: none;
+  justify-content: center;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.wsu-section--on-this-page .wsu-anchor-menu li {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.wsu-section--on-this-page .wsu-anchor-menu li::after {
+  content: '';
+  background-color: #ca1237;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: 0;
+  transition: height cubic-bezier(0,0,.03,1) 150ms;
+}
+
+.wsu-section--on-this-page .wsu-anchor-menu li:hover::after{
+  height: 6px;
+}
+
+.wsu-section--on-this-page .wsu-sticky-box__content {
+  border: 0!important;
+  padding: 0!important;
+}
+
+.on-this-page__link,
+.wsu-section--on-this-page .wsu-anchor-menu a {
+  display: block;
+  font-weight: 600;
+  color: #a60f2d;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: .75rem 1.25rem;
+  position: relative;
+}
+
+.wsu-section--on-this-page .wsu-anchor-menu a::before {
+    content: '';
+    border-left: 2px solid #d9d9d9;
+    bottom: .75rem;
+    display: block;
+    height: auto;
+    left: -1px;
+    position: absolute;
+    top: .75rem;
+    width: 0;
+    transition: height cubic-bezier(0,0,.03,1) 150ms;
+}
+
+.wsu-section--on-this-page .wsu-anchor-menu li:first-child a::before {
+  content: none;
+}
+
+.wsu-section--on-this-page .wsu-sticky-box--stuck {
+  visibility: hidden!important;
+}
+
+@media screen and (max-width: 1200px) {
+  .wsu-section--on-this-page .wsu-sticky-nav {
+    padding: 2rem 0;
+  }
+
+  .wsu-section--on-this-page .wsu-sticky-nav::before {
+    content: "On this page";
+    color: #4d4d4d;
+    display: block;
+    font-weight: 800;
+    font-size: 1.25rem;
+    margin-bottom: .375rem;
+  }
+
+  .wsu-section--on-this-page .wsu-anchor-menu {
+    justify-content: flex-start;
+  }
+
+  .wsu-section--on-this-page .wsu-anchor-menu li {
+    border-bottom: 1px solid #d9d9d9;
+    margin-right: 2rem;
+    width: calc( 33% - 2rem );
+  }
+
+  .wsu-section--on-this-page .wsu-anchor-menu a {
+    padding: .5rem 0 !important;
+    font-size: 1rem !important;
+    display: inline-block !important;
+  }
+
+  .wsu-section--on-this-page .wsu-anchor-menu a::before {
+    content: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .wsu-section--on-this-page .wsu-anchor-menu li {
+    width: calc(50% - 2rem);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .wsu-section--on-this-page .wsu-anchor-menu li {
+    width: calc(100% - 2rem);
+  }
+}
+
 /*! —» Enhancement: WDS block assemblies → Home page website intro «— */
+
+.wsu-section--hmpg-cg-sccss-intro {
+  border-bottom: 4px solid #a60f2d;
+  margin: 0;
+  padding: 0;
+}
 
 .wsu-row--hmpg-cg-sccss-intro h1 {
   border-bottom: .1875rem solid #e6e6e6;
+  color: white;
+}
+
+.wsu-row--hmpg-cg-sccss-intro p {
+  color: white;
 }
 
 .wsu-row--hmpg-cg-sccss-intro h1::before,
@@ -711,7 +947,6 @@ hr:not([class*=separator--style-]) {
     0 8px 8px hsl(0deg 0% 0% / 0.075),
     0 16px 16px hsl(0deg 0% 0% / 0.075);*/
   padding-bottom: 2.25rem!important;
-  z-index: 1;
 }
 
 @media screen and (max-width: 860px) {
@@ -1030,8 +1265,35 @@ hr:not([class*=separator--style-]) {
   }
 }
 
+@media screen and (min-width:861px) {
+    .wsu-breakpoint-hide-above--stacked-columns {
+        display: none !important
+    }
+}
+
+@media screen and (max-width:860px) {
+    .wsu-breakpoint-hide-below--stacked-columns {
+        display: none !important
+    }
+}
+
 /*! —» Atomic CSS: Text transformations «— */
 
 .tt-upper {
   text-transform: uppercase;
+}
+
+/*! —» Issue Fix: WDS List Components → Marker color inheritance «— */
+
+[class*=wsu-color-text--] li::marker {
+  color: inherit;
+}
+
+/*! —» Issue fix: WDS section components → Responsive design «— */
+
+@media screen and (max-width: 576px) {
+  .wsu-section__inner {
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+  }
 }
