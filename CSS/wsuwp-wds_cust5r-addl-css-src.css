@@ -1,23 +1,31 @@
-/*!********************************************************
-█▀▀▀▐▄ ▄▌▐▀█▀▌█▀▀▄ ▄▀▀▄   ▄▀▀▀ ▄▀▀▀ ▄▀▀▀
-█▀▀   █    █  █▄▄▀ █▄▄█   █    ▀▀▀█ ▀▀▀█
-▀▀▀▀▐▀ ▀▌  █  ▀  ▀▄█  ▀    ▀▀▀ ▀▀▀  ▀▀▀
-FOR THE COUGAR SUCCESS WEBSITE
------------------------------------------------------------
-@version 0.7.0
-@author Daniel Rieck
-  [daniel.rieck@wsu.edu]
-  (https://github.com/invokeImmediately)
-@license MIT - Copyright © 2022
-**********************************************************/
+/*!***************************************
+ * ▄▀▀▄ █▀▀▄ █▀▀▄ ▀█ █      ▄▀▀▀ ▄▀▀▀ ▄▀▀▀
+ * █▄▄█ █  █ █  █    █  ▄   █    ▀▀▀█ ▀▀▀█
+ * █  ▀ ▀▀▀  ▀▀▀     ▀▀▀     ▀▀▀ ▀▀▀  ▀▀▀
+ * ADDITIONAL CSS FOR CUSTOMIZATION OF
+ *  WDS-THEMED DAESA WEBSITES BUILT ON
+ *  THE WSUWP PLATFORM.
+ * ---------------------------------------
+ * Issue Fixes = Improvements to and
+ *  corrections of upstream stylesheets.
+ * Enhancements = Customized styling
+ *  unique to DAESA-branded websites.
+ * Atomic CSS = Custom utility classes.
+ * ---------------------------------------
+ * @version 0.7.1
+ * @author Daniel Rieck
+ *  [daniel.rieck@wsu.edu]
+ *  (https://github.com/invokeImmediately)
+ * @license MIT - Copyright © 2022
+ ****************************************/
 
-/*! —» Issue fix: Avoid fuzzy downsampled images on Chrome «— */
+/*! —» Issue Fix: Web Browsers → Avoid fuzzy downsampled images on Chrome «— */
 
 body {
   image-rendering: -webkit-optimize-contrast;
 }
 
-/*! —» Issue fixes: WDS link elements → Coloring «— */
+/*! —» Issue Fix: WDS Link Elements → Coloring «— */
 
 .wsu-color-background--gray-85 a,
 .wsu-color-background--gray-95 a {
@@ -60,7 +68,7 @@ h6 a::after {
   background-color: white;
 }
 
-/*! —» Issue fix: WDS list elements → Typographical sizing «— */
+/*! —» Issue Fix: WDS List Elements → Typographical sizing «— */
 
 ul ul,
 ol ol,
@@ -69,25 +77,25 @@ ol ul {
   font-size: inherit;
 }
 
-/*! —» Issue fix: WDS list elements → Improve presentation when ordered and nested «— */
+/*! —» Issue Fix: WDS List Elements → Improve presentation when ordered and nested «— */
 
 ol li li li {
   list-style-type: lower-roman;
 }
 
-/*! —» Issue Fix: WDS paragraph elements → Hide when empty «— */
+/*! —» Issue Fix: WDS Paragraph Elements → Hide when empty «— */
 
 p:empty {
   display: none !important;
 }
 
-/*! —» Issue fix: WDS breadcrumb components → Home icon spacing «— */
+/*! —» Issue Fix: WDS Breadcrumb Components → Home icon spacing «— */
 
 .breadcrumbs .wsu-i-home {
   margin-right: .5rem;
 }
 
-/*! —» Issue fixes: WDS content wrapper components → Overall presentation «— */
+/*! —» Issue Fix: WDS Content Wrapper Components → Overall presentation «— */
 
 .wsu-wrapper-site {
   background-color: #f7f7f7;
@@ -118,7 +126,7 @@ p:empty {
   width: auto;
 }
 
-/*! —» Issue fixes: WDS global header module  → Bordering «— */
+/*! —» Issue Fix: WDS Global Header Modules → Bordering «— */
 
 .wsu-header-global:after {
     background-color: #e6e6e6;
@@ -132,7 +140,7 @@ p:empty {
     width: auto;
 }
 
-/*! —» Issue fixes: WDS hero banner modules → Presentation «— */
+/*! —» Issue Fix: WDS Hero Banner Modules → Presentation «— */
 
 .wsu-hero--no-bottom-bleed .wsu-image-frame--fill {
   bottom: 0;
@@ -142,7 +150,7 @@ p:empty {
   content: none;
 }
 
-/*! —» Issue fixes: WDS primary navigation modules → Presentation «— */
+/*! —» Issue Fix: WDS Primary Navigation Modules → Presentation «— */
 
 .wsu-navigation-site-vertical--color-dark .wsu-navigation-site-vertical__panel {
   border: 0;
@@ -166,7 +174,7 @@ p:empty {
   padding-right: 50px;
 }
 
-/*! —» Issue fixes: WDS card modules → Overall presentation «— */
+/*! —» Issue Fix: WDS Card Modules → Overall presentation «— */
 
 .wsu-card.wsu-color-background--white {
   border-bottom: 1px solid #e6e6e6;
@@ -178,13 +186,13 @@ p:empty {
   border-radius: 4px;
 }
 
-/*! —» Issue fix: WDS card module → Advising cards design «— */
+/*! —» Issue Fix: WDS Card Modules → Advising cards design «— */
 
 .advising-cards .advising-text {
   margin-bottom: 0;
 }
 
-/*! —» Issue fixes: WDS sticky nav modules → Background «— */
+/*! —» Issue Fix: WDS Sticky Nav Modules → Background «— */
 
 .wsu-sticky-nav--style-crimson .wsu-anchor-menu {
   justify-content: center;
@@ -215,13 +223,13 @@ nav.wsu-sticky-nav--style-crimson {
   }
 }
 
-/*! —» Issue fixes: WSUWP Content Syndicate modules → Font sizing «— */
+/*! —» Issue Fix: WSUWP Content Syndicate Modules → Font sizing «— */
 
 .wsuwp-content-syndicate-list {
   font-size: inherit;
 }
 
-/*! —» Issue fixes: TablePress modules → Overall presentation «— */
+/*! —» Issue Fix: TablePress Modules → Overall presentation «— */
 
 .tablepress thead th,
 .dataTables_wrapper .tablepress.dataTable thead th:not(:hover):not(:focus) {
@@ -236,7 +244,7 @@ nav.wsu-sticky-nav--style-crimson {
   border-bottom-color: #bbb;
 }
 
-/*! —» Issue Fixes: Tribe Events calendar block assemblies → Overall presentation «— */
+/*! —» Issue Fix: Tribe Events Calendar Block Assemblies → Overall presentation «— */
 
 #tribe-events {
   padding-top: 0;
@@ -267,7 +275,7 @@ nav.wsu-sticky-nav--style-crimson {
   transform: translateY(-50%);
 }
 
-/*! —» Issue Fixes: News page block assemblies → Overall presentation «— */
+/*! —» Issue Fix: News Page Block Assemblies → Overall presentation «— */
 
 .archive .wsu-meta-byline {
   display: none;
@@ -321,7 +329,7 @@ nav.wsu-sticky-nav--style-crimson {
   }
 }
 
-/*! —» Issue fix: Gravity Forms block assemblies → Select field drop-down indicator «— */
+/*! —» Issue Fix: Gravity Forms Block Assemblies → Select field drop-down indicator «— */
 
 select.gfield_select:not([multiple]) {
   background-position: calc(100% - 1.22rem) .975em, calc(100% - .91rem) .975em,calc(100% - .5rem) .35em;
@@ -340,25 +348,25 @@ select.gfield_select:not([multiple]):active {
   background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
 }
 
-/*! —» Issue fix: Gravity Forms  block assemblies → Choice field layout «— */
+/*! —» Issue Fix: Gravity Forms Block Assemblies → Choice field layout «— */
 
 .gform_wrapper.gravity-theme .gfield-choice-input+label {
   max-width: calc(100% - 32px - 1.8em);
 }
 
-/*! —» Issue fixes: Gravity Forms block assemblies → Input field maximum width «— */
+/*! —» Issue Fix: Gravity Forms Block Assemblies → Input field maximum width «— */
 
 .gform_wrapper.gravity-theme .gfield-choice-input+label {
   max-width: calc(100% - 32px - 1.8em);
 }
 
-/*! —» Issue fixes: Gravity Forms block assemblies → Overly wide grid gap «— */
+/*! —» Issue Fix: Gravity Forms Block Assemblies → Overly wide grid gap «— */
 
 .gform_wrapper.gravity-theme .gform_fields {
   grid-row-gap: 1.75rem;
 }
 
-/*! —» Issue fixes: Gravity Forms block assemblies → Junky layout of nested entries «— */
+/*! —» Issue Fix: Gravity Forms Block Assemblies → Junky layout of nested entries «— */
 
 .gpnf-nested-entries,
 .gpnf-row-actions > ul {
@@ -369,7 +377,7 @@ select.gfield_select:not([multiple]):active {
   margin-bottom: 0;
 }
 
-/*! —» Issue fixes: Home page → Typographical sizing «— */
+/*! —» Issue Fix: WDS Block Assemblies on Home Pages → Typographical sizing «— */
 
 @media only screen and (min-width: 993px) {
   .home .wsu-hero .wsu-title,
@@ -388,7 +396,7 @@ select.gfield_select:not([multiple]):active {
   display: none;
 }
 
-/*! —» Enhancement: WDS site header modules → Coloring «— */
+/*! —» Enhancement: WDS Site Header Modules → Coloring «— */
 
 .wsu-header-site {
   background-color: #333;
@@ -400,7 +408,7 @@ select.gfield_select:not([multiple]):active {
   color: inherit;
 }
 
-/*! —» Enhancement: Page header assemblies → Sharper presentation «— */
+/*! —» Enhancement: Page Header Assemblies → Sharper presentation «— */
 
 .breadcrumbs {
   border-bottom: 1px solid #e6e6e6;
@@ -452,7 +460,7 @@ h1::before {
   content: none;
 }
 
-/*! —» Enhancement: WDS link elements → Heading/hX-style «— */
+/*! —» Enhancement: WDS Link Elements → Heading/hX-style «— */
 
 .hx-style-link:not(:hover) {
   color: inherit;
@@ -472,14 +480,14 @@ h1::before {
   text-decoration: none;
 }
 
-/*! —» Enhancement: WDS heading element → Heading tail text «— */
+/*! —» Enhancement: WDS Heading Element → Heading tail text «— */
 
 .hX-tail-text {
   display: block;
   font-size: 1rem;
 }
 
-/*! —» Enhancement: WDS column components → Full-bleed row design «— */
+/*! —» Enhancement: WDS Column Components → Full-bleed row design «— */
 
 .wsu-row.wsu-row--full-bleed:after {
   bottom: 0;
@@ -494,7 +502,7 @@ h1::before {
   z-index: 1;
 }
 
-/*! —» Enhancement: WDS column components → Full-bleed row coloring «— */
+/*! —» Enhancement: WDS Column Components → Full-bleed row coloring «— */
 
 .wsu-wrapper-site .wsu-row.wsu-row--full-bleed:after {
   margin-left: calc((100vw - 100%)/ -2);
@@ -540,7 +548,7 @@ h1::before {
   background-color: #262626;
 }
 
-/*! —» Enhancement: WDS hero banner modules → Design variants «— */
+/*! —» Enhancement: WDS Hero Banner Modules → Design variants «— */
 
 .wsu-hero--hide-tail {
   overflow-y: hidden;
@@ -566,7 +574,7 @@ h1::before {
   clip-path: polygon(100% 0, 100% 100%, 80px 100%, 0 calc(100% - 100px), 0 0);
 }
 
-/*! —» Enhancement: WDS accordion component → Improved interaction reactivity «— */
+/*! —» Enhancement: WDS Accordion Component → Improved interaction reactivity «— */
 
 .wsu-accordion__content {
   border-left: 1px solid transparent;
@@ -577,7 +585,7 @@ h1::before {
   border-color: #ccc;
 }
 
-/*! —» Enhancement: WDS icon ICON → Design variants «— */
+/*! —» Enhancement: WDS Icon Components → Design variants «— */
 .wsu-i-arrow-right--offsite {
   margin-right: 0;
   position: relative;
@@ -597,7 +605,7 @@ h1::before {
   }
 }
 
-/*! —» Enhancement: WDS separator component → Design variants «— */
+/*! —» Enhancement: WDS Separator Component → Design variants «— */
 
 hr:not([class*=separator--style-]) {
   border: 1px solid #e7e7e7;
@@ -611,7 +619,7 @@ hr:not([class*=separator--style-]) {
   border: 1px solid #e7e7e7 !important;
 }
 
-/*! —» Enhancement: WDS row components → Fixed height rows «— */
+/*! —» Enhancement: WDS Row Components → Fixed height rows «— */
 
 @media all and (min-width: 861px) {
 
@@ -647,7 +655,7 @@ hr:not([class*=separator--style-]) {
 
 }
 
-/*! —» Enhancement: WDS button components → "Need Assistance" design «— */
+/*! —» Enhancement: WDS Button Components → "Need Assistance" design «— */
 
 .wsu-button--need-assistance .wsu-button {
   box-sizing: border-box;
@@ -667,7 +675,7 @@ hr:not([class*=separator--style-]) {
   color: white;
 }
 
-/*! —» Enhancement: WDS decorator components → Background art «— */
+/*! —» Enhancement: WDS Decorator Components → Background art «— */
 
 .wsu-decorator--bg-zigzag-gray {
   background:
@@ -719,7 +727,7 @@ background-color: #f2f2f2;
     linear-gradient(155deg, #303030 10px, transparent 10px);
 }
 
-/*! —» Enhancement: WDS general components → Background art «— */
+/*! —» Enhancement: WDS General Components → Background art «— */
 
 .bgi-cherry-blossoms {
   background: #efefef url(https://s3.wp.wsu.edu/uploads/sites/2814/2021/11/calculate-your-gpa_CORE-Spring-Campus_sh_1780_559w559h.jpg) no-repeat center/cover;
@@ -751,7 +759,7 @@ background-color: #f2f2f2;
   position: absolute;
 }
 
-/*! —» Enhancement: WDS card modules → Call-to-action linker «— */
+/*! —» Enhancement: WDS Card Modules → Call-to-action linker «— */
 
 .cta-linker,
 .cta-linker__link {
@@ -771,7 +779,7 @@ background-color: #f2f2f2;
   text-decoration: none;
 }
 
-/*! —» Enhancement: WDS sticky nav module → "On this page" design variant «— */
+/*! —» Enhancement: WDS Sticky Nav Module → "On this page" design variant «— */
 
 .wsu-section--on-this-page {
   border-bottom: 2px solid #f0f0f0;
@@ -838,7 +846,6 @@ background-color: #f2f2f2;
   padding: 0!important;
 }
 
-.on-this-page__link,
 .wsu-section--on-this-page .wsu-anchor-menu a {
   display: block;
   font-weight: 600;
@@ -918,7 +925,7 @@ background-color: #f2f2f2;
   }
 }
 
-/*! —» Enhancement: WDS block assemblies → Home page website intro «— */
+/*! —» Enhancement: WDS Block Assemblies → Home page website intro «— */
 
 .wsu-section--hmpg-cg-sccss-intro {
   border-bottom: 4px solid #a60f2d;
@@ -1043,7 +1050,7 @@ background-color: #f2f2f2;
   margin-bottom: 0;
 }
 
-/*! —» Enhancement: Gravity Forms block assemblies → "GPA Calculator" form design «— */
+/*! —» Enhancement: Gravity Forms Block Assemblies → "GPA Calculator" form design «— */
 
 .gpa-calc-gf_wrapper.gravity-theme {
   border: 1px solid #a60f2d;
@@ -1229,7 +1236,7 @@ background-color: #f2f2f2;
   align-self: end;
 }
 
-/*! —» Atomic CSS: Font weights «— */
+/*! —» Atomic CSS: Font Weights «— */
 
 .fw-lb {
   font-weight: 300;
@@ -1251,7 +1258,7 @@ background-color: #f2f2f2;
   font-weight: 800;
 }
 
-/*! —» Atomic CSS: Responsive design «— */
+/*! —» Atomic CSS: Responsive Design «— */
 
 @media (max-width: 768px) {
   .hide-on-tablet {
@@ -1277,7 +1284,7 @@ background-color: #f2f2f2;
     }
 }
 
-/*! —» Atomic CSS: Text transformations «— */
+/*! —» Atomic CSS: Text Transformations «— */
 
 .tt-upper {
   text-transform: uppercase;
@@ -1289,7 +1296,7 @@ background-color: #f2f2f2;
   color: inherit;
 }
 
-/*! —» Issue fix: WDS section components → Responsive design «— */
+/*! —» Issue Fix: WDS Section Components → Responsive design «— */
 
 @media screen and (max-width: 576px) {
   .wsu-section__inner {
