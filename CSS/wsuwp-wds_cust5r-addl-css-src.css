@@ -12,7 +12,7 @@
  *  unique to DAESA-branded websites.
  * Atomic CSS = Custom utility classes.
  * ---------------------------------------
- * @version 0.7.1
+ * @version 0.8.0
  * @author Daniel Rieck
  *  [daniel.rieck@wsu.edu]
  *  (https://github.com/invokeImmediately)
@@ -23,6 +23,53 @@
 
 body {
   image-rendering: -webkit-optimize-contrast;
+}
+
+/*! —» Issue fix: WDS Websites → Set CSS variable for handling scrollbar artifacts «— */
+
+:root {
+  --scrollbar-w: 0px;
+}
+
+/*! —» Issue fix: WDS Websites → Compensate for width-changing effects of classic scrollbars «— */
+
+@media screen and (pointer: fine) and (min-width: 1260px) {
+  .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-width--full {
+    margin-left: calc(((100vw - 100%) - 280px - var(--scrollbar-w))/ -2);
+    margin-right: calc(((100vw - 100%) - 280px - var(--scrollbar-w))/ -2);
+  }
+
+  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-width--full {
+    margin-left: calc(((100vw - 100%) - 60px - var(--scrollbar-w))/ -2);
+    margin-right: calc(((100vw - 100%) - 60px - var(--scrollbar-w))/ -2);
+  }
+}
+
+@media screen and (pointer: fine) and (min-width: 1260px) {
+  .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-width--full {
+    margin-left: calc(((100vw - 100%) - 280px - var(--scrollbar-w))/ -2);
+    margin-right: calc(((100vw - 100%) - 280px - var(--scrollbar-w))/ -2);
+  }
+
+  .wsu-navigation-site-vertical--is-closed .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-width--full {
+    margin-left: calc(((100vw - 100%) - 60px - var(--scrollbar-w))/ -2);
+    margin-right: calc(((100vw - 100%) - 60px - var(--scrollbar-w))/ -2);
+  }
+}
+
+@media screen and (pointer: fine) and (min-width: 769px) and (max-width: 1259px) {
+  .wsu-navigation-site-vertical~.wsu-wrapper-site .wsu-width--full {
+    margin-left: calc(((100vw - 100%) - 60px - var(--scrollbar-w))/ -2);
+    margin-right: calc(((100vw - 100%) - 60px - var(--scrollbar-w))/ -2);
+  }
+}
+
+@media screen and (pointer: fine) and (max-width: 768px) {
+  .wsu-wrapper-site .wsu-width--full {
+    margin-left: calc((100vw - 100% - var(--scrollbar-w))/ -2);
+    margin-right: calc((100vw - 100% - var(--scrollbar-w))/ -2);
+    width: auto;
+  }
 }
 
 /*! —» Issue Fix: WDS Link Elements → Coloring «— */
@@ -124,6 +171,19 @@ p:empty {
   position: absolute;
   right: calc((100vw - 100%)/ -2);
   width: auto;
+}
+
+/*! —» Issue Fix: WDS Accordion Components → Layout of nested accordions «— */
+
+.wsu-accordion--open .wsu-accordion:not(.wsu-accordion--open) .wsu-accordion__content {
+    max-height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: max-height cubic-bezier(0,0,.03,1) .3s,visibility 0s .4s;
+}
+
+.wsu-accordion--open .wsu-accordion:not(.wsu-accordion--open) .wsu-accordion__title::before {
+  content: "\F137";
 }
 
 /*! —» Issue Fix: WDS Global Header Modules → Bordering «— */
@@ -346,12 +406,6 @@ select.gfield_select:not([multiple]):focus {
 
 select.gfield_select:not([multiple]):active {
   background-image: linear-gradient(45deg,transparent 50%,white 50%),linear-gradient(135deg,white 50%,transparent 50%),radial-gradient(black 70%,transparent 75%);
-}
-
-/*! —» Issue Fix: Gravity Forms Block Assemblies → Choice field layout «— */
-
-.gform_wrapper.gravity-theme .gfield-choice-input+label {
-  max-width: calc(100% - 32px - 1.8em);
 }
 
 /*! —» Issue Fix: Gravity Forms Block Assemblies → Input field maximum width «— */
@@ -1210,6 +1264,24 @@ background-color: #f2f2f2;
     min-height: none;
     line-height: 1.15;
   }
+}
+
+/*! —» Atomic CSS: Display modes «— */
+
+.dy-0 {
+  display: none;
+}
+
+.dy-il {
+  display: inline;
+}
+
+.dy-bl {
+  display: block;
+}
+
+.dy-ilbl {
+  display: inline-block;
 }
 
 /*! —» Atomic CSS: Width «— */
