@@ -12,7 +12,7 @@
  *  unique to DAESA-branded websites.
  * Atomic CSS = Custom utility classes.
  * ---------------------------------------
- * @version 0.8.0
+ * @version 0.9.0
  * @author Daniel Rieck
  *  [daniel.rieck@wsu.edu]
  *  (https://github.com/invokeImmediately)
@@ -677,36 +677,71 @@ hr:not([class*=separator--style-]) {
 
 @media all and (min-width: 861px) {
 
-.wsu-row-fixed-h {
-  box-sizing: content-box;
-  display: flex;
-  height: 650px;
+  .wsu-row-fixed-h {
+    box-sizing: content-box;
+    display: flex;
+    height: 650px;
+  }
+
+  .wsu-row-fixed-h--xsmall {
+    height: 300px;
+  }
+
+  .wsu-row-fixed-h--small {
+    height: 500px;
+  }
+
+  .wsu-row-fixed-h--medium {
+    height: 800px;
+  }
+
+  .wsu-row-fixed-h--large {
+    height: 800px;
+  }
+
+  .wsu-row-fixed-h--medium {
+    height: 800px;
+  }
+
+  .wsu-row-fixed-h .wsu-column {
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .wsu-row-fixed-h .wsu-row-fixed-h__btm-scroll-indctr,
+  .wsu-row-fixed-h .wsu-row-fixed-h__top-scroll-indctr {
+    position: absolute;
+    right: 0.375rem;
+    transition: opacity .4s 3s ease;
+  }
+
+  .wsu-row-fixed-h .wsu-row-fixed-h__btm-scroll-indctr {
+    bottom: 0;
+  }
+
+  .wsu-row-fixed-h .wsu-row-fixed-h__top-scroll-indctr {
+    top: 0;
+  }
+
+  .wsu-row-fixed-h__btm-scroll-indctr .wsu-i-arrow-down,
+  .wsu-row-fixed-h__top-scroll-indctr .wsu-i-arrow-up {
+    margin: 0;
+  }
+
+  .wsu-column:hover .wsu-row-fixed-h__btm-scroll-indctr,
+  .wsu-column:hover .wsu-row-fixed-h__top-scroll-indctr,
+  .wsu-column--scrolled-at-bottom .wsu-row-fixed-h__btm-scroll-indctr,
+  .wsu-column--scrolled-at-top .wsu-row-fixed-h__top-scroll-indctr {
+    opacity: 0;
+    transition: opacity .4s .5s ease;
+  }
 }
 
-.wsu-row-fixed-h--xsmall {
-  height: 300px;
-}
-
-.wsu-row-fixed-h--small {
-  height: 500px;
-}
-
-.wsu-row-fixed-h--medium {
-  height: 800px;
-}
-
-.wsu-row-fixed-h--large {
-  height: 800px;
-}
-
-.wsu-row-fixed-h--medium {
-  height: 800px;
-}
-
-.wsu-row-fixed-h .wsu-column {
-  overflow-y: auto;
-}
-
+@media all and (max-width: 860px) {
+  .wsu-row-fixed-h__btm-scroll-indctr,
+  .wsu-row-fixed-h__top-scroll-indctr {
+    display: none;
+  }
 }
 
 /*! —» Enhancement: WDS Button Components → "Need Assistance" design «— */
@@ -767,7 +802,7 @@ background-color: #f2f2f2;
 }
 
 .wsu-decorator--bg-steps-dark-gray {
-  background-color: #777;
+  background-color: rgba(0,0,0,.65);
   background-size: 58px 58px;
   background-position: 0px 2px, 4px 35px, 29px 31px, 33px 6px, 0px 36px, 4px 2px, 29px 6px, 33px 30px;
   background-image:
@@ -789,6 +824,18 @@ background-color: #f2f2f2;
 
 .wsu-background--style-wsu-crimson.wsu-background--style-no-pattern {
     background-image: radial-gradient(ellipse at center,#ca1237 0,#78001e 100%);
+  color: #fff;
+}
+
+.wsu-background--style-wsu-crimson .wsu-accordion a {
+  color: inherit;
+}
+.wsu-background--style-wsu-crimson .wsu-accordion a:not(:hover) {
+  text-decoration-color: inherit;
+}
+
+.wsu-background--style-wsu-crimson .wsu-accordion a:focus {
+  outline-color: inherit;
 }
 
 .wsu-bg-acronym-white {
@@ -982,7 +1029,7 @@ background-color: #f2f2f2;
 /*! —» Enhancement: WDS Block Assemblies → Home page website intro «— */
 
 .wsu-section--hmpg-cg-sccss-intro {
-  border-bottom: 4px solid #a60f2d;
+  border-bottom: .1875rem solid #fff;
   margin: 0;
   padding: 0;
 }
